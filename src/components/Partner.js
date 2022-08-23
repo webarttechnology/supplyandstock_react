@@ -9,7 +9,7 @@ const Partner = () => {
                     <div className="col-md-12">
                         <h1 className="partnerHeading">Manufactures We Have</h1>
                     </div>
-                    <div className="col-md-12">
+                    <div className="col-md-12 text-center">
                         <img src={partNarLogo} alt="" />
                     </div>
                 </div>

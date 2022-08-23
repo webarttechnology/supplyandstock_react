@@ -1,6 +1,5 @@
 import React from "react";
 import Banner from "./Banner";
-import Footer from "./Footer";
 import GetTouch from "./GetTouch";
 import OurStory from "./OurStory";
 import Partner from "./Partner";
@@ -14,7 +13,7 @@ const Home = () => {
       <Partner/>
       <OurStory />
       <GetTouch/>
-      <Footer/>
+      
     </>
   );
 };
