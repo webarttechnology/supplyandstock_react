@@ -1,6 +1,5 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import banner from "../assets/images/banner.png"
 const Banner = () => {
   return (
     <>
@@ -9,7 +8,7 @@ const Banner = () => {
                 <div className="row justify-content-center">
                     <div className="col-md-8 text-center">
                         <h4 className="bannerWlcomeHeading">Welcome to</h4>
-                        <h1 className="bannnercolorHaed">S<span className="commonColor">upply</span> o<span className="commonColor">ur</span> S<span className="commonColor">tock</span></h1>
+                        <h1 className="bannnercolorHaed">S<span className="commonColor">upply</span> W<span className="commonColor">e</span> S<span className="commonColor">tock</span></h1>
                         <div className="searchSec">
                             <div class="search">
                                 <span><i class="bi bi-search"></i></span>

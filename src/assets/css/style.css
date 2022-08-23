@@ -419,3 +419,8 @@ label{
   display: block;
   margin-top: 2rem;
 }
+.disableBtn{
+  color: #8f8f93;
+  cursor: no-drop;
+  background-color: #515151;
+}
