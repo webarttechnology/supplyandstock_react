@@ -1,0 +1,69 @@
+import axios from "axios";
+import * as c from "./constant";
+
+// ? REGISTRATION API
+export const user_registration_buyer = async (data) => {
+    try {
+        const url = c.BUYER;
+        const res = await axios.post(url, data);
+        return res;
+    } catch (e) {
+        return e.response;
+    }
+};
+
+// ? REGISTRATION API
+export const user_buyer_mailVerifi = async (data) => {
+    try {
+        const url = c.BUYER + "/otp-verification/" + data.id + "/" +  data.otp;
+        const res = await axios.get(url, data);
+        return res;
+    } catch (e) {
+        return e.response;
+    }
+};
+
+// ? REGISTRATION API
+export const user_buyer_resendOtp = async (data) => {
+    try {
+        const url = c.BUYER + "/send-otp/" + data;
+        const res = await axios.get(url, data);
+        return res;
+    } catch (e) {
+        return e.response;
+    }
+};
+
+
+// ? REGISTRATION API
+export const user_registration_seller = async (data) => {
+    try {
+        const url = c.SELLER;
+        const res = await axios.post(url, data);
+        return res;
+    } catch (e) {
+        return e.response;
+    }
+};
+
+// ? REGISTRATION API
+export const user_seller_mailVerifi = async (data) => {
+    try {
+        const url = c.SELLER + "/otp-verification/" + data.id + "/" +  data.otp;
+        const res = await axios.get(url, data);
+        return res;
+    } catch (e) {
+        return e.response;
+    }
+};
+
+// ? REGISTRATION API
+export const user_seller_resendOtp = async (data) => {
+    try {
+        const url = c.SELLER + "/send-otp/" + data;
+        const res = await axios.get(url, data);
+        return res;
+    } catch (e) {
+        return e.response;
+    }
+};
