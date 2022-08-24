@@ -13,13 +13,23 @@ const initialData = {
     password:"",
     confirmPassword:"",
 }
+const initialDatalog = {
+  emailId:"",
+  password:"",
+}
+
 const Login = () => {
 const [formData, setFormData] = useState(initialData)
 const [loading, setLoading] = useState(false);
 const [dialCode, setDialCode] = useState("");
 const [isEmail, setIsEmail] = useState(0)
 const [OTP, setOTP] = useState("");
-const [otpVelue, setOtpVelue] = useState("")
+const [loginData, setLoginData] = useState(initialDatalog)
+const [newEmailData, setNewEmailData] = useState("")
+const [isForgot, setIsForgot] = useState(2)
+const [passWordData, setPassWordData] = useState("")
+const [conpassWordData, setConPassWordData] = useState("")
+
 
 
 //ERROR-MSGS
@@ -31,7 +41,10 @@ const [errorPassword, setErrorPassword] = useState("");
 const [confirmErrorPasword, setConfirmErrorPasword] = useState("");
 const [mobileError, setMobileError] = useState("")
 const [selected, setSelected] = useState("");
+const [selectedLogin, setSelectedLogin] = useState("");
+const [selectedForgot, setSelectedForgot] = useState("");
 const [otpError, setOtpError] = useState("")
+const [newPassError, setNewPassError] = useState("")
 
 const handalerChnages = (e) => {
     const { name, value } = e.target;  
@@ -61,10 +74,29 @@ const handalerChnages = (e) => {
     setFormData({ ...formData, [name]: value });
 } 
 
+// ? login handaler
+const loginHandaler = (e) => {
+  const { name, value } = e.target; 
+  setLoginData({ ...loginData, [name]: value });
+}
+// ? sign up
 const handleChange = event => {
   console.log(event.target.value);
   setSelected(event.target.value);
 };
+
+// ? login type
+const handleChangeLogin = event => {
+  console.log(event.target.value);
+  setSelectedLogin(event.target.value);
+};
+// ? login type
+const handleChangeforgot = event => {
+  console.log(event.target.value);
+  setSelectedForgot(event.target.value);
+};
+
+
 const handleCountrySelect = (e) => {
   setDialCode(e.target.value);
 };
@@ -93,7 +125,6 @@ const submitHandaler = async () => {
                 setLoading(false)
                 setIsEmail(1)
                 localStorage.setItem("__userId", response.data.data._id)
-                setOtpVelue(response.data.data.otp)
               }else{
                 setErrorMsg(response.data.msg)
                 setLoading(false)
@@ -121,7 +152,6 @@ const submitHandaler = async () => {
               setLoading(false)
               setIsEmail(1)
               localStorage.setItem("__userId", response.data.data._id)
-              setOtpVelue(response.data.data.otp)
             }else{
               setErrorMsg(response.data.msg)
               setLoading(false)
@@ -139,14 +169,16 @@ const submitHandaler = async () => {
     
 }
 
+
 // ? EMAIL OTP VERIFACTION 
 const emaitVerifaction = async () =>{
   if (selected === "Buyer") {
     try {
       const reqObj = {
         id: localStorage.getItem("__userId"),
-        otp: otpVelue,
+        otp: OTP,
       }
+      console.log("reqObj", reqObj);
       const response = await API.user_buyer_mailVerifi(reqObj)
       console.log("buyerresponse", response);
       if (response.data.success === 1) {
@@ -161,7 +193,7 @@ const emaitVerifaction = async () =>{
     try {
       const reqObj = {
         id: localStorage.getItem("__userId"),
-        otp: otpVelue,
+        otp: OTP,
       }
       const response = await API.user_seller_mailVerifi(reqObj)
       console.log("sellerresponse", response);
@@ -192,7 +224,187 @@ const resendOtp = async() =>{
   
 }
 
+//  ? ============ LOGIN START ============
+const loginSubmit = async ()=>{
+  if (selectedLogin === "Buyer") {
+    try {
+      const reqObj = {
+        emailId: loginData.emailId,
+        password: loginData.password,
+      }
+      console.log("bbbreqObj", reqObj);
+      const response = await API.user_login_buyer(reqObj)
+      console.log("bbbresponse", response);
+      if (response.data.success === 1) {
+        localStorage.setItem("_tokenCode", response.data.token_code)
+      }else{
+        toast(response.data.msg, {
+          position: "top-right",
+          autoClose: 5000,
+          type: "error",
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
+      }
+    } catch (error) {
+      
+    }
+  }else{
+    try {
+      const reqObj = {
+        emailId: loginData.emailId,
+        password: loginData.password,
+      }
+      console.log("ssreqObj", reqObj);
+      const response = await API.user_login_seller(reqObj)
+      console.log("sssresponse",response);
+      if (response.data.success === 1) {
+        localStorage.setItem("_tokenCode", response.data.token_code)
+      }else{
+        toast(response.data.msg, {
+          position: "top-right",
+          autoClose: 5000,
+          type: "error",
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
+      }
+    } catch (error) {
+      
+    }
+  }
+ 
+}
 
+// ? FORGOT EMAIL ======
+const newEmailDataSubmit = async () => {
+  if (selectedForgot === 'Buyer') {
+      try {
+        const reqObj = {
+          emailId: newEmailData,
+        }
+        console.log("reqObj", reqObj);
+        const response = await API.forgot_password_buyer(reqObj)
+        console.log("response",response);
+        if (response.data.success) {
+          setIsForgot(1)
+        }else{
+          toast(response.data.message, {
+            position: "top-right",
+            autoClose: 5000,
+            type: "error",
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+          });
+        }
+      } catch (error) {
+        
+      }
+  }else{
+    try {
+      const reqObj = {
+        emailId: newEmailData,
+      }
+      console.log("reqObj", reqObj);
+      const response = await API.forgot_password_saller(reqObj)
+      console.log("response",response);
+      if (response.data.success) {
+        setIsForgot(1)
+      }else{
+        toast(response.data.message, {
+          position: "top-right",
+          autoClose: 5000,
+          type: "error",
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
+      }
+    } catch (error) {
+      
+    }
+  }
+  
+}
+
+
+const newEmailDataSubmitOtp = async () => {
+  try {
+    if (selectedForgot === "Buyer") {
+      const reqObj = {
+        id: localStorage.getItem("__userId"),
+        otp: OTP,
+      }
+      const response = await API.user_buyer_mailVerifi(reqObj)
+      console.log("bbbresponse", response);
+      if (response.data.success === 1) {
+        setIsForgot(2)
+      }
+    }else{
+      const reqObj = {
+        id: localStorage.getItem("__userId"),
+        otp: OTP,
+      }
+      const response = await API.user_seller_mailVerifi(reqObj)
+      if (response.data.success === 1) {
+        setIsForgot(2)
+      }
+      console.log("ssbresponse", response);
+    }
+   
+  } catch (error) {
+    
+  }
+}
+
+const newPasswordSet = async () =>{
+  if (selectedForgot === "Buyer") {
+    if (passWordData.length < 8 ) {
+      setNewPassError("Your password is too short. It needs to be 8+ characters")
+      if (passWordData === conpassWordData) {
+        const reqObj = {
+            emailId: newEmailData,
+            password: passWordData, 
+            otp: OTP
+          }
+          console.log("bbreqObj", reqObj);
+        }
+    }else{
+      setConfirmErrorPasword("Please confirm your password")
+    }
+  }else{
+    if (passWordData.length < 8 ) {
+      setNewPassError("Your password is too short. It needs to be 8+ characters")
+      if (passWordData === conpassWordData) {
+        const reqObj = {
+            emailId: newEmailData,
+            password: passWordData, 
+            otp: OTP
+          }
+          console.log("bbreqObj", reqObj);
+        }
+    }else{
+      setConfirmErrorPasword("Please confirm your password")
+    }
+  }
+}
+
+const disabelBtnlog = !loginData.emailId || !selectedLogin || !loginData.password;
 
 //VALIDATE-INPUT
 const validate = () => {
@@ -309,6 +521,8 @@ const validate = () => {
     return flag;
   };
 
+  
+
   const disabelBtn = !formData.firstName || !formData.lastName || 
     !formData.email || !formData.mobileNo || !formData.password || !formData.confirmPassword || !selected;
 
@@ -316,6 +530,7 @@ const validate = () => {
 
   return (
     <>
+     <ToastContainer />
         <div className="loginSec">
             <div className={isEmail === 0 ? "main": "main verification"}>
                 {isEmail === 0 ? (
@@ -367,7 +582,8 @@ const validate = () => {
                               <select className="mobileCode" onChange={handleCountrySelect}>
                                   {cuntryData.map((item, index) => (
                                     <>
-                                      <option
+                                        <option>choose</option>
+                                        <option
                                           name="category"
                                           key={item.name}
                                           value={item.dial_code}
@@ -407,10 +623,42 @@ const validate = () => {
                       </div>
                       <div class="login">
                           <label for="chk" aria-hidden="true">Login</label>
-                          <input type="email" name="email" placeholder="Email" required=""/>
-                          <input type="password" name="pswd" placeholder="Password" required=""/>
-                          <button className="customBtn">Login</button>
-                          <Link className="forgotPass" to="/">Forgot Password ?</Link>
+                          <p className="formErrorAlrt">{errorMsg}</p>
+                          <div className="userType">
+                            <input
+                                type="radio"
+                                id="Buyer"
+                                name="choose"
+                                value="Buyer"
+                                checked={selectedLogin === 'Buyer'}
+                                onChange={handleChangeLogin}
+                                className="redioBtn"
+                              />
+                              <label htmlFor="Buyer">Buyer</label>
+
+                              <input
+                                type="radio"
+                                id="Seller"
+                                name="choose"
+                                value="Seller"
+                                onChange={handleChangeLogin}
+                                checked={selectedLogin === 'Seller'}
+                                className="redioBtn"
+                              />
+                              <label htmlFor="Seller">Seller</label>
+                          </div>
+                          <input onChange={loginHandaler} 
+                            value={loginData.emailId}
+                            type="email" name="emailId"
+                            placeholder="Email" required=""/>
+                            
+                          <input onChange={loginHandaler} 
+                            value={loginData.password} 
+                            type="password" name="password" 
+                            placeholder="Password" required=""/>
+                          <button className={disabelBtnlog ? "customBtn disableBtn" : "customBtn"} disabled={disabelBtnlog} onClick={loginSubmit}>Login</button>
+                         
+                          <Link className="forgotPass" to="/" data-bs-toggle="modal" data-bs-target="#exampleModal">Forgot Password ?</Link>
                       </div>
                   </>
                 ):(
@@ -437,6 +685,84 @@ const validate = () => {
                 
             </div>
         </div>
+
+      <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Forgot Password</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body forgot">
+             {isForgot === 0 ?(
+               <div className="userType mb-3">
+               <input
+                   type="radio"
+                   id="Buyer"
+                   name="choose"
+                   value="Buyer"
+                   checked={selectedForgot === 'Buyer'}
+                   onChange={handleChangeforgot}
+                   className="redioBtn"
+                 />
+                 <label htmlFor="Buyer">Buyer</label>
+                   
+                 <input
+                   type="radio"
+                   id="Seller"
+                   name="choose"
+                   value="Seller"
+                   onChange={handleChangeforgot}
+                   checked={selectedForgot === 'Seller'}
+                   className="redioBtn"
+                 />
+                 <label htmlFor="Seller">Seller</label>
+             </div>
+             ):("")}
+            
+                {isForgot === 0 ?(
+                  <input onChange={(e)=> setNewEmailData(e.target.value)} type="email" class="form-control" placeholder="Enter email id" />
+                ): isForgot === 1 ? (
+                  <>
+                      <p className="formErrorAlrt">{otpError}</p>
+                      <div className="otpInput">
+                        <OTPInput
+                          value={OTP}
+                          onChange={setOTP}
+                          autoFocus
+                          OTPLength={6}
+                          otpType="number"
+                          disabled={false}
+                          className="forgotOtp"
+                        />
+                      </div>
+                  </>
+                ):(
+                  <>
+                    <input onChange={(e)=> setPassWordData(e.target.value)} type="password" class="form-control mb-3" placeholder="Enter password" />
+                      <p className="formErrorAlrt mb-3">{newPassError}</p>
+                    <input onChange={(e)=> setConPassWordData(e.target.value)} type="password"
+                     class="form-control" placeholder="Confirm password" />
+                      <p className="formErrorAlrt mb-3">{confirmErrorPasword}</p>
+                  </>
+                )}
+                
+            </div>
+            <div class="modal-footer">
+              {isForgot === 0 ? (<button type="button" disabled={!selectedForgot || !newEmailData} 
+              class="btn btn-primary" onClick={newEmailDataSubmit}>Submit</button>):
+              isForgot === 1 ? (
+              <button type="button" disabled={!selectedForgot ||
+               !newEmailData} class="btn btn-primary" onClick={newEmailDataSubmitOtp}> Verify OTP </button>
+               ):(
+               <button type="button" disabled={!passWordData || !conpassWordData} class="btn btn-primary" 
+               onClick={newPasswordSet}>Submit</button>
+               )}
+              
+            </div>
+          </div>
+        </div>
+      </div>
     </>
   )
 }

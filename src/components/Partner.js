@@ -1,6 +1,20 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import partNarLogo from "../assets/images/logoprt.png"
 const Partner = () => {
+
+    const partnerLogo = () => {
+        try {
+            
+        } catch (error) {
+            
+        }
+    }
+
+  useEffect(() => {
+    partnerLogo()
+  }, [])
+  
+    
   return (
     <>
         <div className="partner">

@@ -478,3 +478,9 @@ label{
   color: greenyellow;
   text-align: center;
 }
+.forgot label{
+  color: #000;
+}
+.forgotOtp{
+  justify-content: center;
+}

@@ -27,6 +27,8 @@ export const user_buyer_mailVerifi = async (data) => {
 export const user_buyer_resendOtp = async (data) => {
     try {
         const url = c.BUYER + "/send-otp/" + data;
+
+        console.log("url", url);
         const res = await axios.get(url, data);
         return res;
     } catch (e) {
@@ -67,3 +69,61 @@ export const user_seller_resendOtp = async (data) => {
         return e.response;
     }
 };
+
+// ? LOGIN API
+export const user_login_seller = async (data) => {
+    try {
+        const url = c.SELLER + "/login";
+        const res = await axios.post(url, data);
+        return res;
+    } catch (e) {
+        return e.response;
+    }
+};
+
+
+// ? LOGIN API
+export const user_login_buyer = async (data) => {
+    try {
+        const url = c.BUYER + "/login";
+        const res = await axios.post(url, data);
+        return res;
+    } catch (e) {
+        return e.response;
+    }
+};
+
+// ? FORGOT API
+export const forgot_password_buyer = async (data) => {
+    try {
+        const url = c.BUYER + "/forgot-password";
+        const res = await axios.post(url, data);
+        return res;
+    } catch (e) {
+        return e.response;
+    }
+};
+
+// ? FORGOT API
+export const forgot_password_saller = async (data) => {
+    try {
+        const url = c.SELLER + "/forgot-password";
+        const res = await axios.post(url, data);
+        return res;
+    } catch (e) {
+        return e.response;
+    }
+};
+
+
+// ? FORGOT API
+export const reset_password_saller = async (data) => {
+    try {
+        const url = c.SELLER + "/reset-password";
+        const res = await axios.post(url, data);
+        return res;
+    } catch (e) {
+        return e.response;
+    }
+};
+
