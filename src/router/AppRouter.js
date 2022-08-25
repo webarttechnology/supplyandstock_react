@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
@@ -8,13 +8,18 @@ import EditProfile from "../pages/EditProfile";
 import Login from "../pages/Login";
 
 const AppRouter = () => {
+  const [isLogin, setIsLogin] = useState(
+    JSON.parse(localStorage.getItem("isLoginCheck"))
+  );
+  console.log("isLogin",isLogin);
   return (
     <Router>
-      <Header />
+      {isLogin ? (<Header isLogin={isLogin} />):(<Header isLogin={isLogin} />)}
+      
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/user-dashboard" element={<Dashboard />} />
+        <Route path="/login" element={<Login setIsLogin={setIsLogin}  />} />
+        <Route path="/user-dashboard" element={<Dashboard setIsLogin={setIsLogin} />} />
         <Route path="/edit-profile" element={<EditProfile />} />
       </Routes>
       <Footer/>

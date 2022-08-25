@@ -19,7 +19,12 @@ const initialDatalog = {
   password:"",
 }
 
-const Login = () => {
+const initialDatalogPass = {
+  password:"",
+  confirmPassword:""
+}
+
+const Login = ({setIsLogin}) => {
 
 const navigate = useNavigate();
 
@@ -31,8 +36,7 @@ const [OTP, setOTP] = useState("");
 const [loginData, setLoginData] = useState(initialDatalog)
 const [newEmailData, setNewEmailData] = useState("")
 const [isForgot, setIsForgot] = useState(0)
-const [passWordData, setPassWordData] = useState("")
-const [conpassWordData, setConPassWordData] = useState("")
+const [passWordData, setPassWordData] = useState(initialDatalogPass)
 
 
 
@@ -49,6 +53,8 @@ const [selectedLogin, setSelectedLogin] = useState("");
 const [selectedForgot, setSelectedForgot] = useState("");
 const [otpError, setOtpError] = useState("")
 const [newPassError, setNewPassError] = useState("")
+const [newPassErrorCon, setNewPassErrorCon] = useState("")
+
 
 const handalerChnages = (e) => {
     const { name, value } = e.target;  
@@ -186,6 +192,7 @@ const emaitVerifaction = async () =>{
       const response = await API.user_buyer_mailVerifi(reqObj)
       console.log("buyerresponse", response);
       if (response.data.success === 1) {
+        localStorage.setItem("_userType", selected)
         navigate("/user-dashboard")
       }else{
         setOtpError(response.data.msg)
@@ -203,6 +210,7 @@ const emaitVerifaction = async () =>{
       console.log("sellerresponse", response);
       if (response.data.success === 1) {
         navigate("/user-dashboard")
+        localStorage.setItem("_userType", selected)
       }else{
         setOtpError(response.data.msg)
       }
@@ -245,6 +253,9 @@ const loginSubmit = async ()=>{
       const response = await API.user_login_buyer(reqObj)
       console.log("bbbresponse", response);
       if (response.data.success === 1) {
+        localStorage.setItem("isLoginCheck", true);
+        setIsLogin(localStorage.getItem("isLoginCheck"))
+        localStorage.setItem("_userType", selectedLogin)
         localStorage.setItem("__userId", response.data.data.id)
         localStorage.setItem("_tokenCode", response.data.token_code)
         navigate("/user-dashboard")
@@ -274,6 +285,9 @@ const loginSubmit = async ()=>{
       const response = await API.user_login_seller(reqObj)
       console.log("sssresponse",response);
       if (response.data.success === 1) {
+        localStorage.setItem("isLoginCheck", true);
+        setIsLogin(localStorage.getItem("isLoginCheck"))
+        localStorage.setItem("_userType", selectedLogin)
         localStorage.setItem("__userId", response.data.data.id)
         localStorage.setItem("_tokenCode", response.data.token_code)
         navigate("/user-dashboard")
@@ -390,36 +404,77 @@ const newEmailDataSubmitOtp = async () => {
   }
 }
 
+const newPassHandaler = (e) =>{
+  const { name, value } = e.target;  
+  switch (name) {
+      case "password":
+        setNewPassError("");
+        break;
+      case "confirmPassword":
+        setNewPassErrorCon("");
+        break;
+      default:
+    }
+  setPassWordData({ ...passWordData, [name]: value });
+}
+
 const newPasswordSet = async () =>{
-  if (selectedForgot === "Buyer") {
-    if (passWordData.length < 8 ) {
-      setNewPassError("Your password is too short. It needs to be 8+ characters")
-      if (passWordData === conpassWordData) {
-        const reqObj = {
-            emailId: newEmailData,
-            password: passWordData, 
-            otp: OTP
-          }
-          console.log("bbreqObj", reqObj);
-        }
-    }else{
-      setConfirmErrorPasword("Please confirm your password")
+  setLoading(true);
+    let flag = validatePass();
+    if (!flag) {
+      setLoading(false);
+      return;
     }
-  }else{
-    if (passWordData.length < 8 ) {
-      setNewPassError("Your password is too short. It needs to be 8+ characters")
-      if (passWordData === conpassWordData) {
-        const reqObj = {
-            emailId: newEmailData,
-            password: passWordData, 
-            otp: OTP
+    try {
+      const reqObj = {
+        emailId: newEmailData,
+        password: passWordData.password, 
+        otp: OTP
+      }
+      console.log("reqObj",reqObj);
+      if (selectedForgot === "Buyer") {
+        const response = await API.reset_password_buyer(reqObj);
+          console.log("bbbresponse", response);
+          if (response.data.success === 1) {
+            toast(response.data.msg, {
+              position: "top-right",
+              autoClose: 5000,
+              type: "success",
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "colored",
+            });
+            setIsForgot(0)
           }
-          console.log("bbreqObj", reqObj);
-        }
-    }else{
-      setConfirmErrorPasword("Please confirm your password")
+      }else{
+        console.log("seller");
+        const response = await API.reset_password_saller(reqObj);
+          console.log("bbbresponse", response);
+          if (response.data.success === 1) {
+            toast(response.data.msg, {
+              position: "top-right",
+              autoClose: 5000,
+              type: "success",
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "colored",
+            });
+            setIsForgot(0)
+          }
+      }
+    } catch (error) {
+      
     }
-  }
+
+
+
+ 
 }
 
 const disabelBtnlog = !loginData.emailId || !selectedLogin || !loginData.password;
@@ -539,6 +594,55 @@ const validate = () => {
     return flag;
   };
 
+  //VALIDATE-INPUT
+const validatePass = () => {
+  const {password, confirmPassword } =
+    passWordData;
+  let flag = true;
+  
+  // ? password
+  if (password) {
+    if (password.length < 8) {
+      setNewPassError({
+        field: "password",
+        message: "Your password is too short. It needs to be 8+ characters",
+      });
+      flag = false;
+    }
+    if (password.length > 8) {
+      setNewPassError({
+        field: "password",
+        message: "",
+      });
+      flag = true;
+    }
+  } else {
+    setNewPassError({
+      field: "password",
+      message: "Please enter your password.",
+    });
+    flag = false;
+  }
+
+  // ? confirmPassword
+
+  // ? confirmPassword
+  if (password === "" || password !== confirmPassword) {
+    setNewPassErrorCon({
+      field: "confirmPassword",
+      message: "Please confirm your password",
+    });
+    flag = false;
+  } else {
+    setNewPassErrorCon({
+      field: "confirmPassword",
+      message: "",
+    });
+    flag = true;
+  }
+
+  return flag;
+};
   
 
   const disabelBtn = !formData.firstName || !formData.lastName || 
@@ -757,11 +861,15 @@ const validate = () => {
                   </>
                 ):(
                   <>
-                    <input onChange={(e)=> setPassWordData(e.target.value)} type="password" class="form-control mb-3" placeholder="Enter password" />
-                      <p className="formErrorAlrt mb-3">{newPassError}</p>
-                    <input onChange={(e)=> setConPassWordData(e.target.value)} type="password"
+                    <input onChange={newPassHandaler} type="password" name="password" value={passWordData.password} class="form-control mb-3" placeholder="Enter password" />
+                    {newPassError.field === "password" && (
+                      <p className="formErrorAlrt">{newPassError.message}</p>
+                    )}
+                    <input onChange={newPassHandaler} name="confirmPassword" value={passWordData.confirmPassword} type="password"
                      class="form-control" placeholder="Confirm password" />
-                      <p className="formErrorAlrt mb-3">{confirmErrorPasword}</p>
+                     {newPassErrorCon.field === "confirmPassword" && (
+                        <p className="formErrorAlrt">{newPassErrorCon.message}</p>
+                      )}
                   </>
                 )}
                 
@@ -773,7 +881,7 @@ const validate = () => {
               <button type="button" disabled={!selectedForgot ||
                !newEmailData} class="btn btn-primary" onClick={newEmailDataSubmitOtp}> Verify OTP </button>
                ):(
-               <button type="button" disabled={!passWordData || !conpassWordData} class="btn btn-primary" 
+               <button type="button" data-bs-dismiss="modal" disabled={!passWordData.password || !passWordData.confirmPassword} class="btn btn-primary" 
                onClick={newPasswordSet}>Submit</button>
                )}
               

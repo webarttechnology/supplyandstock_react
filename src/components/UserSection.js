@@ -10,7 +10,7 @@ const UserSection = () => {
                     <div className="col-md-6">
                         <div className="usertypeBox">
                             <span>
-                                <Link to="/">Buyer <i class="bi bi-arrow-right"></i></Link>
+                                <Link to="/login">Buyer <i class="bi bi-arrow-right"></i></Link>
                             </span>
                         </div>
                     </div>
@@ -19,8 +19,8 @@ const UserSection = () => {
                             <span>
                                 <Link to="/">Seller </Link>
                                 <div className="userBtn">
-                                    <Link to="/">Login </Link>
-                                    <Link to="/">SignUp </Link>
+                                    <Link to="/login">Login </Link>
+                                    <Link to="/login">SignUp </Link>
                                 </div>
                             </span>
                         </div>

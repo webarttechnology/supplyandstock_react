@@ -1,9 +1,21 @@
 import React from 'react'
-import SideBar from '../components/SideBar'
 import EditProfile from './EditProfile'
 import Manufactures from './Manufactures'
+import { useNavigate } from "react-router";
+const Dashboard = ({setIsLogin}) => {
+    const navigate = useNavigate();
+    const logOutBtn = () => {
+        localStorage.removeItem("__userId")
+        localStorage.removeItem("_tokenCode")
+        localStorage.removeItem("_userType")
+        localStorage.removeItem("isLoginCheck")
+        setIsLogin(localStorage.removeItem("isLoginCheck"));
+        if (localStorage.getItem("__userId") === null) {
+            navigate("/login")
+        }
+       
+    }
 
-const Dashboard = () => {
   return (
     <>
         <div className="userDashboard">
@@ -18,9 +30,7 @@ const Dashboard = () => {
                                         <button class="nav-link" id="v-pills-profile-tab" data-bs-toggle="pill" data-bs-target="#v-pills-profile" type="button" role="tab" aria-controls="v-pills-profile" aria-selected="false"><span><i class="bi bi-pencil-square"></i></span> Edit Profile</button>
                                         <button class="nav-link" id="v-pills-messages-tab" data-bs-toggle="pill" data-bs-target="#v-pills-messages" type="button" role="tab" aria-controls="v-pills-messages" aria-selected="false"><span><i class="bi bi-box-seam-fill"></i></span> Manufactures </button>
                                         <button class="nav-link" id="v-pills-settings-tab" data-bs-toggle="pill" data-bs-target="#v-pills-settings" type="button" role="tab" aria-controls="v-pills-settings" aria-selected="false"><span> <i class="bi bi-key-fill"></i> </span>  Change password </button>
-                                        <button class="nav-link logout" id="v-pills-settings-tab"
-                                         data-bs-toggle="pill" data-bs-target="#v-pills-settings" type="button"
-                                          role="tab" aria-controls="v-pills-settings" aria-selected="false"><span> <i class="bi bi-box-arrow-left"></i> </span>  Logout </button>
+                                        <button class="nav-link logout" onClick={logOutBtn}><span> <i class="bi bi-box-arrow-left"></i> </span>  Logout </button>
                                     </div>
                                     <div class="tab-content" id="v-pills-tabContent">
                                         <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">user dashboard</div>

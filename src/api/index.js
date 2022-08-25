@@ -127,6 +127,18 @@ export const reset_password_saller = async (data) => {
     }
 };
 
+export const reset_password_buyer = async (data) => {
+    console.log("data", data);
+    try {
+        const url = c.BUYER + "/reset-password";
+        const res = await axios.post(url, data);
+        console.log("res",res);
+        return res;
+    } catch (e) {
+        return e.response;
+    }
+};
+
 
 // ? menufactursGet
 export const menufactursGet = async (data) => {
@@ -142,7 +154,6 @@ export const menufactursGet = async (data) => {
 
 // ? choose_manufacturer_saller
 export const choose_manufacturer_saller = async (data) => {
-    console.log("data",data);
     try {
         const url = c.SELLER + "/choose-manufacturer";
         const res = await axios.patch(url, data);

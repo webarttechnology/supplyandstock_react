@@ -4,9 +4,8 @@ import * as API from "../api/index";
 const Manufactures = () => {
     const [menufacData, setMenufacData] = useState([])
     const [checked, setChecked] = useState("");
-    console.log("checked" , checked);
 
-
+    //  ? choose handaler
     const coosheHandaler = async (itemId) => {
         setChecked(!checked)
         try {

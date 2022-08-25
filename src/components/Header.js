@@ -1,7 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import logo from "../assets/images/logo.png";
-const Header = () => {
+const Header = ({isLogin}) => {
+  console.log("isLoginHeadr", isLogin);
   return (
     <>
       <div className="header">
@@ -42,11 +43,12 @@ const Header = () => {
             <div className="col-md-3 text-end">
               <div className="rightMenu">
                 <ul>
-                  <li>
-                    <Link to="/">
+                  {isLogin ? (<li>
+                    <Link to="/user-dashboard">
                       <i class="bi bi-person-circle"></i>
                     </Link>
-                  </li>
+                  </li>):("")}
+                  
                   <li>
                     <Link to="/" className="countSec">
                       <i class="bi bi-heart-fill "></i>
