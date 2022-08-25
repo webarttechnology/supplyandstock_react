@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import { toast, ToastContainer } from "react-toastify";
 import * as API from "../api/index";
 import OTPInput from "otp-input-react";
+import { useNavigate } from "react-router";
 import { cuntryData } from '../helpers/commonData';
 const initialData = {
     firstName:"",
@@ -19,6 +20,9 @@ const initialDatalog = {
 }
 
 const Login = () => {
+
+const navigate = useNavigate();
+
 const [formData, setFormData] = useState(initialData)
 const [loading, setLoading] = useState(false);
 const [dialCode, setDialCode] = useState("");
@@ -26,7 +30,7 @@ const [isEmail, setIsEmail] = useState(0)
 const [OTP, setOTP] = useState("");
 const [loginData, setLoginData] = useState(initialDatalog)
 const [newEmailData, setNewEmailData] = useState("")
-const [isForgot, setIsForgot] = useState(2)
+const [isForgot, setIsForgot] = useState(0)
 const [passWordData, setPassWordData] = useState("")
 const [conpassWordData, setConPassWordData] = useState("")
 
@@ -182,7 +186,7 @@ const emaitVerifaction = async () =>{
       const response = await API.user_buyer_mailVerifi(reqObj)
       console.log("buyerresponse", response);
       if (response.data.success === 1) {
-        // setOtpError()
+        navigate("/user-dashboard")
       }else{
         setOtpError(response.data.msg)
       }
@@ -197,6 +201,11 @@ const emaitVerifaction = async () =>{
       }
       const response = await API.user_seller_mailVerifi(reqObj)
       console.log("sellerresponse", response);
+      if (response.data.success === 1) {
+        navigate("/user-dashboard")
+      }else{
+        setOtpError(response.data.msg)
+      }
     } catch (error) {
       
     }
@@ -236,7 +245,9 @@ const loginSubmit = async ()=>{
       const response = await API.user_login_buyer(reqObj)
       console.log("bbbresponse", response);
       if (response.data.success === 1) {
+        localStorage.setItem("__userId", response.data.data.id)
         localStorage.setItem("_tokenCode", response.data.token_code)
+        navigate("/user-dashboard")
       }else{
         toast(response.data.msg, {
           position: "top-right",
@@ -263,7 +274,9 @@ const loginSubmit = async ()=>{
       const response = await API.user_login_seller(reqObj)
       console.log("sssresponse",response);
       if (response.data.success === 1) {
+        localStorage.setItem("__userId", response.data.data.id)
         localStorage.setItem("_tokenCode", response.data.token_code)
+        navigate("/user-dashboard")
       }else{
         toast(response.data.msg, {
           position: "top-right",
@@ -354,6 +367,9 @@ const newEmailDataSubmitOtp = async () => {
       console.log("bbbresponse", response);
       if (response.data.success === 1) {
         setIsForgot(2)
+        setOtpError("")
+      }else{
+        setOtpError(response.data.msg)
       }
     }else{
       const reqObj = {
@@ -363,6 +379,8 @@ const newEmailDataSubmitOtp = async () => {
       const response = await API.user_seller_mailVerifi(reqObj)
       if (response.data.success === 1) {
         setIsForgot(2)
+      }else{
+        setOtpError(response.data.msg)
       }
       console.log("ssbresponse", response);
     }
@@ -724,7 +742,7 @@ const validate = () => {
                   <input onChange={(e)=> setNewEmailData(e.target.value)} type="email" class="form-control" placeholder="Enter email id" />
                 ): isForgot === 1 ? (
                   <>
-                      <p className="formErrorAlrt">{otpError}</p>
+                      <p className="formErrorAlrt mb-3">{otpError}</p>
                       <div className="otpInput">
                         <OTPInput
                           value={OTP}

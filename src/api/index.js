@@ -127,3 +127,38 @@ export const reset_password_saller = async (data) => {
     }
 };
 
+
+// ? menufactursGet
+export const menufactursGet = async (data) => {
+    try {
+        const url = c.MENUFACTURS;
+        const res = await axios.get(url, data);
+        return res;
+    } catch (e) {
+        return e.response;
+    }
+};
+
+
+// ? choose_manufacturer_saller
+export const choose_manufacturer_saller = async (data) => {
+    console.log("data",data);
+    try {
+        const url = c.SELLER + "/choose-manufacturer";
+        const res = await axios.patch(url, data);
+        return res;
+    } catch (e) {
+        return e.response;
+    }
+};
+
+// ? remove_manufacturer_saller
+export const remove_manufacturer_saller = async (data) => {
+    try {
+        const url = c.SELLER + "/remove-manufacturer";
+        const res = await axios.patch(url, data);
+        return res;
+    } catch (e) {
+        return e.response;
+    }
+};
