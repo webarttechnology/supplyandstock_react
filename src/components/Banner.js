@@ -17,6 +17,32 @@ const Banner = () => {
                         </div>
                     </div>
                 </div>
+                <div className="userSection">
+                <div className="row">
+                    <div className="col-md-6">
+                        <div className="usertypeBox">
+                            <span>
+                                <Link to="/buyer/login">Buyer <i class="bi bi-arrow-right"></i></Link>
+                                <div className="userBtn">
+                                    <Link to="/buyer/login">Login </Link>
+                                    <Link to="/buyer/login">SignUp </Link>
+                                </div>
+                            </span>
+                        </div>
+                    </div>
+                    <div className="col-md-6">
+                        <div className="usertypeBox">
+                            <span>
+                                <Link to="/seller/login">Seller </Link>
+                                <div className="userBtn">
+                                    <Link to="/seller/login">Login </Link>
+                                    <Link to="/seller/login">SignUp </Link>
+                                </div>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                </div>
                 {/* <div className="bannerSec">
                     <div className="row">
                         <div className="col-md-6">

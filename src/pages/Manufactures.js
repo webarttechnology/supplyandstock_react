@@ -51,7 +51,7 @@ const Manufactures = () => {
                     <div className="col-md-4 text-center" key={index}>
                         <div className="menuimgBox">
                             <img src={IMG + item.image} alt="" />
-                            <div className="align-items-center d-flex justify-content-around">
+                            <div className="align-items-center d-flex justify-content-evenly">
                                 <h4 className="menufecHeading">{item.name}</h4>
                                 <input class="form-check-input" 
                                     type="checkbox" value="" 

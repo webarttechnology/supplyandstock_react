@@ -48,12 +48,15 @@ const [errorLastName, setErrorLastName] = useState("");
 const [errorPassword, setErrorPassword] = useState("");
 const [confirmErrorPasword, setConfirmErrorPasword] = useState("");
 const [mobileError, setMobileError] = useState("")
-const [selected, setSelected] = useState("");
-const [selectedLogin, setSelectedLogin] = useState("");
-const [selectedForgot, setSelectedForgot] = useState("");
+const [selected, setSelected] = useState("Buyer");
+const [selectedLogin, setSelectedLogin] = useState("Buyer");
+const [selectedForgot, setSelectedForgot] = useState("Buyer");
 const [otpError, setOtpError] = useState("")
 const [newPassError, setNewPassError] = useState("")
 const [newPassErrorCon, setNewPassErrorCon] = useState("")
+
+
+console.log("errorName",errorName);
 
 
 const handalerChnages = (e) => {
@@ -70,14 +73,14 @@ const handalerChnages = (e) => {
         case "lastName":
           setErrorLastName("");
           break;
+        case "mobileNo":
+          setMobileError("");
+          break;
         case "password":
           setErrorPassword("");
           break;
         case "confirmPassword":
           setConfirmErrorPasword("");
-          break;
-        case "mobileNo":
-          setMobileError("");
           break;
         default:
       }
@@ -119,34 +122,6 @@ const submitHandaler = async () => {
       return;
     }
     if (selected === "Buyer") {
-        if (formData.mobileNo.length === 10) {
-            try {
-              const reqObj = {
-                  firstName: formData.firstName,
-                  lastName: formData.lastName,
-                  emailId: formData.email,
-                  mobileNo: dialCode + formData.mobileNo,
-                  password: formData.password,  
-              }
-              console.log("bbbreqObj", reqObj);
-              const response = await API.user_registration_buyer(reqObj)
-              console.log("response", response);
-              if (response.data.success === 1) {
-                setLoading(false)
-                setIsEmail(1)
-                localStorage.setItem("__userId", response.data.data._id)
-              }else{
-                setErrorMsg(response.data.msg)
-                setLoading(false)
-              }
-          } catch (error) {
-              
-          }
-        }else{
-          setMobileError("Please enter valid mobile number")
-        }
-    }else{
-        if (formData.mobileNo.length === 10) {
           try {
             const reqObj = {
                 firstName: formData.firstName,
@@ -155,10 +130,10 @@ const submitHandaler = async () => {
                 mobileNo: dialCode + formData.mobileNo,
                 password: formData.password,  
             }
-            console.log("sssreqObj", reqObj);
-            const response = await API.user_registration_seller(reqObj)
-            console.log("sssreqObj", response);
-            if (response.data.success ===1) {
+            console.log("bbbreqObj", reqObj);
+            const response = await API.user_registration_buyer(reqObj)
+            console.log("response", response);
+            if (response.data.success === 1) {
               setLoading(false)
               setIsEmail(1)
               localStorage.setItem("__userId", response.data.data._id)
@@ -166,12 +141,32 @@ const submitHandaler = async () => {
               setErrorMsg(response.data.msg)
               setLoading(false)
             }
-            
         } catch (error) {
             
         }
-      }else{
-        setMobileError("Please enter valid mobile number")
+    }else{
+      try {
+        const reqObj = {
+            firstName: formData.firstName,
+            lastName: formData.lastName,
+            emailId: formData.email,
+            mobileNo: dialCode + formData.mobileNo,
+            password: formData.password,  
+          }
+          console.log("sssreqObj", reqObj);
+          const response = await API.user_registration_seller(reqObj)
+          console.log("sssreqObj", response);
+          if (response.data.success ===1) {
+            setLoading(false)
+            setIsEmail(1)
+            localStorage.setItem("__userId", response.data.data._id)
+          }else{
+            setErrorMsg(response.data.msg)
+            setLoading(false)
+          }
+          
+      } catch (error) {
+          
       }
     }
 
@@ -481,7 +476,7 @@ const disabelBtnlog = !loginData.emailId || !selectedLogin || !loginData.passwor
 
 //VALIDATE-INPUT
 const validate = () => {
-    const { email, password, firstName, lastName, confirmPassword } =
+    const { email, password, firstName, lastName, confirmPassword, mobileNo } =
       formData;
     let flag = true;
 
@@ -549,6 +544,32 @@ const validate = () => {
       });
       flag = false;
     }
+
+    // ? mobile number
+
+    if (mobileNo) {
+      if (mobileNo.length < 10) {
+        setMobileError({
+          field: "mobileNo",
+          message: "Please enter valid mobile number",
+        });
+        flag = false;
+      }
+      if (mobileNo.length > 10) {
+        setMobileError({
+          field: "mobileNo",
+          message: "",
+        });
+        flag = true;
+      }
+    } else {
+      setMobileError({
+        field: "mobileNo",
+        message: "Please enter your mobile number.",
+      });
+      flag = false;
+    }
+
 
     // ? password
     if (password) {
@@ -661,47 +682,29 @@ const validatePass = () => {
                       <div class="signup">
                           <label for="chk" aria-hidden="true">Sign up</label>
                           <p className="formErrorAlrt">{errorMsg}</p>
-                          <div className="userType">
-                            <input
-                                type="radio"
-                                id="Buyer"
-                                name="choose"
-                                value="Buyer"
-                                checked={selected === 'Buyer'}
-                                onChange={handleChange}
-                                className="redioBtn"
-                              />
-                              <label htmlFor="Buyer">Buyer</label>
-
-                              <input
-                                type="radio"
-                                id="Seller"
-                                name="choose"
-                                value="Seller"
-                                onChange={handleChange}
-                                checked={selected === 'Seller'}
-                                className="redioBtn"
-                              />
-                              <label htmlFor="Seller">Seller</label>
-                          </div>
                           <input 
                               onChange={handalerChnages} 
                               value={formData.firstName} 
                               type="text" name="firstName" 
                               placeholder="First Name" 
-                              required="" 
+                              className={errorName ? "mb-0" :"" }
                           />
                           {errorName.field === "firstName" && (
                               <p className="formErrorAlrt">{errorName.message}</p>
                           )}
-                          <input onChange={handalerChnages} value={formData.lastName} type="text" name="lastName" placeholder="Last Name" required="" />
-                          <input onChange={handalerChnages} value={formData.email} type="email" className={errorEmail ? "mb-2" :"" } name="email" placeholder="Email" required="" />
+                          <input className={errorLastName ? "mb-0" :"" } onChange={handalerChnages} value={formData.lastName}
+                           type="text" name="lastName" placeholder="Last Name" required="" />
+                          {errorLastName.field === "lastName" && (
+                              <p className="formErrorAlrt">{errorLastName.message}</p>
+                          )}
+
+                          <input onChange={handalerChnages} value={formData.email} type="email" className={errorEmail ? "mb-0" :"" } name="email" placeholder="Email" required="" />
                           {errorEmail.field === "email" && (
                             <p className="formErrorAlrt">{errorEmail.message}</p>
                           )}
 
-                          <div className="mobileNumber">
-                              <select className="mobileCode" onChange={handleCountrySelect}>
+                          <div className="mobileNumber mt-2">
+                              <select className="mobileCode " onChange={handleCountrySelect}>
                                   {cuntryData.map((item, index) => (
                                     <>
                                         <option>choose</option>
@@ -720,9 +723,14 @@ const validatePass = () => {
                                 max={10}
                                 type="number" name="mobileNo" placeholder="Phone number" />
                           </div>
-                          {mobileError?(<p className="formErrorAlrt">{mobileError}</p>):("")}
+                            {mobileError.field === "mobileNo" && (
+                              <p className="formErrorAlrt">{mobileError.message}</p>
+                            )}
+                          {/* {mobileError?(<p className="formErrorAlrt">{mobileError}</p>):("")} */}
                           
-                          <input 
+                          <input
+                            autoFocus={true}
+                            autoComplete="off"
                             onChange={handalerChnages} value={formData.password}
                             className={errorPassword ? "mb-0" :"" } 
                             type="password" name="password" 
@@ -739,14 +747,14 @@ const validatePass = () => {
                             <p className="formErrorAlrt">{confirmErrorPasword.message}</p>
                           )}
 
-                          <button  className={disabelBtn ? "customBtn disableBtn" : "customBtn"}  onClick={submitHandaler} disabled={disabelBtn}>
+                          <button  className="customBtn"  onClick={submitHandaler}>
                               {loading === false ? "Sign up" : "loader..."}    
                           </button>
                       </div>
                       <div class="login">
                           <label for="chk" aria-hidden="true">Login</label>
                           <p className="formErrorAlrt">{errorMsg}</p>
-                          <div className="userType">
+                          {/* <div className="userType">
                             <input
                                 type="radio"
                                 id="Buyer"
@@ -768,19 +776,21 @@ const validatePass = () => {
                                 className="redioBtn"
                               />
                               <label htmlFor="Seller">Seller</label>
-                          </div>
-                          <input onChange={loginHandaler} 
-                            value={loginData.emailId}
-                            type="email" name="emailId"
-                            placeholder="Email" required=""/>
+                          </div> */}
+                         <div className="loginCont">
+                            <input onChange={loginHandaler} 
+                                value={loginData.emailId}
+                                type="email" name="emailId"
+                                placeholder="Email" required=""/>
+                                
+                              <input onChange={loginHandaler} 
+                                value={loginData.password} 
+                                type="password" name="password" 
+                                placeholder="Password" required=""/>
+                              <button className={disabelBtnlog ? "customBtn disableBtn" : "customBtn"} disabled={disabelBtnlog} onClick={loginSubmit}>Login</button>
                             
-                          <input onChange={loginHandaler} 
-                            value={loginData.password} 
-                            type="password" name="password" 
-                            placeholder="Password" required=""/>
-                          <button className={disabelBtnlog ? "customBtn disableBtn" : "customBtn"} disabled={disabelBtnlog} onClick={loginSubmit}>Login</button>
-                         
-                          <Link className="forgotPass" to="/" data-bs-toggle="modal" data-bs-target="#exampleModal">Forgot Password ?</Link>
+                              <Link className="forgotPass" to="/" data-bs-toggle="modal" data-bs-target="#exampleModal">Forgot Password ?</Link>
+                         </div>
                       </div>
                   </>
                 ):(

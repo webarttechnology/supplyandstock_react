@@ -12,8 +12,7 @@ const Home = () => {
       <UserSection/>
       <Partner/>
       <OurStory />
-      <GetTouch/>
-      
+      {/* <GetTouch/> */}
     </>
   );
 };

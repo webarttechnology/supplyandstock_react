@@ -1,20 +1,24 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import partNarLogo from "../assets/images/logoprt.png"
+import { IMG } from '../api/constant';
+import * as API from "../api/index";
 const Partner = () => {
-
-    const partnerLogo = () => {
+    const [menufacData, setMenufacData] = useState([])
+    // ? MenufactursList
+    const MenufactursGet = async () =>{
         try {
-            
+            const response = await API.menufactursGet();
+            console.log("response", response);
+            setMenufacData(response.data.data)
         } catch (error) {
             
         }
     }
 
-  useEffect(() => {
-    partnerLogo()
-  }, [])
-  
-    
+    useEffect(() => {
+        MenufactursGet()
+    }, [])
+
   return (
     <>
         <div className="partner">
@@ -23,9 +27,18 @@ const Partner = () => {
                     <div className="col-md-12">
                         <h1 className="partnerHeading">Manufactures We Have</h1>
                     </div>
-                    <div className="col-md-12 text-center">
-                        <img src={partNarLogo} alt="" />
-                    </div>
+                </div>
+                <div className="row mt-5">
+                    {menufacData.map((item , index)=>(
+                        <div className="col-md-3 text-center" key={index}>
+                            <div className="menuimgBox">
+                                <img src={IMG + item.image} alt="" />
+                                <div className="align-items-center d-flex justify-content-evenly">
+                                    <h4 className="menufecHeading">{item.name}</h4>
+                                </div>
+                            </div>
+                        </div>
+                    ))}
                 </div>
             </div>
         </div>
