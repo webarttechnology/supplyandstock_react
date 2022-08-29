@@ -2,7 +2,9 @@ import React, { useEffect, useState } from 'react'
 import { IMG } from '../api/constant';
 import * as API from "../api/index";
 import { Vortex } from 'react-loader-spinner'
-const Manufactures = () => {
+import { useNavigate } from 'react-router';
+const Manufactures = ({setIsLogin}) => {
+    const navigate = useNavigate();
     const [menufacData, setMenufacData] = useState([])
     const [checked, setChecked] = useState("");
     const [menuFacId, setMenuFacId] = useState([])
@@ -11,11 +13,10 @@ const Manufactures = () => {
     const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
     //  ? choose handaler
     const coosheHandaler = async (itemId) => {
-       
         setChecked(!checked)
         setMenuId(itemId)
         setLoader(true)
-        
+        const header = localStorage.getItem("_tokenCode");
         try {
             const reqObj = {
                 id:localStorage.getItem("__userId"),
@@ -23,21 +24,34 @@ const Manufactures = () => {
             }
             console.log("reqObj",reqObj);
             if (!checked) {
-                const response = await API.choose_manufacturer_saller(reqObj)
+                const response = await API.choose_manufacturer_saller(reqObj, header)
                 console.log("Choosresponse", response);
-                if (response.data.success) {
+                if (response.data.success === 1) {
                     MenufactursGet()
                     await delay(3000);
                     setLoader(false)
+                }else{
+                    localStorage.removeItem("__userId")
+                    localStorage.removeItem("_tokenCode")
+                    localStorage.removeItem("_userType")
+                    localStorage.removeItem("isLoginCheck")
+                    setIsLogin(localStorage.removeItem("isLoginCheck"));
+                    navigate("/" , {state: response.data.message})
                 }
             }else{
-                const response = await API.remove_manufacturer_saller(reqObj)
+                const response = await API.remove_manufacturer_saller(reqObj, header)
                 console.log("remresponse", response);
-                if (response.data.success) {
+                if (response.data.success === 1) {
                     MenufactursGet()
                     await delay(3000);
                     setLoader(false)
-                    
+                }else{
+                    localStorage.removeItem("__userId")
+                    localStorage.removeItem("_tokenCode")
+                    localStorage.removeItem("_userType")
+                    localStorage.removeItem("isLoginCheck")
+                    setIsLogin(localStorage.removeItem("isLoginCheck"));
+                    navigate("/" , {state: response.data.message})
                 }
             }
            
@@ -48,16 +62,16 @@ const Manufactures = () => {
 
     // ? MenufactursList
     const MenufactursGet = async () =>{
+        const header = localStorage.getItem("_tokenCode");
         try {
-            const response = await API.menufactursGet();
+            const response = await API.menufactursGet(header);
             setMenufacData(response.data.data)
             console.log("response", response);
-            const sellerResponse = await API.manufacturer_saller(localStorage.getItem("__userId"))
+            const sellerResponse = await API.manufacturer_saller(localStorage.getItem("__userId"), header)
             console.log("sellerResponse", sellerResponse);
             setMenuFacId(sellerResponse.data.data)
             await delay(3000);
             setLoader(false)
-            
             
         } catch (error) {
             

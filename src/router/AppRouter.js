@@ -7,6 +7,7 @@ import Dashboard from "../pages/Dashboard";
 import EditProfile from "../pages/EditProfile";
 import Login from "../pages/Login";
 import Logins from "../components/Logins"
+import { ToastContainer } from "react-toastify";
 
 const AppRouter = () => {
   const [isLogin, setIsLogin] = useState(
@@ -16,7 +17,7 @@ const AppRouter = () => {
   return (
     <Router>
       {isLogin ? (<Header isLogin={isLogin} />):(<Header isLogin={isLogin} />)}
-      
+      <ToastContainer />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/seller/login" element={<Login setIsLogin={setIsLogin}  />} />

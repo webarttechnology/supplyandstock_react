@@ -256,6 +256,10 @@ const loginSubmit = async ()=>{
         localStorage.setItem("_userType", selectedLogin)
         localStorage.setItem("__userId", response.data.data.id)
         localStorage.setItem("_tokenCode", response.data.token_code)
+        const headerObj = {
+          Authorization: `Bearer ${response.data.token_code}`,
+        };
+        localStorage.setItem("_tokenCode", JSON.stringify(headerObj))
         navigate("/user-dashboard")
       }else{
         toast(response.data.msg, {
@@ -287,7 +291,10 @@ const loginSubmit = async ()=>{
         setIsLogin(localStorage.getItem("isLoginCheck"))
         localStorage.setItem("_userType", selectedLogin)
         localStorage.setItem("__userId", response.data.data.id)
-        localStorage.setItem("_tokenCode", response.data.token_code)
+        const headerObj = {
+          Authorization: `Bearer ${response.data.token_code}`,
+        };
+        localStorage.setItem("_tokenCode", JSON.stringify(headerObj))
         navigate("/user-dashboard")
       }else{
         toast(response.data.msg, {
