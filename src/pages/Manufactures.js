@@ -11,6 +11,8 @@ const Manufactures = ({setIsLogin}) => {
     const [loader, setLoader] = useState(false)
     const [menuId, setMenuId] = useState('')
     const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+  
     //  ? choose handaler
     const coosheHandaler = async (itemId) => {
         setChecked(!checked)
@@ -87,7 +89,7 @@ const Manufactures = ({setIsLogin}) => {
         <div className="manufactures">
             <h4 className="menuHading">Manufactures</h4>
             <div className="row">
-                {menufacData.map((item, index)=>(
+                {menufacData === null ? "" : menufacData.map((item, index)=>(
                     <div className="col-md-4 text-center" key={index}>
                         <div className="menuimgBox">
                             <img src={IMG + item.image} alt="" />
