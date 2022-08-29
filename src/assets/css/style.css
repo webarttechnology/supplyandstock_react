@@ -15,7 +15,7 @@ li{
   list-style: none; 
 }
 .header {
-  background-color: #000;
+  background-color: #424b54;
   padding: 15px 0;
   border-bottom: 1px solid var(--them_primaryColor);
 }
@@ -36,7 +36,7 @@ li{
   border-bottom: 1px solid var(--them_primaryColor);
 }
 .headermain {
-  background-color: #000;
+  background:rgb(155, 106, 108, 86%);
   padding-bottom: 12px;
 }
 .headerMenu ul li {
@@ -253,6 +253,10 @@ li{
 .footer{
   background-color: #424B54;
   padding: 100px 0px 20px;
+}
+.footer img{
+  width: 100%;
+  object-fit: contain;
 }
 
 .fotterMenu ul li{
@@ -526,7 +530,7 @@ label{
 }
 .userDashboard{
   padding: 100px 0px;
-  background: #ffd89d;
+  background: #637c96;
 }
 .userSideBar{
   border-right: 1px solid #ccc;
@@ -658,6 +662,6 @@ label{
   text-align: center !important;
 }
 .userBadsg{
-  background-color: #0e778b;
+  background-color: #424b54;
   padding: 50px 0;
 }

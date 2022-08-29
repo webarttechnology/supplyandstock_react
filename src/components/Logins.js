@@ -24,10 +24,10 @@ const initialDatalogPass = {
   confirmPassword:""
 }
 
-const Login = ({setIsLogin}) => {
+const Logins = ({setIsLogin}) => {
 
-
-  // ???? SELLERS LOGIN AND SIGNUP PAGE
+  
+  // ???? BUYERS LOGIN AND SIGNUP PAGE
 
 const navigate = useNavigate();
 
@@ -51,9 +51,9 @@ const [errorLastName, setErrorLastName] = useState("");
 const [errorPassword, setErrorPassword] = useState("");
 const [confirmErrorPasword, setConfirmErrorPasword] = useState("");
 const [mobileError, setMobileError] = useState("")
-const [selected, setSelected] = useState("Seller");
-const [selectedLogin, setSelectedLogin] = useState("Seller");
-const [selectedForgot, setSelectedForgot] = useState("Seller");
+const [selected, setSelected] = useState("Buyer");
+const [selectedLogin, setSelectedLogin] = useState("Buyer");
+const [selectedForgot, setSelectedForgot] = useState("Buyer");
 const [otpError, setOtpError] = useState("")
 const [newPassError, setNewPassError] = useState("")
 const [newPassErrorCon, setNewPassErrorCon] = useState("")
@@ -906,4 +906,4 @@ const validatePass = () => {
   )
 }
 
-export default Login
+export default Logins

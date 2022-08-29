@@ -11,7 +11,7 @@ const Dashboard = ({setIsLogin}) => {
         localStorage.removeItem("isLoginCheck")
         setIsLogin(localStorage.removeItem("isLoginCheck"));
         if (localStorage.getItem("__userId") === null) {
-            navigate("/login")
+            navigate("/")
         }
        
     }

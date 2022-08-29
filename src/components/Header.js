@@ -14,7 +14,7 @@ const Header = ({isLogin}) => {
               </div>
             </div>
             <div className="col-md-2 text-end">
-              <Link to="/login" className="loginBtn">login</Link>
+              <Link to="/buyer/login" className="loginBtn">login</Link>
             </div>
           </div>
         </div>

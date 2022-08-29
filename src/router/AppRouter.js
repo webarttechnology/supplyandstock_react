@@ -6,6 +6,7 @@ import Home from "../components/Home";
 import Dashboard from "../pages/Dashboard";
 import EditProfile from "../pages/EditProfile";
 import Login from "../pages/Login";
+import Logins from "../components/Logins"
 
 const AppRouter = () => {
   const [isLogin, setIsLogin] = useState(
@@ -18,7 +19,8 @@ const AppRouter = () => {
       
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login setIsLogin={setIsLogin}  />} />
+        <Route path="/seller/login" element={<Login setIsLogin={setIsLogin}  />} />
+        <Route path="/buyer/login" element={<Logins setIsLogin={setIsLogin}  />} />
         <Route path="/user-dashboard" element={<Dashboard setIsLogin={setIsLogin} />} />
         <Route path="/edit-profile" element={<EditProfile />} />
       </Routes>

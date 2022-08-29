@@ -1,13 +1,15 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-
+import fiest from "../assets/images/sas.png"
+import secnd from "../assets/images/sadsadasd.png"
+import thard from "../assets/images/assasa.png"
 const Footer = () => {
   return (
     <>
         <div className="footer">
             <div className="container">
                 <div className="row">
-                    <div className="col-md-8 ps-0">
+                    <div className="col-md-6 ps-0">
                         <div className="fotterMenu">
                             <ul className="ps-0">
                                 <li>
@@ -22,8 +24,17 @@ const Footer = () => {
                             </ul>
                         </div>
                     </div>
-                    <div className="col-md-4">
+                    <div className="col-md-3">
                         <input type="text" className="fooetrInput" placeholder="Give an email, get the newsletter" />
+                    </div>
+                    <div className="col-md-1 text-center">
+                        <img src={secnd} alt="" />
+                    </div>
+                    <div className="col-md-1 text-center">
+                        <img src={fiest} alt="" />
+                    </div>
+                    <div className="col-md-1 text-center">
+                        <img src={thard} alt="" />
                     </div>
                 </div>
                 <div className="row mt-5">

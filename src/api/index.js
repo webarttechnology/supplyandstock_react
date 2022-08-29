@@ -128,7 +128,6 @@ export const reset_password_saller = async (data) => {
 };
 
 export const reset_password_buyer = async (data) => {
-    console.log("data", data);
     try {
         const url = c.BUYER + "/reset-password";
         const res = await axios.post(url, data);
@@ -144,6 +143,17 @@ export const reset_password_buyer = async (data) => {
 export const menufactursGet = async (data) => {
     try {
         const url = c.MENUFACTURS;
+        const res = await axios.get(url, data);
+        return res;
+    } catch (e) {
+        return e.response;
+    }
+};
+
+// ? manufacturer_saller)by id
+export const manufacturer_saller = async (data) => {
+    try {
+        const url = c.SELLER + "/" + data;
         const res = await axios.get(url, data);
         return res;
     } catch (e) {
