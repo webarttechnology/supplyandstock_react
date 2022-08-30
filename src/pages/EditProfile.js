@@ -13,6 +13,7 @@ const initialData = {
 const EditProfile = () => {
   const [formData, setFormData] = useState(initialData)
   const [dialCode, setDialCode] = useState("");
+  const mobile = formData.mobileNo
 
   const handleCountrySelect = (e) => {
     setDialCode(e.target.value);
@@ -142,8 +143,7 @@ const upDateSubmitBtn = async () => {
                   </select>
                 <input className="mobileNumberF" onChange={handalerChnages} 
                   value={formData.mobileNo} 
-                  max={10}
-                  type="number" name="mobileNo" placeholder="Phone number" />
+                  type="number" name="mobileNo" placeholder={mobile} />
             </div>
           </div>
       </div>

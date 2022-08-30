@@ -43,6 +43,7 @@ const upDateSubmitBtn = async () => {
             const response = await API.changesPassword_seller(reqObj, header)
             console.log("Sssresponse", response);
             if (response.data.success === 1) {
+                
                 toast(response.data.msg, {
                     position: "top-right",
                     autoClose: 5000,
@@ -143,7 +144,7 @@ const validatePass = () => {
               <input onChange={newPassHandaler} name="confirmPassword" value={passWordData.confirmPassword} type="password"
                 class="form-control" placeholder="Confirm password" />
                 {newPassErrorCon.field === "confirmPassword" && (
-                    <p className="formErrorAlrt">{newPassErrorCon.message}</p>
+                    <p className="formErrorAlrt mt-3">{newPassErrorCon.message}</p>
                 )}
           </div>
         </div>
