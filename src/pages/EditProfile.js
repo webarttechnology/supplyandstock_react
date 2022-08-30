@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router';
 import { toast } from 'react-toastify';
 import * as API from "../api/index";
 import { cuntryData } from '../helpers/commonData';
@@ -10,10 +11,16 @@ const initialData = {
 }
 
 
-const EditProfile = () => {
+const EditProfile = ({setIsLogin}) => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState(initialData)
   const [dialCode, setDialCode] = useState("");
-  const mobile = formData.mobileNo
+  const [mobileData, setMobileData] = useState("")
+  const mobileNum = formData.mobileNo
+  console.log("mobileData",mobileData);
+
+  const dailCode = mobileNum.slice(0, 3)
+  console.log("dailCode", dailCode);
 
   const handleCountrySelect = (e) => {
     setDialCode(e.target.value);
@@ -33,7 +40,7 @@ const upDateSubmitBtn = async () => {
       firstName: formData.firstName,
       lastName: formData.lastName,
       emailId: formData.emailId,
-      mobileNo: dialCode + formData.mobileNo,
+      mobileNo: dailCode + mobileData,
     }
     console.log("reqObj", reqObj);
     if (localStorage.getItem("_userType") === "Buyer") {
@@ -52,9 +59,16 @@ const upDateSubmitBtn = async () => {
           progress: undefined,
           theme: "colored",
         });
+      }else{
+        localStorage.removeItem("__userId")
+        localStorage.removeItem("_tokenCode")
+        localStorage.removeItem("_userType")
+        localStorage.removeItem("isLoginCheck")
+        setIsLogin(localStorage.removeItem("isLoginCheck"));
+        navigate("/" , {state: response.data.message})
       }
     }else{
-      const response = await API.user_update_buyer(reqObj, header)
+      const response = await API.user_update_seller(reqObj, header)
       console.log("sellerUp", response);
       if (response.data.success === 1) {
         userData_details()
@@ -69,6 +83,13 @@ const upDateSubmitBtn = async () => {
           progress: undefined,
           theme: "colored",
         });
+      }else{
+        localStorage.removeItem("__userId")
+        localStorage.removeItem("_tokenCode")
+        localStorage.removeItem("_userType")
+        localStorage.removeItem("isLoginCheck")
+        setIsLogin(localStorage.removeItem("isLoginCheck"));
+        navigate("/" , {state: response.data.message})
       }
     }
   } catch (error) {
@@ -83,10 +104,16 @@ const upDateSubmitBtn = async () => {
         const BuyerResponse = await API.manufacturer_buyer(localStorage.getItem("__userId"), header)
         console.log("BuyerResponse", BuyerResponse);
         setFormData(BuyerResponse.data.data)
+        const mobileDatas = BuyerResponse.data.data.mobile.substring(3)
+        setMobileData(mobileDatas)
+        console.log("mobileData", mobileDatas);
       }else{
         const sellerResponse = await API.manufacturer_saller(localStorage.getItem("__userId"), header)
         console.log("sellerResponse", sellerResponse);
         setFormData(sellerResponse.data.data)
+        const mobileDatas = sellerResponse.data.data.mobileNo.substring(3)
+        setMobileData(mobileDatas)
+        console.log("mobileData", mobileDatas);
       }
       
     } catch (error) {
@@ -127,23 +154,23 @@ const upDateSubmitBtn = async () => {
           <div className="col-md-6">
             <label for="exampleFormControlInput1" class="form-label">Mobile Number</label>
             <div className="mobileNumber editPro mt-2">
-                <select className="mobileCode " onChange={handleCountrySelect}>
+                <select className="mobileCode" onChange={(e)=> setDialCode(e.target.value)}>
+                    <option>{dailCode}</option>
                     {cuntryData.map((item, index) => (
                       <>
-                          <option>choose</option>
                           <option
                             name="category"
                             key={item.name}
                             value={item.dial_code}
                           >
-                            {item.code + item.dial_code}
+                            {item.dial_code}
                           </option>
                       </>
                     ))}
                   </select>
-                <input className="mobileNumberF" onChange={handalerChnages} 
-                  value={formData.mobileNo} 
-                  type="number" name="mobileNo" placeholder={mobile} />
+                <input className="mobileNumberF" onChange={(e) => setMobileData(e.target.value)} 
+                  value={mobileData} 
+                  type="number" name="mobileNo" placeholder="Enter Mobile number" />
             </div>
           </div>
       </div>

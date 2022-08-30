@@ -13,8 +13,15 @@ const Header = ({isLogin}) => {
                 <img src={logo} alt="" />
               </div>
             </div>
-            <div className="col-md-2 text-end">
-              <Link to="/buyer/login" className="loginBtn">login</Link>
+            <div className="col-md-4 text-end">
+              {isLogin ? (
+                <>
+                {localStorage.getItem("_userType") === "Buyer" ? (<Link to="#" className="loginBtn me-4 enquery">Enquiry</Link>):("")}
+                  
+                  <Link to="/user-dashboard" className="loginBtn">Dashboard</Link>
+                </>
+              ):(<Link to="/buyer/login" className="loginBtn">login</Link>)}
+              
             </div>
           </div>
         </div>
