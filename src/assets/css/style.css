@@ -472,8 +472,14 @@ label{
 .formErrorAlrt {
   font-size: 12px;
   margin: 0;
-  text-align: center;
   color: #ac0000;
+}
+
+.signup .formErrorAlrt {
+  font-size: 12px;
+  color: #bd1212;
+  width: 70%;
+  margin: auto;
 }
 .mobileNumber{
   display: flex;
@@ -640,7 +646,7 @@ label{
 .menuimgBox{
   box-shadow: 0px 0px 15px #ccc;
   border-radius: 7px;
-  background: #ffff;
+  background: #424b54;
   padding: 6px;
   margin-bottom: 20px;
 }
@@ -664,4 +670,13 @@ label{
 .userBadsg{
   background-color: #424b54;
   padding: 50px 0;
+}
+.react-responsive-modal-modal .modal-content{
+  width: 500px;
+  border: none;
+}
+.editPro .mobileNumberF{
+  width: 80% !important;
+  padding: 7px;
+  border: 1px solid #ced4da;
 }

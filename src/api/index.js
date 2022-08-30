@@ -12,6 +12,34 @@ export const user_registration_buyer = async (data) => {
     }
 };
 
+// ? UPDATE BUYER
+export const user_update_buyer = async (data, header) => {
+    try {
+        const url = c.BUYER;
+        const res = await axios.patch(url, data , {
+            headers: JSON.parse(header),
+          });
+        return res;
+    } catch (e) {
+        return e.response;
+    }
+};
+
+
+// ? UPDATE BUYER
+export const user_update_seller = async (data, header) => {
+    try {
+        const url = c.SELLER;
+        const res = await axios.patch(url, data , {
+            headers: JSON.parse(header),
+          });
+        return res;
+    } catch (e) {
+        return e.response;
+    }
+};
+
+
 // ? REGISTRATION API
 export const user_buyer_mailVerifi = async (data) => {
     try {
@@ -53,6 +81,32 @@ export const user_seller_mailVerifi = async (data) => {
     try {
         const url = c.SELLER + "/otp-verification/" + data.id + "/" +  data.otp;
         const res = await axios.get(url, data);
+        return res;
+    } catch (e) {
+        return e.response;
+    }
+};
+
+// ? REGISTRATION API
+export const changesPassword_seller = async (data, header) => {
+    try {
+        const url = c.SELLER + "/change-password";
+        const res = await axios.patch(url, data, {
+            headers: JSON.parse(header),
+          });
+        return res;
+    } catch (e) {
+        return e.response;
+    }
+};
+
+// ? REGISTRATION API
+export const changesPassword_buyer = async (data, header) => {
+    try {
+        const url = c.BUYER + "/change-password";
+        const res = await axios.patch(url, data, {
+            headers: JSON.parse(header),
+          });
         return res;
     } catch (e) {
         return e.response;
@@ -131,7 +185,6 @@ export const reset_password_buyer = async (data) => {
     try {
         const url = c.BUYER + "/reset-password";
         const res = await axios.post(url, data);
-        console.log("res",res);
         return res;
     } catch (e) {
         return e.response;
@@ -155,6 +208,19 @@ export const menufactursGet = async (data) => {
 export const manufacturer_saller = async (data, header) => {
     try {
         const url = c.SELLER + "/" + data;
+        const res = await axios.get(url, {
+            headers: JSON.parse(header),
+          });
+        return res;
+    } catch (e) {
+        return e.response;
+    }
+};
+
+// ? BUYER)by id
+export const manufacturer_buyer = async (data, header) => {
+    try {
+        const url = c.BUYER + "/" + data;
         const res = await axios.get(url, {
             headers: JSON.parse(header),
           });

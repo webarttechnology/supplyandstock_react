@@ -1,6 +1,7 @@
 import React from 'react'
 import EditProfile from './EditProfile'
 import Manufactures from './Manufactures'
+import ChangesPassword from "./ChangesPassword"
 import { useNavigate } from "react-router";
 const Dashboard = ({setIsLogin}) => {
     const navigate = useNavigate();
@@ -33,14 +34,19 @@ const Dashboard = ({setIsLogin}) => {
                                         <button class="nav-link logout" onClick={logOutBtn}><span> <i class="bi bi-box-arrow-left"></i> </span>  Logout </button>
                                     </div>
                                     <div class="tab-content" id="v-pills-tabContent">
-                                        <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">user dashboard</div>
+                                        <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
+                                            <h1 className="text-center">Welcome to Supply We Stock</h1>
+                                        </div>
                                         <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
                                             <EditProfile/>
                                         </div>
                                         <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">
-                                            <Manufactures setIsLogin={setIsLogin} />
+                                            {localStorage.getItem("_userType") === "Buyer" ? "" : <Manufactures setIsLogin={setIsLogin} />}
+                                            
                                         </div>
-                                        <div class="tab-pane fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">...</div>
+                                        <div class="tab-pane fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">
+                                            <ChangesPassword />
+                                        </div>
                                     </div>
                                 </div>
                             </div>

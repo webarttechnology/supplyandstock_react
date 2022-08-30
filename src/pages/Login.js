@@ -6,6 +6,7 @@ import * as API from "../api/index";
 import OTPInput from "otp-input-react";
 import { useNavigate } from "react-router";
 import { cuntryData } from '../helpers/commonData';
+import Modal from 'react-responsive-modal';
 const initialData = {
     firstName:"",
     lastName:"",
@@ -31,6 +32,7 @@ const Login = ({setIsLogin}) => {
 
 const navigate = useNavigate();
 
+const [openModal, setOpenModal] = useState(false);
 const [formData, setFormData] = useState(initialData)
 const [loading, setLoading] = useState(false);
 const [dialCode, setDialCode] = useState("");
@@ -180,10 +182,11 @@ const emaitVerifaction = async () =>{
   if (selected === "Buyer") {
     try {
       const reqObj = {
-        id: localStorage.getItem("__userId"),
+        id: formData.email,
         otp: OTP,
       }
       console.log("reqObj", reqObj);
+      
       const response = await API.user_buyer_mailVerifi(reqObj)
       console.log("buyerresponse", response);
       if (response.data.success === 1) {
@@ -198,7 +201,7 @@ const emaitVerifaction = async () =>{
   }else{
     try {
       const reqObj = {
-        id: localStorage.getItem("__userId"),
+        id: formData.email,
         otp: OTP,
       }
       const response = await API.user_seller_mailVerifi(reqObj)
@@ -375,7 +378,7 @@ const newEmailDataSubmitOtp = async () => {
   try {
     if (selectedForgot === "Buyer") {
       const reqObj = {
-        id: localStorage.getItem("__userId"),
+        id: newEmailData,
         otp: OTP,
       }
       const response = await API.user_buyer_mailVerifi(reqObj)
@@ -388,7 +391,7 @@ const newEmailDataSubmitOtp = async () => {
       }
     }else{
       const reqObj = {
-        id: localStorage.getItem("__userId"),
+        id: newEmailData,
         otp: OTP,
       }
       const response = await API.user_seller_mailVerifi(reqObj)
@@ -437,6 +440,7 @@ const newPasswordSet = async () =>{
         const response = await API.reset_password_buyer(reqObj);
           console.log("bbbresponse", response);
           if (response.data.success === 1) {
+            closeModal()
             toast(response.data.msg, {
               position: "top-right",
               autoClose: 5000,
@@ -455,6 +459,7 @@ const newPasswordSet = async () =>{
         const response = await API.reset_password_saller(reqObj);
           console.log("bbbresponse", response);
           if (response.data.success === 1) {
+            closeModal()
             toast(response.data.msg, {
               position: "top-right",
               autoClose: 5000,
@@ -607,7 +612,7 @@ const validate = () => {
     if (password === "" || password !== confirmPassword) {
       setConfirmErrorPasword({
         field: "confirmPassword",
-        message: "Please confirm your password",
+        message: "Confirm password does not match with your password",
       });
       flag = false;
     } else {
@@ -657,7 +662,7 @@ const validatePass = () => {
   if (password === "" || password !== confirmPassword) {
     setNewPassErrorCon({
       field: "confirmPassword",
-      message: "Please confirm your password",
+      message: "Confirm password does not match with your password",
     });
     flag = false;
   } else {
@@ -670,7 +675,13 @@ const validatePass = () => {
 
   return flag;
 };
+
+
+const closeModal = () =>{
   
+  setIsForgot(0)
+  setOpenModal(false)
+}
 
   const disabelBtn = !formData.firstName || !formData.lastName || 
     !formData.email || !formData.mobileNo || !formData.password || !formData.confirmPassword || !selected;
@@ -795,7 +806,7 @@ const validatePass = () => {
                                 placeholder="Password" required=""/>
                               <button className={disabelBtnlog ? "customBtn disableBtn" : "customBtn"} disabled={disabelBtnlog} onClick={loginSubmit}>Login</button>
                             
-                              <Link className="forgotPass" to="/" data-bs-toggle="modal" data-bs-target="#exampleModal">Forgot Password ?</Link>
+                              <Link className="forgotPass"  to="#" onClick={() => setOpenModal(true)}>Forgot Password ?</Link>
                          </div>
                       </div>
                   </>
@@ -824,87 +835,60 @@ const validatePass = () => {
             </div>
         </div>
 
-      <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Forgot Password</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body forgot">
-             {/* {isForgot === 0 ?(
-               <div className="userType mb-3">
-               <input
-                   type="radio"
-                   id="Buyer"
-                   name="choose"
-                   value="Buyer"
-                   checked={selectedForgot === 'Buyer'}
-                   onChange={handleChangeforgot}
-                   className="redioBtn"
-                 />
-                 <label htmlFor="Buyer">Buyer</label>
-                   
-                 <input
-                   type="radio"
-                   id="Seller"
-                   name="choose"
-                   value="Seller"
-                   onChange={handleChangeforgot}
-                   checked={selectedForgot === 'Seller'}
-                   className="redioBtn"
-                 />
-                 <label htmlFor="Seller">Seller</label>
-             </div>
-             ):("")} */}
-            
-                {isForgot === 0 ?(
-                  <input onChange={(e)=> setNewEmailData(e.target.value)} type="email" class="form-control" placeholder="Enter email id" />
-                ): isForgot === 1 ? (
-                  <>
-                      <p className="formErrorAlrt mb-3">{otpError}</p>
-                      <div className="otpInput">
-                        <OTPInput
-                          value={OTP}
-                          onChange={setOTP}
-                          autoFocus
-                          OTPLength={6}
-                          otpType="number"
-                          disabled={false}
-                          className="forgotOtp"
-                        />
-                      </div>
-                  </>
-                ):(
-                  <>
-                    <input onChange={newPassHandaler} type="password" name="password" value={passWordData.password} class="form-control mb-3" placeholder="Enter password" />
-                    {newPassError.field === "password" && (
-                      <p className="formErrorAlrt">{newPassError.message}</p>
-                    )}
-                    <input onChange={newPassHandaler} name="confirmPassword" value={passWordData.confirmPassword} type="password"
-                     class="form-control" placeholder="Confirm password" />
-                     {newPassErrorCon.field === "confirmPassword" && (
-                        <p className="formErrorAlrt">{newPassErrorCon.message}</p>
+
+        <Modal open={openModal} onClose={closeModal}>
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Forgot Password</h5>
+              </div>
+              <div class="modal-body forgot">
+                  {isForgot === 0 ?(
+                    <input onChange={(e)=> setNewEmailData(e.target.value)} type="email" class="form-control" placeholder="Enter email id" />
+                  ): isForgot === 1 ? (
+                    <>
+                        <p className="formErrorAlrt mb-3">{otpError}</p>
+                        <div className="otpInput">
+                          <OTPInput
+                            value={OTP}
+                            onChange={setOTP}
+                            autoFocus
+                            OTPLength={6}
+                            otpType="number"
+                            disabled={false}
+                            className="forgotOtp"
+                          />
+                        </div>
+                    </>
+                  ):(
+                    <>
+                      <input onChange={newPassHandaler} type="password" name="password" value={passWordData.password} class="form-control mb-3" placeholder="Enter password" />
+                      {newPassError.field === "password" && (
+                        <p className="formErrorAlrt">{newPassError.message}</p>
                       )}
-                  </>
+                      <input onChange={newPassHandaler} name="confirmPassword" value={passWordData.confirmPassword} type="password"
+                      class="form-control" placeholder="Confirm password" />
+                      {newPassErrorCon.field === "confirmPassword" && (
+                          <p className="formErrorAlrt">{newPassErrorCon.message}</p>
+                        )}
+                    </>
+                  )}
+                  
+              </div>
+              <div class="modal-footer">
+                {isForgot === 0 ? (<button type="button" disabled={!selectedForgot || !newEmailData} 
+                class="btn btn-primary" onClick={newEmailDataSubmit}>Submit</button>):
+                isForgot === 1 ? (
+                <button type="button" disabled={!OTP} class="btn btn-primary" onClick={newEmailDataSubmitOtp}> Verify OTP </button>
+                ):(
+                <button type="button" disabled={!passWordData.password || !passWordData.confirmPassword} class="btn btn-primary" 
+                onClick={newPasswordSet}>Submit</button>
                 )}
                 
+              </div>
             </div>
-            <div class="modal-footer">
-              {isForgot === 0 ? (<button type="button" disabled={!selectedForgot || !newEmailData} 
-              class="btn btn-primary" onClick={newEmailDataSubmit}>Submit</button>):
-              isForgot === 1 ? (
-              <button type="button" disabled={!selectedForgot ||
-               !newEmailData} class="btn btn-primary" onClick={newEmailDataSubmitOtp}> Verify OTP </button>
-               ):(
-               <button type="button" data-bs-dismiss="modal" disabled={!passWordData.password || !passWordData.confirmPassword} class="btn btn-primary" 
-               onClick={newPasswordSet}>Submit</button>
-               )}
-              
-            </div>
-          </div>
-        </div>
-      </div>
+        </Modal>
+
+      
     </>
   )
 }
