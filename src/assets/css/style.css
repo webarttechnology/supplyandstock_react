@@ -650,6 +650,9 @@ label{
   padding: 6px;
   margin-bottom: 20px;
   height: 200px;
+  display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 .menuimgBox img{
   width: 100%;
