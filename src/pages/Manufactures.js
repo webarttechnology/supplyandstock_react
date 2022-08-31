@@ -14,8 +14,8 @@ const Manufactures = ({setIsLogin}) => {
 
   
     //  ? choose handaler
-    const coosheHandaler = async (itemId) => {
-        setChecked(!checked)
+    const coosheHandaler = async (itemId , Check) => {
+        console.log("Check",Check);
         setMenuId(itemId)
         setLoader(true)
         const header = localStorage.getItem("_tokenCode");
@@ -25,7 +25,7 @@ const Manufactures = ({setIsLogin}) => {
                 manufacturer:itemId
             }
             console.log("reqObj",reqObj);
-            if (!checked) {
+            if (Check === 1) {
                 const response = await API.choose_manufacturer_saller(reqObj, header)
                 console.log("Choosresponse", response);
                 if (response.data.success === 1) {
@@ -95,37 +95,13 @@ const Manufactures = ({setIsLogin}) => {
                             <img src={IMG + item.image} alt="" />
                             <div className="align-items-center d-flex justify-content-evenly">
                                 <h4 className="menufecHeading">{item.name}</h4>
-                                {/* <Vortex
-                                    visible={true}
-                                    height="40"
-                                    width="40"
-                                    ariaLabel="vortex-loading"
-                                    wrapperStyle={{}}
-                                    wrapperClass="vortex-wrapper"
-                                /> */}
-                                {menuId === item._id ? (loader ? 
-                                    <Vortex
-                                        visible={true}
-                                        height="40"
-                                        width="40"
-                                        ariaLabel="vortex-loading"
-                                        wrapperStyle={{}}
-                                        wrapperClass="vortex-wrapper"
-                                    /> : 
-                                    <input class="form-check-input" 
-                                type="checkbox" value="" 
-                                onChange={()=> coosheHandaler(item._id)}
-                                checked={menuFacId.manufacturer ? menuFacId.manufacturer.includes(item._id) ? true : false:""}
-                            />) : (<input class="form-check-input" 
-                            type="checkbox" value="" 
-                            onChange={()=> coosheHandaler(item._id)}
-                            checked={menuFacId.manufacturer ? menuFacId.manufacturer.includes(item._id) ? true : false:""}
-                        />) }
-                                {/* <input class="form-check-input" 
-                                    type="checkbox" value="" 
-                                    onChange={()=> coosheHandaler(item._id)}
-                                    checked={menuFacId.manufacturer.includes(item._id) ? true : false}
-                                /> */}
+                                {
+                                    menuFacId.manufacturer ? menuFacId.manufacturer.includes(item._id) ? (
+                                        <div className="checkBOx"><div class="check" onClick={() => coosheHandaler(item._id)}></div></div>
+                                    ):(
+                                        <div className="checkBOx" onClick={() => coosheHandaler(item._id , 1)}></div>
+                                    ):("")
+                                }
                             </div>
                         </div>
                     </div>

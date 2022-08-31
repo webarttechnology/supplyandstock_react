@@ -347,7 +347,18 @@ const newEmailDataSubmit = async () => {
         console.log("reqObj", reqObj);
         const response = await API.forgot_password_buyer(reqObj)
         console.log("response",response);
-        if (response.data.success) {
+        if (response.data.success === 1) {
+          toast(response.data.message, {
+            position: "top-right",
+            autoClose: 5000,
+            type: "success",
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+          });
           setIsForgot(1)
         }else{
           toast(response.data.message, {
@@ -373,7 +384,18 @@ const newEmailDataSubmit = async () => {
       console.log("reqObj", reqObj);
       const response = await API.forgot_password_saller(reqObj)
       console.log("response",response);
-      if (response.data.success) {
+      if (response.data.success === 1) {
+        toast(response.data.message, {
+          position: "top-right",
+          autoClose: 5000,
+          type: "success",
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
         setIsForgot(1)
       }else{
         toast(response.data.message, {

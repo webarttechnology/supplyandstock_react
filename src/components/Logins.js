@@ -352,6 +352,17 @@ const newEmailDataSubmit = async () => {
         const response = await API.forgot_password_buyer(reqObj)
         console.log("response",response);
         if (response.data.success === 1) {
+          toast(response.data.message, {
+            position: "top-right",
+            autoClose: 5000,
+            type: "success",
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+          });
           setIsForgot(1)
           localStorage.setItem("__userId", response.data.data.id)
         }else{

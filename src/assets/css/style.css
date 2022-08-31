@@ -649,6 +649,7 @@ label{
   background: #424b54;
   padding: 6px;
   margin-bottom: 20px;
+  height: 200px;
 }
 .menuimgBox img{
   width: 100%;
@@ -690,4 +691,26 @@ label{
   text-align: left;
   display: block;
   margin-bottom: 10px;
+}
+.check {
+  display: inline-block;
+  transform: rotate(45deg);
+  height: 24px;
+  width: 12px;
+  border-bottom: 7px solid #78b13f;
+  border-right: 7px solid #78b13f;
+}
+.checkBox{
+  background-color: #fff;
+  width: 20px;
+  height: 20px;
+  border-radius: 5px;
+}
+.checkBOx{
+  width: 33px;
+  height: 30px;
+  background-color: #fff;
+  border-radius: 5px;
+  padding: 2px 5px 4px;
+
 }
