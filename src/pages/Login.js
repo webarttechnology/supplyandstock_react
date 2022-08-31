@@ -53,6 +53,7 @@ const [errorLastName, setErrorLastName] = useState("");
 const [errorPassword, setErrorPassword] = useState("");
 const [confirmErrorPasword, setConfirmErrorPasword] = useState("");
 const [mobileError, setMobileError] = useState("")
+const [mobileErrorInner, setMobileErrorInner] = useState("")
 const [selected, setSelected] = useState("Seller");
 const [selectedLogin, setSelectedLogin] = useState("Seller");
 const [selectedForgot, setSelectedForgot] = useState("Seller");
@@ -77,6 +78,7 @@ const handalerChnages = (e) => {
           break;
         case "mobileNo":
           setMobileError("");
+          setMobileErrorInner("")
           break;
         case "password":
           setErrorPassword("");
@@ -136,6 +138,10 @@ const submitHandaler = async () => {
             const response = await API.user_registration_buyer(reqObj)
             console.log("response", response);
             if (response.data.success === 1) {
+              const headerObj = {
+                Authorization: `Bearer ${response.data.token_code}`,
+              };
+              localStorage.setItem("_tokenCode", JSON.stringify(headerObj))
               setLoading(false)
               setIsEmail(1)
               localStorage.setItem("__userId", response.data.data._id)
@@ -156,24 +162,35 @@ const submitHandaler = async () => {
             password: formData.password,  
           }
           console.log("sssreqObj", reqObj);
-          const response = await API.user_registration_seller(reqObj)
-          console.log("sssreqObj", response);
-          if (response.data.success ===1) {
-            setLoading(false)
-            setIsEmail(1)
-            localStorage.setItem("__userId", response.data.data._id)
+          if (formData.mobileNo === "") {
+            setMobileErrorInner(
+              "Please enter your mobile number.",
+            );
+          }else if (formData.mobileNo.length < 10) {
+            setMobileErrorInner(
+              "Please enter valid mobile number",
+            );
           }else{
-            setErrorMsg(response.data.msg)
-            setLoading(false)
+            const response = await API.user_registration_seller(reqObj)
+            console.log("sssresponse", response);
+            if (response.data.success ===1) {
+              const headerObj = {
+                Authorization: `Bearer ${response.data.token_code}`,
+              };
+              localStorage.setItem("_tokenCode", JSON.stringify(headerObj))
+              setLoading(false)
+              setIsEmail(1)
+              localStorage.setItem("__userId", response.data.data._id)
+            }else{
+              setErrorMsg(response.data.msg)
+              setLoading(false)
+            }
           }
-          
       } catch (error) {
           
       }
     }
-
-    
-    
+  
 }
 
 
@@ -190,6 +207,9 @@ const emaitVerifaction = async () =>{
       const response = await API.user_buyer_mailVerifi(reqObj)
       console.log("buyerresponse", response);
       if (response.data.success === 1) {
+       
+        localStorage.setItem("isLoginCheck", true);
+        setIsLogin(localStorage.getItem("isLoginCheck"))
         localStorage.setItem("_userType", selected)
         navigate("/user-dashboard")
       }else{
@@ -207,6 +227,8 @@ const emaitVerifaction = async () =>{
       const response = await API.user_seller_mailVerifi(reqObj)
       console.log("sellerresponse", response);
       if (response.data.success === 1) {
+        localStorage.setItem("isLoginCheck", true);
+        setIsLogin(localStorage.getItem("isLoginCheck"))
         navigate("/user-dashboard")
         localStorage.setItem("_userType", selected)
       }else{
@@ -740,9 +762,16 @@ const closeModal = () =>{
                                 max={10}
                                 type="number" name="mobileNo" placeholder="Phone number" />
                           </div>
-                            {mobileError.field === "mobileNo" && (
-                              <p className="formErrorAlrt">{mobileError.message}</p>
-                            )}
+                          {mobileErrorInner ? (""):(
+                              <>
+                                {mobileError.field === "mobileNo" && (
+                                  <p className="formErrorAlrt">{mobileError.message}</p>
+                                )}
+                              </>
+                            )}  
+                            
+                            <p className="formErrorAlrt">{mobileErrorInner}</p>
+                          
                           {/* {mobileError?(<p className="formErrorAlrt">{mobileError}</p>):("")} */}
                           
                           <input
@@ -814,7 +843,7 @@ const closeModal = () =>{
                   <>
                     <h3 className="headingSing">Email verification</h3>
                     <p className="message">Enter the code we just send on your Email</p>
-                    <p className="formErrorAlrt">{otpError}</p>
+                    <p className="formErrorAlrt ps-4">{otpError}</p>
                     <div className="otpInput">
                       <OTPInput
                         value={OTP}
