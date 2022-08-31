@@ -16,7 +16,7 @@ const Header = ({isLogin}) => {
             <div className="col-md-4 text-end">
               {isLogin ? (
                 <>
-                {localStorage.getItem("_userType") === "Buyer" ? (<Link to="#" className="loginBtn me-4 enquery">Enquiry</Link>):("")}
+                {localStorage.getItem("_userType") === "Buyer" ? (<Link to="/enquiry" className="loginBtn me-4 enquery">Enquiry</Link>):("")}
                   
                   <Link to="/user-dashboard" className="loginBtn">Dashboard</Link>
                 </>

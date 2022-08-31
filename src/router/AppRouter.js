@@ -8,6 +8,7 @@ import EditProfile from "../pages/EditProfile";
 import Login from "../pages/Login";
 import Logins from "../components/Logins"
 import { ToastContainer } from "react-toastify";
+import Enquiry from "../pages/Enquiry";
 
 const AppRouter = () => {
   const [isLogin, setIsLogin] = useState(
@@ -24,6 +25,7 @@ const AppRouter = () => {
         <Route path="/buyer/login" element={<Logins setIsLogin={setIsLogin}  />} />
         <Route path="/user-dashboard" element={<Dashboard setIsLogin={setIsLogin} />} />
         <Route path="/edit-profile" element={<EditProfile />} />
+        <Route path="/enquiry" element={<Enquiry />} />
       </Routes>
       <Footer/>
     </Router>

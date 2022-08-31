@@ -39,8 +39,7 @@ const upDateSubmitBtn = async () => {
       id:localStorage.getItem("__userId"),
       firstName: formData.firstName,
       lastName: formData.lastName,
-      emailId: formData.emailId,
-      mobileNo: dailCode + mobileData,
+      mobileNo: dialCode ? dialCode + mobileData  :  dailCode + mobileData,
     }
     console.log("reqObj", reqObj);
     if (localStorage.getItem("_userType") === "Buyer") {
@@ -104,7 +103,7 @@ const upDateSubmitBtn = async () => {
         const BuyerResponse = await API.manufacturer_buyer(localStorage.getItem("__userId"), header)
         console.log("BuyerResponse", BuyerResponse);
         setFormData(BuyerResponse.data.data)
-        const mobileDatas = BuyerResponse.data.data.mobile.substring(3)
+        const mobileDatas = BuyerResponse.data.data.mobileNo.substring(3)
         setMobileData(mobileDatas)
         console.log("mobileData", mobileDatas);
       }else{
