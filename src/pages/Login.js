@@ -7,6 +7,7 @@ import OTPInput from "otp-input-react";
 import { useNavigate } from "react-router";
 import { cuntryData } from '../helpers/commonData';
 import Modal from 'react-responsive-modal';
+import NumberFormat from "react-number-format";
 const initialData = {
     firstName:"",
     lastName:"",
@@ -131,10 +132,11 @@ const submitHandaler = async () => {
                 firstName: formData.firstName,
                 lastName: formData.lastName,
                 emailId: formData.email,
-                mobileNo: dialCode + formData.mobileNo,
+                mobileNo: +1 + formData.mobileNo,
                 password: formData.password,  
             }
             console.log("bbbreqObj", reqObj);
+            
             const response = await API.user_registration_buyer(reqObj)
             console.log("response", response);
             if (response.data.success === 1) {
@@ -158,10 +160,11 @@ const submitHandaler = async () => {
             firstName: formData.firstName,
             lastName: formData.lastName,
             emailId: formData.email,
-            mobileNo: dialCode + formData.mobileNo,
+            mobileNo: `+1${formData.mobileNo}`,
             password: formData.password,  
           }
           console.log("sssreqObj", reqObj);
+          
           if (formData.mobileNo === "") {
             setMobileErrorInner(
               "Please enter your mobile number.",
@@ -763,27 +766,36 @@ const closeModal = () =>{
                           {errorEmail.field === "email" && (
                             <p className="formErrorAlrt">{errorEmail.message}</p>
                           )}
-
                           <div className="mobileNumber mt-2">
                               <select className="mobileCode " onChange={handleCountrySelect}>
+                                  
                                   {cuntryData.map((item, index) => (
                                     <>
-                                        <option>choose</option>
-                                        <option
-                                          name="category"
-                                          key={item.name}
-                                          value={item.dial_code}
-                                        >
-                                          {item.code + item.dial_code}
-                                        </option>
+                                        {item.code === "US" ? (
+                                          <option
+                                            name="category"
+                                            key={item.name}
+                                            value={item.dial_code}
+                                          >
+                                            { item.dial_code}
+                                          </option>
+                                        ) : (
+                                          ""
+                                        )}
                                     </>
                                   ))}
                                 </select>
-                              <input className="mobileNumberF" onChange={handalerChnages} 
-                                value={formData.mobileNo} 
-                                max={10}
-                                type="number" name="mobileNo" placeholder="Phone number" />
+                                <NumberFormat
+                                  className="mobileNumberF"
+                                  placeholder="Enter mobile number"
+                                  format="(###)###-####"
+                                  onChange={handalerChnages}
+                                  mask="_"
+                                  name="mobileNo"
+                                  value={formData.mobileNo} 
+                                />
                           </div>
+
                           {mobileErrorInner ? (""):(
                               <>
                                 {mobileError.field === "mobileNo" && (

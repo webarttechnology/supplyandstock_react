@@ -715,5 +715,22 @@ label{
   background-color: #fff;
   border-radius: 5px;
   padding: 2px 5px 4px;
-
+  cursor: pointer;
+}
+.seacrhBoxSr{
+  border-radius: 50px;
+  padding: 6px 15px;
+  border: none;
+  width: 100%;
+  transition: 0.5s;
+}
+.seacrhBoxSr:focus{
+  outline: none;
+}
+.searchBox{
+  width: 70%;
+  transition: 0.5s;
+}
+.checkBOx i{
+  color: red;
 }

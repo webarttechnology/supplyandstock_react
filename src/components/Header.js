@@ -1,8 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import logo from "../assets/images/logo.png";
 const Header = ({isLogin}) => {
-  console.log("isLoginHeadr", isLogin);
+  const [search, setSearch] = useState(false)
+
+  const searchShows = () =>{
+    if (search) {
+      setSearch(false)
+    }else{
+      setSearch(true)
+    }
+    
+  }
+
   return (
     <>
       <div className="header">
@@ -50,22 +60,36 @@ const Header = ({isLogin}) => {
             <div className="col-md-3 text-end">
               <div className="rightMenu">
                 <ul>
-                  {isLogin ? (<li>
-                    <Link to="/user-dashboard">
-                      <i class="bi bi-person-circle"></i>
-                    </Link>
-                  </li>):("")}
                   
-                  <li>
-                    <Link to="/" className="countSec">
-                      <i class="bi bi-heart-fill "></i>
-                      <span className="countBang">0</span>
-                    </Link>
-                  </li>
-                  <li>
-                    <Link to="/" className="countSec">
-                      <i class="bi bi-bag-fill"></i>
-                      <span className="countBang">0</span>
+                  {search === false ? (
+                    <>
+                    {isLogin ? (<li>
+                      <Link to="/user-dashboard">
+                        <i class="bi bi-person-circle"></i>
+                      </Link>
+                    </li>):("")}
+                    
+                    <li>
+                      <Link to="/" className="countSec">
+                        <i class="bi bi-heart-fill "></i>
+                        <span className="countBang">0</span>
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to="/" className="countSec">
+                        <i class="bi bi-bag-fill"></i>
+                        <span className="countBang">0</span>
+                      </Link>
+                    </li>
+                    </>
+                  ):(
+                    <li className="searchBox">
+                      <input placeholder="Search here" type="text" className="seacrhBoxSr" />
+                    </li>
+                  )}
+                  <li className="searchTuch">
+                    <Link to="#" className="countSec" onClick={searchShows}>
+                      <i class="bi bi-search"></i>
                     </Link>
                   </li>
                 </ul>

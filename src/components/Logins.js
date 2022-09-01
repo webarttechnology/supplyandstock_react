@@ -5,6 +5,7 @@ import { toast, ToastContainer } from "react-toastify";
 import * as API from "../api/index";
 import OTPInput from "otp-input-react";
 import { useNavigate } from "react-router";
+import NumberFormat from "react-number-format";
 import { cuntryData } from '../helpers/commonData';
 import Modal from 'react-responsive-modal';
 const initialData = {
@@ -131,7 +132,7 @@ const submitHandaler = async () => {
                 firstName: formData.firstName,
                 lastName: formData.lastName,
                 emailId: formData.email,
-                mobileNo: dialCode + formData.mobileNo,
+                mobileNo: `+1${formData.mobileNo}`,
                 password: formData.password,  
             }
             console.log("bbbreqObj", reqObj);
@@ -635,7 +636,7 @@ const validate = () => {
     } else {
       setErrorPassword({
         field: "password",
-        message: "Please enter your password.",
+        message: "Confirm password does not match with your password",
       });
       flag = false;
     }
@@ -755,23 +756,32 @@ const closeModal = () =>{
 
                           <div className="mobileNumber mt-2">
                               <select className="mobileCode " onChange={handleCountrySelect}>
+                                  
                                   {cuntryData.map((item, index) => (
                                     <>
-                                        <option>choose</option>
-                                        <option
-                                          name="category"
-                                          key={item.name}
-                                          value={item.dial_code}
-                                        >
-                                          {item.code + item.dial_code}
-                                        </option>
+                                        {item.code === "US" ? (
+                                          <option
+                                            name="category"
+                                            key={item.name}
+                                            value={item.dial_code}
+                                          >
+                                            { item.dial_code}
+                                          </option>
+                                        ) : (
+                                          ""
+                                        )}
                                     </>
                                   ))}
                                 </select>
-                              <input className="mobileNumberF" onChange={handalerChnages} 
-                                value={formData.mobileNo} 
-                                max={10}
-                                type="number" name="mobileNo" placeholder="Phone number" />
+                                <NumberFormat
+                                  className="mobileNumberF"
+                                  placeholder="Enter mobile number"
+                                  format="(###)###-####"
+                                  onChange={handalerChnages}
+                                  mask="_"
+                                  name="mobileNo"
+                                  value={formData.mobileNo} 
+                                />
                           </div>
                             
                             {mobileErrorInner ? (""):(
