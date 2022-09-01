@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import NumberFormat from 'react-number-format';
 import { useNavigate } from 'react-router';
 import { toast } from 'react-toastify';
 import * as API from "../api/index";
@@ -16,11 +17,7 @@ const EditProfile = ({setIsLogin}) => {
   const [formData, setFormData] = useState(initialData)
   const [dialCode, setDialCode] = useState("");
   const [mobileData, setMobileData] = useState("")
-  const mobileNum = formData.mobileNo
-  console.log("mobileData",mobileData);
 
-  const dailCode = mobileNum.slice(0, 3)
-  console.log("dailCode", dailCode);
 
   const handleCountrySelect = (e) => {
     setDialCode(e.target.value);
@@ -39,10 +36,10 @@ const upDateSubmitBtn = async () => {
       id:localStorage.getItem("__userId"),
       firstName: formData.firstName,
       lastName: formData.lastName,
-      mobileNo: dialCode ? dialCode + mobileData  :  dailCode + mobileData,
+      mobileNo: `+1${formData.mobileNo}`,
     }
     console.log("reqObj", reqObj);
-    if (localStorage.getItem("_userType") === "Buyer") {
+    if (localStorage.getItem("_userType") === "Buyer") {    
       const response = await API.user_update_buyer(reqObj, header)
       console.log("Buyer", response);
       if (response.data.success === 1) {
@@ -154,22 +151,35 @@ const upDateSubmitBtn = async () => {
             <label for="exampleFormControlInput1" class="form-label">Mobile Number</label>
             <div className="mobileNumber editPro mt-2">
                 <select className="mobileCode" onChange={(e)=> setDialCode(e.target.value)}>
-                    <option>{dailCode}</option>
+                    
                     {cuntryData.map((item, index) => (
                       <>
-                          <option
-                            name="category"
-                            key={item.name}
-                            value={item.dial_code}
-                          >
-                            {item.dial_code}
-                          </option>
+                          {item.code === "US" ? (
+                              <option
+                                name="category"
+                                key={item.name}
+                                value={item.dial_code}
+                              >
+                                { item.dial_code}
+                              </option>
+                            ) : (
+                              ""
+                            )}
                       </>
                     ))}
                   </select>
-                <input className="mobileNumberF" onChange={(e) => setMobileData(e.target.value)} 
+                  <NumberFormat
+                      className="mobileNumberF"
+                      placeholder="Enter mobile number"
+                      format="(###)###-####"
+                      onChange={handalerChnages}
+                      mask="_"
+                      name="mobileNo"
+                      value={formData.mobileNo} 
+                    />
+                {/* <input className="mobileNumberF" onChange={(e) => setMobileData(e.target.value)} 
                   value={mobileData} 
-                  type="number" name="mobileNo" placeholder="Enter Mobile number" />
+                  type="number" name="mobileNo" placeholder="Enter Mobile number" /> */}
             </div>
           </div>
       </div>
