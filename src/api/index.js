@@ -255,3 +255,30 @@ export const remove_manufacturer_saller = async (data, header) => {
         return e.response;
     }
 };
+
+// ? buyer_enqueris
+export const buyer_enqueris = async (data, header) => {
+    try {
+        const url = c.ENQUIRIES;
+        const res = await axios.post(url, data, {
+            headers: JSON.parse(header),
+          });
+        return res;
+    } catch (e) {
+        return e.response;
+    }
+};
+
+export const buyer_enqueris_id = async (data, header) => {
+    console.log(header);
+    try {
+        const url = c.ENQUIRIES + "/buyer/" + data;
+        console.log("url", url);
+        const res = await axios.get(url, {
+            headers: JSON.parse(header),
+          });
+        return res;
+    } catch (e) {
+        return e.response;
+    }
+};

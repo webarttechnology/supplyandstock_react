@@ -18,6 +18,8 @@ const EditProfile = ({setIsLogin}) => {
   const [dialCode, setDialCode] = useState("");
   const [mobileData, setMobileData] = useState("")
 
+  console.log("mobileData", mobileData);
+
 
   const handleCountrySelect = (e) => {
     setDialCode(e.target.value);
@@ -36,7 +38,7 @@ const upDateSubmitBtn = async () => {
       id:localStorage.getItem("__userId"),
       firstName: formData.firstName,
       lastName: formData.lastName,
-      mobileNo: `+1${formData.mobileNo}`,
+      mobileNo: `+1${mobileData}` ? `+1${mobileData}` : `+1${formData.mobileNo}`,
     }
     console.log("reqObj", reqObj);
     if (localStorage.getItem("_userType") === "Buyer") {    
@@ -100,14 +102,14 @@ const upDateSubmitBtn = async () => {
         const BuyerResponse = await API.manufacturer_buyer(localStorage.getItem("__userId"), header)
         console.log("BuyerResponse", BuyerResponse);
         setFormData(BuyerResponse.data.data)
-        const mobileDatas = BuyerResponse.data.data.mobileNo.substring(3)
+        const mobileDatas = BuyerResponse.data.data.mobileNo.substring(2)
         setMobileData(mobileDatas)
         console.log("mobileData", mobileDatas);
       }else{
         const sellerResponse = await API.manufacturer_saller(localStorage.getItem("__userId"), header)
         console.log("sellerResponse", sellerResponse);
         setFormData(sellerResponse.data.data)
-        const mobileDatas = sellerResponse.data.data.mobileNo.substring(3)
+        const mobileDatas = sellerResponse.data.data.mobileNo.substring(2)
         setMobileData(mobileDatas)
         console.log("mobileData", mobileDatas);
       }
@@ -172,10 +174,11 @@ const upDateSubmitBtn = async () => {
                       className="mobileNumberF"
                       placeholder="Enter mobile number"
                       format="(###)###-####"
-                      onChange={handalerChnages}
+                      //onChange={handalerChnages}
+                      onChange={(e) => setMobileData(e.target.value)} 
                       mask="_"
                       name="mobileNo"
-                      value={formData.mobileNo} 
+                      value={mobileData} 
                     />
                 {/* <input className="mobileNumberF" onChange={(e) => setMobileData(e.target.value)} 
                   value={mobileData} 

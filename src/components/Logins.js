@@ -152,11 +152,22 @@ const submitHandaler = async () => {
                   Authorization: `Bearer ${response.data.token_code}`,
                 };
                 localStorage.setItem("_tokenCode", JSON.stringify(headerObj))
+                localStorage.setItem("_userType", selected)
                 setLoading(false)
                 setIsEmail(1)
                 localStorage.setItem("__userId", response.data.data._id)
               }else{
-                setErrorMsg(response.data.msg)
+                toast(response.data.msg, {
+                  position: "top-right",
+                  autoClose: 5000,
+                  type: "error",
+                  hideProgressBar: false,
+                  closeOnClick: true,
+                  pauseOnHover: true,
+                  draggable: true,
+                  progress: undefined,
+                  theme: "colored",
+                });
                 setLoading(false)
               }
             }

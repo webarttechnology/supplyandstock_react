@@ -623,9 +623,9 @@ label{
     border-right: 1px solid #ccc;
     padding-right: 20px;
   }
-.bannerSec  .tab-content{
+/* .bannerSec  .tab-content{
   width: 70%;
-}
+} */
 .bannerSec  .tab-content label{
   color: #787171;
   font-size: 15px;
@@ -733,4 +733,49 @@ label{
 }
 .checkBOx i{
   color: red;
+}
+.chatIcon{
+  font-size: 23px;
+  cursor: pointer;
+}
+.table-darks{
+  background-color: #424b54;
+  
+}
+.table-darks th, td, tr{
+  color: #fff;
+}
+
+.buyerBannrBox{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid #8b5759;
+  height: 150px;
+  border-radius: 5px;
+}
+.buyerBannrBox i{
+  font-size: 50px;
+}
+.bannerSec a{
+  text-decoration: none;
+  color: #424B54;
+}
+.bannerSec a h3{
+  color: #424B54;
+    font-size: 31px;
+}
+
+@media only screen and (max-width:768px){
+  .bannerSec{
+    padding: 15px;
+  }
+  .bannerSec .nav-pills{
+    border-right: none;
+    border-bottom: 1px solid #ccc;
+  }
+  .footer img {
+    width: 50%;
+    margin-top: 15px;
+  }
 }

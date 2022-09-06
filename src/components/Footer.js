@@ -27,13 +27,13 @@ const Footer = () => {
                     <div className="col-md-3">
                         <input type="text" className="fooetrInput" placeholder="Give an email, get the newsletter" />
                     </div>
-                    <div className="col-md-1 text-center">
+                    <div className="col-md-1 col-4 text-center">
                         <img src={secnd} alt="" />
                     </div>
-                    <div className="col-md-1 text-center">
+                    <div className="col-md-1 col-4 text-center">
                         <img src={fiest} alt="" />
                     </div>
-                    <div className="col-md-1 text-center">
+                    <div className="col-md-1 col-4 text-center">
                         <img src={thard} alt="" />
                     </div>
                 </div>

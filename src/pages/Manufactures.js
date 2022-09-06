@@ -100,7 +100,6 @@ const Manufactures = ({setIsLogin}) => {
             <div className="row justify-content-center">
                 <div className="col-md-8">
                     <Select
-                        placeholder="Skills"
                         isMulti
                         onChange={(data) => handalerChange (data)}
                         options={menufacData}
