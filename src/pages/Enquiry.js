@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router';
 import { toast } from 'react-toastify';
 import { IMG } from '../api/constant';
 import * as API from "../api/index";
@@ -11,7 +12,7 @@ const initialData = {
 }
 
 const Enquiry = () => {
-
+    const navigate = useNavigate();
     const [menufacData, setMenufacData] = useState([])
     const [formData, setFormData] = useState(initialData)
 
@@ -47,6 +48,8 @@ const upDateSubmitBtn = async () =>{
         const response = await API.buyer_enqueris(reqObj, header)
         console.log("response", response);
         if (response.data.success === 1) {
+            //navigate("/user-dashboard")
+            setFormData("")
             toast(response.data.msg, {
                 position: "top-right",
                 autoClose: 5000,

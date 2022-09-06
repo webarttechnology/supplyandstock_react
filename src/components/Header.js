@@ -41,7 +41,7 @@ const Header = ({isLogin}) => {
           <div className="row justify-content-between">
             <div className="col-md-5 ps-0">
               <div className="headerMenu">
-                <ul className="ps-0">
+                <ul className="ps-0 mobileMenu">
                   <li>
                     <Link to="/">Home</Link>
                   </li>

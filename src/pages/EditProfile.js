@@ -133,7 +133,7 @@ const upDateSubmitBtn = async () => {
               <input type="text" class="form-control"
                 onChange={handalerChnages} 
                 value={formData.firstName} 
-                type="text" name="firstName" 
+                 name="firstName" 
               placeholder="First Name" />
           </div>
           <div className="col-md-6">
