@@ -5,9 +5,9 @@ import { toast, ToastContainer } from "react-toastify";
 import * as API from "../api/index";
 import OTPInput from "otp-input-react";
 import { useNavigate } from "react-router";
-import NumberFormat from "react-number-format";
 import { cuntryData } from '../helpers/commonData';
 import Modal from 'react-responsive-modal';
+import NumberFormat from "react-number-format";
 const initialData = {
     firstName:"",
     lastName:"",
@@ -26,13 +26,14 @@ const initialDatalogPass = {
   confirmPassword:""
 }
 
-const Logins = ({setIsLogin}) => {
+const SignupSeller = ({setIsLogin}) => {
 
-  
-  // ???? BUYERS LOGIN AND SIGNUP PAGE
+
+  // ???? SELLERS LOGIN AND SIGNUP PAGE
 
 const navigate = useNavigate();
 
+const [openModal, setOpenModal] = useState(false);
 const [formData, setFormData] = useState(initialData)
 const [loading, setLoading] = useState(false);
 const [dialCode, setDialCode] = useState("");
@@ -42,7 +43,7 @@ const [loginData, setLoginData] = useState(initialDatalog)
 const [newEmailData, setNewEmailData] = useState("")
 const [isForgot, setIsForgot] = useState(0)
 const [passWordData, setPassWordData] = useState(initialDatalogPass)
-const [openModal, setOpenModal] = useState(false);
+
 
 
 //ERROR-MSGS
@@ -54,9 +55,9 @@ const [errorPassword, setErrorPassword] = useState("");
 const [confirmErrorPasword, setConfirmErrorPasword] = useState("");
 const [mobileError, setMobileError] = useState("")
 const [mobileErrorInner, setMobileErrorInner] = useState("")
-const [selected, setSelected] = useState("Buyer");
-const [selectedLogin, setSelectedLogin] = useState("Buyer");
-const [selectedForgot, setSelectedForgot] = useState("Buyer");
+const [selected, setSelected] = useState("Seller");
+const [selectedLogin, setSelectedLogin] = useState("Seller");
+const [selectedForgot, setSelectedForgot] = useState("Seller");
 const [otpError, setOtpError] = useState("")
 const [newPassError, setNewPassError] = useState("")
 const [newPassErrorCon, setNewPassErrorCon] = useState("")
@@ -117,7 +118,6 @@ const handleChangeforgot = event => {
 const handleCountrySelect = (e) => {
   setDialCode(e.target.value);
 };
-
 // ?=========== submit handaler ============
 const submitHandaler = async () => {
     setLoading(true);
@@ -132,46 +132,36 @@ const submitHandaler = async () => {
                 firstName: formData.firstName,
                 lastName: formData.lastName,
                 emailId: formData.email,
-                mobileNo: `+1${formData.mobileNo}`,
+                mobileNo: +1 + formData.mobileNo,
                 password: formData.password,  
             }
             console.log("bbbreqObj", reqObj);
-            if (formData.mobileNo === "") {
-              setMobileErrorInner(
-                "Please enter your mobile number.",
-              );
-            }else if (formData.mobileNo.length < 10) {
-              setMobileErrorInner(
-                "Please enter valid mobile number",
-              );
-            }else{
-              const response = await API.user_registration_buyer(reqObj)
-              console.log("response", response);
-              if (response.data.success === 1) {
-                const headerObj = {
-                  Authorization: `Bearer ${response.data.token_code}`,
-                };
-                localStorage.setItem("_tokenCode", JSON.stringify(headerObj))
-                localStorage.setItem("_userType", selected)
-                setLoading(false)
-                setIsEmail(1)
-                localStorage.setItem("__userId", response.data.data._id)
-              }else{
-                toast(response.data.msg, {
-                  position: "top-right",
-                  autoClose: 5000,
-                  type: "error",
-                  hideProgressBar: false,
-                  closeOnClick: true,
-                  pauseOnHover: true,
-                  draggable: true,
-                  progress: undefined,
-                  theme: "colored",
-                });
-                setLoading(false)
-              }
-            }
             
+            const response = await API.user_registration_buyer(reqObj)
+            console.log("response", response);
+            if (response.data.success === 1) {
+              const headerObj = {
+                Authorization: `Bearer ${response.data.token_code}`,
+              };
+              localStorage.setItem("_tokenCode", JSON.stringify(headerObj))
+              setLoading(false)
+              setIsEmail(1)
+              localStorage.setItem("__userId", response.data.data._id)
+            }else{
+              toast(response.data.msg, {
+                position: "top-right",
+                autoClose: 5000,
+                type: "error",
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+              });
+              //setErrorMsg(response.data.msg)
+              setLoading(false)
+            }
         } catch (error) {
             
         }
@@ -181,32 +171,53 @@ const submitHandaler = async () => {
             firstName: formData.firstName,
             lastName: formData.lastName,
             emailId: formData.email,
-            mobileNo: dialCode + formData.mobileNo,
+            mobileNo: `+1${formData.mobileNo}`,
             password: formData.password,  
           }
           console.log("sssreqObj", reqObj);
-          const response = await API.user_registration_seller(reqObj)
-          console.log("sssreqObj", response);
-          if (response.data.success === 1) {
-            const headerObj = {
-              Authorization: `Bearer ${response.data.token_code}`,
-            };
-            localStorage.setItem("_tokenCode", JSON.stringify(headerObj))
-            setLoading(false)
-            setIsEmail(1)
-            localStorage.setItem("__userId", response.data.data._id)
-          }else{
-            setErrorMsg(response.data.msg)
-            setLoading(false)
-          }
           
+          if (formData.mobileNo === "") {
+            setMobileErrorInner(
+              "Please enter your mobile number.",
+            );
+          }else if (formData.mobileNo.length < 10) {
+            setMobileErrorInner(
+              "Please enter valid mobile number",
+            );
+          }else{
+            const response = await API.user_registration_seller(reqObj)
+            console.log("sssresponse", response);
+            if (response.data.success ===1) {
+              const headerObj = {
+                Authorization: `Bearer ${response.data.token_code}`,
+              };
+              
+              localStorage.setItem("_tokenCode", JSON.stringify(headerObj))
+              localStorage.setItem("_userType", selected)
+              setLoading(false)
+              setIsEmail(1)
+              localStorage.setItem("__userId", response.data.data._id)
+            }else{
+              toast(response.data.msg, {
+                position: "top-right",
+                autoClose: 5000,
+                type: "error",
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+              });
+              //setErrorMsg(response.data.msg)
+              setLoading(false)
+            }
+          }
       } catch (error) {
           
       }
     }
-
-    
-    
+  
 }
 
 
@@ -219,9 +230,11 @@ const emaitVerifaction = async () =>{
         otp: OTP,
       }
       console.log("reqObj", reqObj);
+      
       const response = await API.user_buyer_mailVerifi(reqObj)
       console.log("buyerresponse", response);
       if (response.data.success === 1) {
+       
         localStorage.setItem("isLoginCheck", true);
         setIsLogin(localStorage.getItem("isLoginCheck"))
         localStorage.setItem("_userType", selected)
@@ -241,7 +254,6 @@ const emaitVerifaction = async () =>{
       const response = await API.user_seller_mailVerifi(reqObj)
       console.log("sellerresponse", response);
       if (response.data.success === 1) {
-        
         localStorage.setItem("isLoginCheck", true);
         setIsLogin(localStorage.getItem("isLoginCheck"))
         navigate("/user-dashboard")
@@ -292,7 +304,6 @@ const loginSubmit = async ()=>{
         setIsLogin(localStorage.getItem("isLoginCheck"))
         localStorage.setItem("_userType", selectedLogin)
         localStorage.setItem("__userId", response.data.data.id)
-        localStorage.setItem("_tokenCode", response.data.token_code)
         const headerObj = {
           Authorization: `Bearer ${response.data.token_code}`,
         };
@@ -376,7 +387,6 @@ const newEmailDataSubmit = async () => {
             theme: "colored",
           });
           setIsForgot(1)
-          localStorage.setItem("__userId", response.data.data.id)
         }else{
           toast(response.data.message, {
             position: "top-right",
@@ -402,8 +412,18 @@ const newEmailDataSubmit = async () => {
       const response = await API.forgot_password_saller(reqObj)
       console.log("response",response);
       if (response.data.success === 1) {
+        toast(response.data.message, {
+          position: "top-right",
+          autoClose: 5000,
+          type: "success",
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
         setIsForgot(1)
-        localStorage.setItem("__userId", response.data.data.id)
       }else{
         toast(response.data.message, {
           position: "top-right",
@@ -473,7 +493,7 @@ const newPassHandaler = (e) =>{
   setPassWordData({ ...passWordData, [name]: value });
 }
 
-const newPasswordSet = async () => {
+const newPasswordSet = async () =>{
   setLoading(true);
     let flag = validatePass();
     if (!flag) {
@@ -491,7 +511,8 @@ const newPasswordSet = async () => {
         const response = await API.reset_password_buyer(reqObj);
           console.log("bbbresponse", response);
           if (response.data.success === 1) {
-            toast(response.data.message, {
+            closeModal()
+            toast(response.data.msg, {
               position: "top-right",
               autoClose: 5000,
               type: "success",
@@ -502,7 +523,6 @@ const newPasswordSet = async () => {
               progress: undefined,
               theme: "colored",
             });
-            closeModal()
             setIsForgot(0)
           }
       }else{
@@ -510,6 +530,7 @@ const newPasswordSet = async () => {
         const response = await API.reset_password_saller(reqObj);
           console.log("bbbresponse", response);
           if (response.data.success === 1) {
+            closeModal()
             toast(response.data.msg, {
               position: "top-right",
               autoClose: 5000,
@@ -527,6 +548,10 @@ const newPasswordSet = async () => {
     } catch (error) {
       
     }
+
+
+
+ 
 }
 
 const disabelBtnlog = !loginData.emailId || !selectedLogin || !loginData.password;
@@ -647,7 +672,7 @@ const validate = () => {
     } else {
       setErrorPassword({
         field: "password",
-        message: "Confirm password does not match with your password",
+        message: "Please enter your password.",
       });
       flag = false;
     }
@@ -658,7 +683,7 @@ const validate = () => {
     if (password === "" || password !== confirmPassword) {
       setConfirmErrorPasword({
         field: "confirmPassword",
-        message: "Please confirm your password",
+        message: "Confirm password does not match with your password",
       });
       flag = false;
     } else {
@@ -722,11 +747,12 @@ const validatePass = () => {
   return flag;
 };
 
+
 const closeModal = () =>{
+  
   setIsForgot(0)
   setOpenModal(false)
 }
-  
 
   const disabelBtn = !formData.firstName || !formData.lastName || 
     !formData.email || !formData.mobileNo || !formData.password || !formData.confirmPassword || !selected;
@@ -735,35 +761,107 @@ const closeModal = () =>{
 
   return (
     <>
-     <ToastContainer />
+     {/* <ToastContainer /> */}
         <div className="loginSec">
-            <div className={isEmail === 0 ? "main loginAll": "main verification"}>
+            <div className={isEmail === 0 ? "main": "main verification"}>
                 {isEmail === 0 ? (
                   <>
-                    <input type="checkbox" id="chk" aria-hidden="true"/>
-                      <div class="signup ">
-                          <label for="chk" aria-hidden="true">Login</label>
-                          <div className="loginCont">
-                            <input onChange={loginHandaler} 
-                                value={loginData.emailId}
-                                type="email" name="emailId"
-                                placeholder="Email" required=""/>
-                                
-                              <input onChange={loginHandaler} 
-                                value={loginData.password} 
-                                type="password" name="password" 
-                                placeholder="Password" required=""/>
-                              <button className={disabelBtnlog ? "customBtn disableBtn" : "customBtn"} disabled={disabelBtnlog} onClick={loginSubmit}>Login</button>
-                            
-                              <Link className="forgotPass" to="#" onClick={() => setOpenModal(true)}>Forgot Password ?</Link>
-                              <p className='sectionBtm'>
-                                Don't have account ? <Link to="/buyer/signup">Sign up</Link>
-                              </p>
+                    {/* <input type="checkbox" id="chk" aria-hidden="true"/> */}
+                      <div class="signup">
+                          <label for="chk" aria-hidden="true">Sign up</label>
+                          <p className="formErrorAlrt">{errorMsg}</p>
+                          <input 
+                              onChange={handalerChnages} 
+                              value={formData.firstName} 
+                              type="text" name="firstName" 
+                              placeholder="First Name" 
+                              className={errorName ? "mb-0" :"" }
+                          />
+                          {errorName.field === "firstName" && (
+                              <p className="formErrorAlrt">{errorName.message}</p>
+                          )}
+                          <input className={errorLastName ? "mb-0" :"" } onChange={handalerChnages} value={formData.lastName}
+                           type="text" name="lastName" placeholder="Last Name" required="" />
+                          {errorLastName.field === "lastName" && (
+                              <p className="formErrorAlrt">{errorLastName.message}</p>
+                          )}
+
+                          <input onChange={handalerChnages} value={formData.email} type="email" className={errorEmail ? "mb-0" :"" } name="email" placeholder="Email" required="" />
+                          {errorEmail.field === "email" && (
+                            <p className="formErrorAlrt">{errorEmail.message}</p>
+                          )}
+                          <div className="mobileNumber mt-2">
+                              <select className="mobileCode " onChange={handleCountrySelect}>
+                                  
+                                  {cuntryData.map((item, index) => (
+                                    <>
+                                        {item.code === "US" ? (
+                                          <option
+                                            name="category"
+                                            key={item.name}
+                                            value={item.dial_code}
+                                          >
+                                            { item.dial_code}
+                                          </option>
+                                        ) : (
+                                          ""
+                                        )}
+                                    </>
+                                  ))}
+                                </select>
+                                <NumberFormat
+                                  className="mobileNumberF"
+                                  placeholder="Enter mobile number"
+                                  format="(###)###-####"
+                                  onChange={handalerChnages}
+                                  mask="_"
+                                  name="mobileNo"
+                                  value={formData.mobileNo} 
+                                />
                           </div>
+
+                          {mobileErrorInner ? (""):(
+                              <>
+                                {mobileError.field === "mobileNo" && (
+                                  <p className="formErrorAlrt">{mobileError.message}</p>
+                                )}
+                              </>
+                            )}  
+                            
+                            <p className="formErrorAlrt">{mobileErrorInner}</p>
+                          
+                          {/* {mobileError?(<p className="formErrorAlrt">{mobileError}</p>):("")} */}
+                          
+                          <input
+                            autoFocus={true}
+                            autoComplete="off"
+                            onChange={handalerChnages} value={formData.password}
+                            className={errorPassword ? "mb-0" :"" } 
+                            type="password" name="password" 
+                            placeholder="Password" required="" />
+                          {errorPassword.field === "password" && (
+                            <p className="formErrorAlrt">{errorPassword.message}</p>
+                          )}
+
+                          <input onChange={handalerChnages} value={formData.confirmPassword} 
+                          className={confirmErrorPasword ? "mb-0" :"" }  type="password" 
+                          name="confirmPassword" placeholder="Confrim Password" required="" />
+
+                          {confirmErrorPasword.field === "confirmPassword" && (
+                            <p className="formErrorAlrt">{confirmErrorPasword.message}</p>
+                          )}
+
+                          <button  className="customBtn"  onClick={submitHandaler}>
+                              {loading === false ? "Sign up" : "loader..."}    
+                          </button>
+                          <p className='sectionBtm'>
+                            Already You Have A Account ? <Link to="/seller/login">Login Now</Link>
+                          </p>
                       </div>
                       {/* <div class="login">
                           <label for="chk" aria-hidden="true">Login</label>
                           <p className="formErrorAlrt">{errorMsg}</p>
+                         
                          <div className="loginCont">
                             <input onChange={loginHandaler} 
                                 value={loginData.emailId}
@@ -776,7 +874,7 @@ const closeModal = () =>{
                                 placeholder="Password" required=""/>
                               <button className={disabelBtnlog ? "customBtn disableBtn" : "customBtn"} disabled={disabelBtnlog} onClick={loginSubmit}>Login</button>
                             
-                              <Link className="forgotPass" to="#" onClick={() => setOpenModal(true)}>Forgot Password ?</Link>
+                              <Link className="forgotPass"  to="#" onClick={() => setOpenModal(true)}>Forgot Password ?</Link>
                          </div>
                       </div> */}
                   </>
@@ -784,7 +882,7 @@ const closeModal = () =>{
                   <>
                     <h3 className="headingSing">Email verification</h3>
                     <p className="message">Enter the code we just send on your Email</p>
-                    <p className="formErrorAlrt">{otpError}</p>
+                    <p className="formErrorAlrt ps-4">{otpError}</p>
                     <div className="otpInput">
                       <OTPInput
                         value={OTP}
@@ -857,8 +955,10 @@ const closeModal = () =>{
               </div>
             </div>
         </Modal>
+
+      
     </>
   )
 }
 
-export default Logins
+export default SignupSeller

@@ -2,10 +2,12 @@ import React from 'react'
 import EditProfile from './EditProfile'
 import Manufactures from './Manufactures'
 import ChangesPassword from "./ChangesPassword"
-import { useNavigate } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 import EnquiryList from './EnquiryList';
 import Order from './Order';
+import UserDashBoard from './UserDashBoard';
 const Dashboard = ({setIsLogin}) => {
+    const loaction = useLocation()
     const navigate = useNavigate();
     const logOutBtn = () => {
         localStorage.removeItem("__userId")
@@ -48,7 +50,7 @@ const Dashboard = ({setIsLogin}) => {
                                 <div className='col-md-8'>
                                     <div class="tab-content" id="v-pills-tabContent">
                                         <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
-                                            <h1 className="text-center">Welcome to Supply We Stock</h1>
+                                            <UserDashBoard />
                                         </div>
                                         <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
                                             <EditProfile setIsLogin={setIsLogin} />

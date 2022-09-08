@@ -763,125 +763,13 @@ const closeModal = () =>{
     <>
      {/* <ToastContainer /> */}
         <div className="loginSec">
-            <div className={isEmail === 0 ? "main": "main verification"}>
+            <div className={isEmail === 0 ? "main loginAll": "main verification"}>
                 {isEmail === 0 ? (
                   <>
                     <input type="checkbox" id="chk" aria-hidden="true"/>
                       <div class="signup">
-                          <label for="chk" aria-hidden="true">Sign up</label>
-                          <p className="formErrorAlrt">{errorMsg}</p>
-                          <input 
-                              onChange={handalerChnages} 
-                              value={formData.firstName} 
-                              type="text" name="firstName" 
-                              placeholder="First Name" 
-                              className={errorName ? "mb-0" :"" }
-                          />
-                          {errorName.field === "firstName" && (
-                              <p className="formErrorAlrt">{errorName.message}</p>
-                          )}
-                          <input className={errorLastName ? "mb-0" :"" } onChange={handalerChnages} value={formData.lastName}
-                           type="text" name="lastName" placeholder="Last Name" required="" />
-                          {errorLastName.field === "lastName" && (
-                              <p className="formErrorAlrt">{errorLastName.message}</p>
-                          )}
-
-                          <input onChange={handalerChnages} value={formData.email} type="email" className={errorEmail ? "mb-0" :"" } name="email" placeholder="Email" required="" />
-                          {errorEmail.field === "email" && (
-                            <p className="formErrorAlrt">{errorEmail.message}</p>
-                          )}
-                          <div className="mobileNumber mt-2">
-                              <select className="mobileCode " onChange={handleCountrySelect}>
-                                  
-                                  {cuntryData.map((item, index) => (
-                                    <>
-                                        {item.code === "US" ? (
-                                          <option
-                                            name="category"
-                                            key={item.name}
-                                            value={item.dial_code}
-                                          >
-                                            { item.dial_code}
-                                          </option>
-                                        ) : (
-                                          ""
-                                        )}
-                                    </>
-                                  ))}
-                                </select>
-                                <NumberFormat
-                                  className="mobileNumberF"
-                                  placeholder="Enter mobile number"
-                                  format="(###)###-####"
-                                  onChange={handalerChnages}
-                                  mask="_"
-                                  name="mobileNo"
-                                  value={formData.mobileNo} 
-                                />
-                          </div>
-
-                          {mobileErrorInner ? (""):(
-                              <>
-                                {mobileError.field === "mobileNo" && (
-                                  <p className="formErrorAlrt">{mobileError.message}</p>
-                                )}
-                              </>
-                            )}  
-                            
-                            <p className="formErrorAlrt">{mobileErrorInner}</p>
-                          
-                          {/* {mobileError?(<p className="formErrorAlrt">{mobileError}</p>):("")} */}
-                          
-                          <input
-                            autoFocus={true}
-                            autoComplete="off"
-                            onChange={handalerChnages} value={formData.password}
-                            className={errorPassword ? "mb-0" :"" } 
-                            type="password" name="password" 
-                            placeholder="Password" required="" />
-                          {errorPassword.field === "password" && (
-                            <p className="formErrorAlrt">{errorPassword.message}</p>
-                          )}
-
-                          <input onChange={handalerChnages} value={formData.confirmPassword} 
-                          className={confirmErrorPasword ? "mb-0" :"" }  type="password" 
-                          name="confirmPassword" placeholder="Confrim Password" required="" />
-
-                          {confirmErrorPasword.field === "confirmPassword" && (
-                            <p className="formErrorAlrt">{confirmErrorPasword.message}</p>
-                          )}
-
-                          <button  className="customBtn"  onClick={submitHandaler}>
-                              {loading === false ? "Sign up" : "loader..."}    
-                          </button>
-                      </div>
-                      <div class="login">
                           <label for="chk" aria-hidden="true">Login</label>
-                          <p className="formErrorAlrt">{errorMsg}</p>
-                          {/* <div className="userType">
-                            <input
-                                type="radio"
-                                id="Buyer"
-                                name="choose"
-                                value="Buyer"
-                                checked={selectedLogin === 'Buyer'}
-                                onChange={handleChangeLogin}
-                                className="redioBtn"
-                              />
-                              <label htmlFor="Buyer">Buyer</label>
-
-                              <input
-                                type="radio"
-                                id="Seller"
-                                name="choose"
-                                value="Seller"
-                                onChange={handleChangeLogin}
-                                checked={selectedLogin === 'Seller'}
-                                className="redioBtn"
-                              />
-                              <label htmlFor="Seller">Seller</label>
-                          </div> */}
-                         <div className="loginCont">
+                          <div className="loginCont">
                             <input onChange={loginHandaler} 
                                 value={loginData.emailId}
                                 type="email" name="emailId"
@@ -894,8 +782,12 @@ const closeModal = () =>{
                               <button className={disabelBtnlog ? "customBtn disableBtn" : "customBtn"} disabled={disabelBtnlog} onClick={loginSubmit}>Login</button>
                             
                               <Link className="forgotPass"  to="#" onClick={() => setOpenModal(true)}>Forgot Password ?</Link>
+                              <p className='sectionBtm'>
+                                Don't have account ? <Link to="/seller/signup">Sign up</Link>
+                              </p>
                          </div>
                       </div>
+                      
                   </>
                 ):(
                   <>

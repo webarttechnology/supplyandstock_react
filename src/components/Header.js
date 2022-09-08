@@ -45,12 +45,12 @@ const Header = ({isLogin}) => {
                   <li>
                     <Link to="/">Home</Link>
                   </li>
-                  <li>
+                  {/* <li>
                     <Link to="/">Shop</Link>
                   </li>
                   <li>
                     <Link to="/">OUR STORY</Link>
-                  </li>
+                  </li> */}
                   <li>
                     <Link to="/">CONTACT</Link>
                   </li>
@@ -60,7 +60,6 @@ const Header = ({isLogin}) => {
             <div className="col-md-3 text-end">
               <div className="rightMenu">
                 <ul>
-                  
                   {search === false ? (
                     <>
                     {isLogin ? (<li>
