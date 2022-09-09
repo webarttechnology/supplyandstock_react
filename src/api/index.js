@@ -270,7 +270,6 @@ export const buyer_enqueris = async (data, header) => {
 };
 
 export const buyer_enqueris_id = async (data, header) => {
-    console.log(header);
     try {
         const url = c.ENQUIRIES + "/buyer/" + data;
         console.log("url", url);
@@ -282,3 +281,53 @@ export const buyer_enqueris_id = async (data, header) => {
         return e.response;
     }
 };
+
+export const seller_enqueris_id = async (data, header) => {
+    try {
+        const url = c.NOTIFICATIONS + "/" + data;
+        const res = await axios.get(url, {
+            headers: JSON.parse(header),
+          });
+        return res;
+    } catch (e) {
+        return e.response;
+    }
+};
+
+export const enquriys_accepts = async (data,  header) => {
+    try {
+        const url = c.NOTIFICATIONS + "/accept/" + data.userId + "/" + data.id;
+        console.log("url", url);
+        const res = await axios.get(url,{
+            headers: JSON.parse(header),
+          });
+        return res;
+    } catch (e) {
+        return e.response;
+    }
+}
+
+
+export const chatRoomlist = async (data, header) => {
+    try {
+        const url = c.CHATROOM + "/" + data;
+        const res = await axios.get(url,{
+            headers: JSON.parse(header),
+          });
+        return res;
+    } catch (e) {
+        return e.response;
+    }
+}
+
+export const chatfeedShow = async (data, header) => {
+    try {
+        const url = c.CHAT + "/" + data;
+        const res = await axios.get(url,{
+            headers: JSON.parse(header),
+          });
+        return res;
+    } catch (e) {
+        return e.response;
+    }
+}

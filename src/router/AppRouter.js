@@ -11,6 +11,7 @@ import { ToastContainer } from "react-toastify";
 import Enquiry from "../pages/Enquiry";
 import SignupBuyer from "../components/SignupBuyer";
 import SignupSeller from "../pages/SignupSeller";
+import Message from "../pages/Message";
 
 const AppRouter = () => {
   const [isLogin, setIsLogin] = useState(
@@ -29,6 +30,7 @@ const AppRouter = () => {
         <Route path="/buyer/signup" element={<SignupBuyer setIsLogin={setIsLogin}  />} />
         <Route path="/user-dashboard" element={<Dashboard setIsLogin={setIsLogin} />} />
         <Route path="/edit-profile" element={<EditProfile />} />
+        <Route path="/message" element={<Message />} />
         <Route path="/enquiry" element={<Enquiry />} />
       </Routes>
       <Footer/>

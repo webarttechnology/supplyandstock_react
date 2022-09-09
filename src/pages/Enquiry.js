@@ -49,7 +49,7 @@ const upDateSubmitBtn = async () =>{
         console.log("response", response);
         if (response.data.success === 1) {
             //navigate("/user-dashboard")
-            setFormData("")
+            setFormData(initialData)
             toast(response.data.msg, {
                 position: "top-right",
                 autoClose: 5000,

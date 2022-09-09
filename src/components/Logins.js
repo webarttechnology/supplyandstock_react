@@ -744,11 +744,12 @@ const closeModal = () =>{
                       <div class="signup ">
                           <label for="chk" aria-hidden="true">Login</label>
                           <div className="loginCont">
+                            <span>Email id</span>
                             <input onChange={loginHandaler} 
                                 value={loginData.emailId}
                                 type="email" name="emailId"
                                 placeholder="Email" required=""/>
-                                
+                                <span>Password</span>
                               <input onChange={loginHandaler} 
                                 value={loginData.password} 
                                 type="password" name="password" 

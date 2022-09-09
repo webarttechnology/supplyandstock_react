@@ -744,6 +744,7 @@ const closeModal = () =>{
                       <div class="signup">
                           <label for="chk" aria-hidden="true">Sign up</label>
                           <p className="formErrorAlrt">{errorMsg}</p>
+                          <span>First Name</span>
                           <input 
                               onChange={handalerChnages} 
                               value={formData.firstName} 
@@ -754,17 +755,18 @@ const closeModal = () =>{
                           {errorName.field === "firstName" && (
                               <p className="formErrorAlrt">{errorName.message}</p>
                           )}
+                          <span>Last Name</span>
                           <input className={errorLastName ? "mb-0" :"" } onChange={handalerChnages} value={formData.lastName}
                            type="text" name="lastName" placeholder="Last Name" required="" />
                           {errorLastName.field === "lastName" && (
                               <p className="formErrorAlrt">{errorLastName.message}</p>
                           )}
-
+                            <span>Email id</span>
                           <input onChange={handalerChnages} value={formData.email} type="email" className={errorEmail ? "mb-0" :"" } name="email" placeholder="Email" required="" />
                           {errorEmail.field === "email" && (
                             <p className="formErrorAlrt">{errorEmail.message}</p>
                           )}
-
+                          <span>Mobile Number</span>
                           <div className="mobileNumber mt-2">
                               <select className="mobileCode " onChange={handleCountrySelect}>
                                   
@@ -806,7 +808,7 @@ const closeModal = () =>{
                             <p className="formErrorAlrt">{mobileErrorInner}</p>
 
                           {/* {mobileError?(<p className="formErrorAlrt">{mobileError}</p>):("")} */}
-                          
+                          <span>Password</span>
                           <input
                             autoFocus={true}
                             autoComplete="off"
@@ -817,7 +819,7 @@ const closeModal = () =>{
                           {errorPassword.field === "password" && (
                             <p className="formErrorAlrt">{errorPassword.message}</p>
                           )}
-
+                          <span>Confrim Password</span>
                           <input onChange={handalerChnages} value={formData.confirmPassword} 
                           className={confirmErrorPasword ? "mb-0" :"" }  type="password" 
                           name="confirmPassword" placeholder="Confrim Password" required="" />
