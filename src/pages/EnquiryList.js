@@ -92,7 +92,6 @@ const EnquiryList = () => {
                                         <button className='btn btn-primary me-2' onClick={()=> sellerAccept(item._id)}> Accept</button>
                                     )}
                                 </td>
-                                {/* <td><i class="bi bi-chat-left-dots-fill chatIcon"></i></td> */}
                             </tr>
                         ))}
                     </>
