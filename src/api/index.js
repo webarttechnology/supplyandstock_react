@@ -297,7 +297,6 @@ export const seller_enqueris_id = async (data, header) => {
 export const enquriys_accepts = async (data,  header) => {
     try {
         const url = c.NOTIFICATIONS + "/accept/" + data.userId + "/" + data.id;
-        console.log("url", url);
         const res = await axios.get(url,{
             headers: JSON.parse(header),
           });

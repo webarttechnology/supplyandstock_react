@@ -2,16 +2,27 @@ import React, { useEffect, useState } from 'react'
 import { useLocation } from 'react-router'
 import { Link } from 'react-router-dom';
 import * as API from "../api/index";
+import { io } from "socket.io-client";
+import InputEmoji from "react-input-emoji";
+import ScrollToBottom from "react-scroll-to-bottom";
 const Message = () => {
+    const socket = io("http://api.supplywestock.com:3001");
+    console.log("socket", socket);
    const loaction =  useLocation()
     const [userList, setUserList] = useState([])
     const [feedMess, setFeedMess] = useState([])
+    const [text, setText] = useState("");
+    const [chatCodes, setChatCodes] = useState("")
+    const [userName, setUserName] = useState([])
 
    const chatRoomShow = async() =>{
         const header = localStorage.getItem("_tokenCode");
         try {
             const response = await API.chatRoomlist(localStorage.getItem("__userId"), header) 
             console.log("responsedf", response);
+            response.data.data.map((item, index)=>(
+                setUserName(item.users)
+            ))
             setUserList(response.data.data)
         } catch (error) {
             
@@ -20,6 +31,7 @@ const Message = () => {
 
 
    const chatHistoryShow = async (chatCode) =>{
+        setChatCodes(chatCode)
         const header = localStorage.getItem("_tokenCode");
         try {
             const response = await API.chatfeedShow(chatCode, header)
@@ -30,7 +42,20 @@ const Message = () => {
         }
    }
 
+   function handleOnEnter(text) {
+    console.log("chatCode", chatCodes);
+    socket.emit("createChat", {
+        senderId: localStorage.getItem("__userId"),
+        chatroomId: chatCodes,
+        message: text,
+    });
+  }
+
     useEffect(() => {
+        socket.on("receiveChat", (data) => {
+            console.log("receiveChat", data);
+            setFeedMess(data);
+        });
         chatRoomShow()
     }, [])
     
@@ -47,9 +72,17 @@ const Message = () => {
                                     <div className='sideBarUser'>
                                         <ul className='ps-0'>
                                             {userList.map((item, index)=>(
-                                                item.users.map((userItm, index)=>(
-                                                    <li onClick={()=>chatHistoryShow(item._id)}>{userItm.firstName} {userItm.lastName}</li>
-                                                ))
+                                                <li onClick={()=>chatHistoryShow(item._id)}>
+                                                    {item.users.length === 2 ? (
+                                                        <>
+                                                            {item.users[0].firstName} {item.users[0].lastName}, {item.users[1].firstName} {item.users[1].lastName}
+                                                        </>
+                                                        ):(
+                                                            <>
+                                                                {item.users[0].firstName} {item.users[0].lastName}, {item.users[1].firstName} {item.users[1].lastName}, {item.users[2].firstName} {item.users[2].lastName}
+                                                            </>
+                                                        )}  
+                                                </li>
                                             ))}
                                         </ul>
                                     </div>
@@ -63,14 +96,29 @@ const Message = () => {
                                     : (
                                         <>
                                         <div className='headerTitle'>
-                                            <h4>Biswajit mondal</h4>
+                                            <h4>{userName[0].firstName} {userName[0].lastName}, {userName[1].firstName} {userName[1].lastName}, {userName[2].firstName} {userName[2].lastName}</h4>
                                         </div>
                                         <div className='messfeed'>
-                                            <div className='isResiver'>
-                                                <p> Hello dost</p>
-                                            </div>
-                                            <div className='isSender'>
-                                                <p> Hey bro</p>
+                                            <div className='row m-0'>
+                                                <ScrollToBottom className="scroll">
+                                                    {feedMess.map((item, index)=>(
+                                                        <>
+                                                            {localStorage.getItem("__userId") != item.senderId ? (
+                                                                <div className='align-items-end col-md-12 d-flex'>
+                                                                    <div className='isResiver'>
+                                                                        <p>{item.message[0].msg}</p>
+                                                                    </div>
+                                                                </div>
+                                                            ):(
+                                                                <div className='align-items-end col-md-12 d-flex justify-content-end text-end'>
+                                                                    <div className='isSender'>
+                                                                        <p> {item.message[0].msg} </p>
+                                                                    </div>
+                                                                </div>
+                                                            )}
+                                                        </>
+                                                    ))}
+                                                </ScrollToBottom>
                                             </div>
                                         </div>
                                         <div className='messinput'>
@@ -78,7 +126,21 @@ const Message = () => {
                                                 <div class="container">
                                                     <div class="row">
                                                     <div class="col-sm-12">
-                                                        <div class="subscribe_now">
+                                                        <div className="mess_type_input">
+                                                            {/* <label for="file-upload" className="custom-file-upload">
+                                                                <i class="bi bi-paperclip"></i>
+                                                            </label>
+                                                            <input hidden id="file-upload" type="file" /> */}
+                                                            <InputEmoji
+                                                                className="messBox"
+                                                                value={text}
+                                                                onChange={setText}
+                                                                cleanOnEnter
+                                                                onEnter={handleOnEnter}
+                                                                placeholder="Type a message"
+                                                            />
+                                                        </div>
+                                                        {/* <div class="subscribe_now">
                                                             <form class="subscribe_form">
                                                                 <div class="input-group">
                                                                 <input type="text" class="form-control" name="email" placeholder="Type messages here..." />
@@ -87,7 +149,7 @@ const Message = () => {
                                                                 </span>
                                                                 </div>
                                                             </form>
-                                                            </div>
+                                                            </div> */}
                                                         </div>
                                                     </div>
                                                 </div>

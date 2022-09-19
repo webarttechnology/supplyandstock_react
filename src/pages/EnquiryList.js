@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import * as API from "../api/index";
 const EnquiryList = () => {
     const [allEnqris, setAllEnqris] = useState([])
+    console.log("allEnqris", allEnqris);
 
     const allEnquery = async () =>{
         const header = localStorage.getItem("_tokenCode");
@@ -33,7 +34,7 @@ const EnquiryList = () => {
                 id: enqrId,
             }
             const response = await API.enquriys_accepts(reqObj, header);
-            if (response.data.success === 1) {
+            if (response.data.success === 200) {
                 allEnquery()
             }
             console.log("response", response);
@@ -82,7 +83,16 @@ const EnquiryList = () => {
                                 <td>{item.quantities}</td>
                                 <td>{item.size}</td>
                                 <td>{item.product_des}</td>
-                                <td><i class="bi bi-chat-left-dots-fill chatIcon"></i></td>
+                                <td>
+                                    {item.isActive === "1" ? (
+                                        <Link to="/message" state={{ data: "occupation" }} className='btn btn-info me-2'> 
+                                            <i class="bi bi-chat-left-dots-fill chatIcon"></i> 
+                                        </Link>
+                                    ):(
+                                        <button className='btn btn-primary me-2' onClick={()=> sellerAccept(item._id)}> Accept</button>
+                                    )}
+                                </td>
+                                {/* <td><i class="bi bi-chat-left-dots-fill chatIcon"></i></td> */}
                             </tr>
                         ))}
                     </>

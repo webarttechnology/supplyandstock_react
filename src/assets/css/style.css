@@ -1016,6 +1016,7 @@ label{
   float: right;
   border-radius: 5px;
   text-align: end;
+  margin-bottom: 15px;
 }
 .isSender p{
   margin-bottom: 0;
@@ -1023,4 +1024,7 @@ label{
 }
 .isResiver p{
   margin-bottom: 0;
+}
+.react-input-emoji--button{
+  display: none !important;
 }
