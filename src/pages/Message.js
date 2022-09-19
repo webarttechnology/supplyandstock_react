@@ -1,11 +1,16 @@
 import React, { useEffect, useState } from 'react'
 import { useLocation } from 'react-router'
+import useSound from 'use-sound';
 import { Link } from 'react-router-dom';
 import * as API from "../api/index";
 import { io } from "socket.io-client";
 import InputEmoji from "react-input-emoji";
 import ScrollToBottom from "react-scroll-to-bottom";
+import boopSfx from '../assets/images/messton.mp3';
 const Message = () => {
+
+    const [play] = useSound(boopSfx);
+
     const socket = io("http://api.supplywestock.com:3001");
     console.log("socket", socket);
    const loaction =  useLocation()
@@ -49,6 +54,7 @@ const Message = () => {
         chatroomId: chatCodes,
         message: text,
     });
+    play()
   }
 
     useEffect(() => {
@@ -140,16 +146,6 @@ const Message = () => {
                                                                 placeholder="Type a message"
                                                             />
                                                         </div>
-                                                        {/* <div class="subscribe_now">
-                                                            <form class="subscribe_form">
-                                                                <div class="input-group">
-                                                                <input type="text" class="form-control" name="email" placeholder="Type messages here..." />
-                                                                <span class="input-group-btn">
-                                                                        <button class="btn btn-default" type="button">Send</button>
-                                                                </span>
-                                                                </div>
-                                                            </form>
-                                                            </div> */}
                                                         </div>
                                                     </div>
                                                 </div>
