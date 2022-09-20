@@ -101,6 +101,14 @@ const upDateSubmitBtn = async () => {
       if (localStorage.getItem("_userType") === "Buyer") {
         const BuyerResponse = await API.manufacturer_buyer(localStorage.getItem("__userId"), header)
         console.log("BuyerResponse", BuyerResponse);
+        if (BuyerResponse.data.data === null) {
+          localStorage.removeItem("__userId")
+          localStorage.removeItem("_tokenCode")
+          localStorage.removeItem("_userType")
+          localStorage.removeItem("isLoginCheck")
+          setIsLogin(localStorage.removeItem("isLoginCheck"));
+          navigate("/")
+        }
         setFormData(BuyerResponse.data.data)
         const mobileDatas = BuyerResponse.data.data.mobileNo.substring(2)
         setMobileData(mobileDatas)
@@ -108,6 +116,14 @@ const upDateSubmitBtn = async () => {
       }else{
         const sellerResponse = await API.manufacturer_saller(localStorage.getItem("__userId"), header)
         console.log("sellerResponse", sellerResponse);
+        if (sellerResponse.data.data === null) {
+          localStorage.removeItem("__userId")
+          localStorage.removeItem("_tokenCode")
+          localStorage.removeItem("_userType")
+          localStorage.removeItem("isLoginCheck")
+          setIsLogin(localStorage.removeItem("isLoginCheck"));
+          navigate("/")
+        }
         setFormData(sellerResponse.data.data)
         const mobileDatas = sellerResponse.data.data.mobileNo.substring(2)
         setMobileData(mobileDatas)
