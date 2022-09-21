@@ -19,12 +19,11 @@ const Message = () => {
     const [text, setText] = useState("");
     const [chatCodes, setChatCodes] = useState("")
     const [userName, setUserName] = useState([])
-    const [typingda, setTypingda] = useState(false)
     const [typeData, setTypeData] = useState("")
-    const [falsData, setfalsData] = useState(true)
+    const [typeId, setTypeId] = useState("")
 
-   console.log("typing", typingda);
-   const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+
    const chatRoomShow = async() =>{
         const header = localStorage.getItem("_tokenCode");
         try {
@@ -53,21 +52,17 @@ const Message = () => {
    }
 
    const messageHandaler = (data) => {
-    console.log("data", data)
-    setTypingda(false)
-    console.log("typingss", typingda);     
     socket.emit('typing', {user: data === "" ? "" : localStorage.getItem("__userId"), typing: data === "" ? false : true})
     setText(data)
    }
 
    function handleOnEnter(text) {
-    console.log("text", text);
     play()
-    // socket.emit("createChat", {
-    //     senderId: localStorage.getItem("__userId"),
-    //     chatroomId: chatCodes,
-    //     message: text,
-    // });
+    socket.emit("createChat", {
+        senderId: localStorage.getItem("__userId"),
+        chatroomId: chatCodes,
+        message: text,
+    });
     
   }
 
@@ -75,16 +70,14 @@ const Message = () => {
 
     useEffect(() => {
         socket.on("display", (data) => {
-            console.log("display", data);
             setTypeData(data.typing)
-            //setFeedMess(data);
-            //feedMess.push(data)
+            setTypeId(data.user)
         });
         
         socket.on("receiveChat", (data) => {
             console.log("receiveChat", data);
-            //setFeedMess(data);
-            feedMess.push(data)
+            setFeedMess(data);
+            //feedMess.push(data)
         });
         
         chatRoomShow()
@@ -156,7 +149,10 @@ const Message = () => {
                                             <div id="subscription_area">
                                                 <div class="container">
                                                     <div className='row'>
-                                                        <p className='mb-1 ps-4 text-start'>{typeData ? "Typeing..." : ""}</p>
+                                                        {typeId === localStorage.getItem("__userId") ? (""):(
+                                                            <p className='mb-1 ps-4 text-start'>{typeData ? "Typeing..." : ""}</p>
+                                                        )}
+                                                        
                                                     </div>
                                                     <div class="row">
                                                     <div class="col-sm-12">
