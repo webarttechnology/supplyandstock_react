@@ -13,12 +13,14 @@ const Message = () => {
 
     const socket = io("http://api.supplywestock.com:3001");
     console.log("socket", socket);
-   const loaction =  useLocation()
+    const loaction =  useLocation()
     const [userList, setUserList] = useState([])
     const [feedMess, setFeedMess] = useState([])
     const [text, setText] = useState("");
     const [chatCodes, setChatCodes] = useState("")
     const [userName, setUserName] = useState([])
+
+    console.log("feedMess", feedMess);
 
    const chatRoomShow = async() =>{
         const header = localStorage.getItem("_tokenCode");
@@ -48,19 +50,20 @@ const Message = () => {
    }
 
    function handleOnEnter(text) {
-    console.log("chatCode", chatCodes);
+    play()
     socket.emit("createChat", {
         senderId: localStorage.getItem("__userId"),
         chatroomId: chatCodes,
         message: text,
     });
-    play()
+    
   }
 
     useEffect(() => {
         socket.on("receiveChat", (data) => {
             console.log("receiveChat", data);
-            setFeedMess(data);
+            //setFeedMess(data);
+            feedMess.push(data)
         });
         chatRoomShow()
     }, [])

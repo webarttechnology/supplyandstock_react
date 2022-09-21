@@ -921,6 +921,17 @@ label{
   font-size: 19px;
 }
 
+.scroll{
+  height: 350px;
+}
+.react-scroll-to-bottom--css-jtrav-1n7m0yu::-webkit-scrollbar{
+  width: 5px;
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+}
+
 .subscribe_form {
   max-width: 470px;
   width: 100%;
