@@ -1039,3 +1039,7 @@ label{
 .react-input-emoji--button{
   display: none !important;
 }
+.messBox{
+  background-color: #fff;
+  width: 80%;
+}

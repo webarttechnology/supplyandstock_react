@@ -19,14 +19,17 @@ const Message = () => {
     const [text, setText] = useState("");
     const [chatCodes, setChatCodes] = useState("")
     const [userName, setUserName] = useState([])
+    const [typingda, setTypingda] = useState(false)
+    const [typeData, setTypeData] = useState("")
+    const [falsData, setfalsData] = useState(true)
 
-    console.log("feedMess", feedMess);
-
+   console.log("typing", typingda);
+   const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
    const chatRoomShow = async() =>{
         const header = localStorage.getItem("_tokenCode");
         try {
             const response = await API.chatRoomlist(localStorage.getItem("__userId"), header) 
-            console.log("responsedf", response);
+            //console.log("responsedf", response);
             response.data.data.map((item, index)=>(
                 setUserName(item.users)
             ))
@@ -42,29 +45,48 @@ const Message = () => {
         const header = localStorage.getItem("_tokenCode");
         try {
             const response = await API.chatfeedShow(chatCode, header)
-            console.log("response", response);
+            //console.log("response", response);
             setFeedMess(response.data.data)
         } catch (error) {
             
         }
    }
 
+   const messageHandaler = (data) => {
+    console.log("data", data)
+    setTypingda(false)
+    console.log("typingss", typingda);     
+    socket.emit('typing', {user: data === "" ? "" : localStorage.getItem("__userId"), typing: data === "" ? false : true})
+    setText(data)
+   }
+
    function handleOnEnter(text) {
+    console.log("text", text);
     play()
-    socket.emit("createChat", {
-        senderId: localStorage.getItem("__userId"),
-        chatroomId: chatCodes,
-        message: text,
-    });
+    // socket.emit("createChat", {
+    //     senderId: localStorage.getItem("__userId"),
+    //     chatroomId: chatCodes,
+    //     message: text,
+    // });
     
   }
 
+  
+
     useEffect(() => {
+        socket.on("display", (data) => {
+            console.log("display", data);
+            setTypeData(data.typing)
+            //setFeedMess(data);
+            //feedMess.push(data)
+        });
+        
         socket.on("receiveChat", (data) => {
             console.log("receiveChat", data);
             //setFeedMess(data);
             feedMess.push(data)
         });
+        
         chatRoomShow()
     }, [])
     
@@ -133,6 +155,9 @@ const Message = () => {
                                         <div className='messinput'>
                                             <div id="subscription_area">
                                                 <div class="container">
+                                                    <div className='row'>
+                                                        <p className='mb-1 ps-4 text-start'>{typeData ? "Typeing..." : ""}</p>
+                                                    </div>
                                                     <div class="row">
                                                     <div class="col-sm-12">
                                                         <div className="mess_type_input">
@@ -143,7 +168,7 @@ const Message = () => {
                                                             <InputEmoji
                                                                 className="messBox"
                                                                 value={text}
-                                                                onChange={setText}
+                                                                onChange={messageHandaler}
                                                                 cleanOnEnter
                                                                 onEnter={handleOnEnter}
                                                                 placeholder="Type a message"
