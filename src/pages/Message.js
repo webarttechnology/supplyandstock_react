@@ -66,8 +66,6 @@ const Message = () => {
     
   }
 
-  
-
     useEffect(() => {
         socket.on("display", (data) => {
             setTypeData(data.typing)
