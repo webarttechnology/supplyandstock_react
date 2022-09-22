@@ -86,8 +86,11 @@ const Manufactures = ({setIsLogin}) => {
             
         }
     }
-
     
+    const getsellerIdbyenquris = async () =>{
+        
+    }
+
 
     useEffect(() => {
         MenufactursGet()

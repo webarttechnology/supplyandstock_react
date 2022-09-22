@@ -75,7 +75,6 @@ const Message = () => {
         socket.on("receiveChat", (data) => {
             console.log("receiveChat", data);
             setFeedMess(data);
-            //feedMess.push(data)
         });
         
         chatRoomShow()
@@ -146,28 +145,28 @@ const Message = () => {
                                         <div className='messinput'>
                                             <div id="subscription_area">
                                                 <div class="container">
-                                                    <div className='row'>
+                                                    {/* <div className='row'>
                                                         {typeId === localStorage.getItem("__userId") ? (""):(
                                                             <p className='mb-1 ps-4 text-start'>{typeData ? "Typeing..." : ""}</p>
                                                         )}
                                                         
-                                                    </div>
+                                                    </div> */}
                                                     <div class="row">
                                                     <div class="col-sm-12">
-                                                        <div className="mess_type_input">
-                                                            {/* <label for="file-upload" className="custom-file-upload">
-                                                                <i class="bi bi-paperclip"></i>
-                                                            </label>
-                                                            <input hidden id="file-upload" type="file" /> */}
-                                                            <InputEmoji
-                                                                className="messBox"
-                                                                value={text}
-                                                                onChange={messageHandaler}
-                                                                cleanOnEnter
-                                                                onEnter={handleOnEnter}
-                                                                placeholder="Type a message"
-                                                            />
-                                                        </div>
+                                                            <div className="mess_type_input">
+                                                                {/* <label for="file-upload" className="custom-file-upload">
+                                                                    <i class="bi bi-paperclip"></i>
+                                                                </label>
+                                                                <input hidden id="file-upload" type="file" /> */}
+                                                                <InputEmoji
+                                                                    className="messBox"
+                                                                    value={text}
+                                                                    onChange={messageHandaler}
+                                                                    cleanOnEnter
+                                                                    onEnter={handleOnEnter}
+                                                                    placeholder="Type a message"
+                                                                />
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
