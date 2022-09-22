@@ -112,9 +112,9 @@ const Manufactures = ({setIsLogin}) => {
                 {menuFacId === null ? "" : menuFacId.map((item, index)=>(
                     <div className="col-md-4 text-center" key={index}>
                         <div className="menuimgBox dashMenu">
-                            <div className="align-items-center d-flex justify-content-evenly">
+                            <div className="align-items-center d-flex justify-content-between">
                                 <h4 className="menufecHeading">{item.name}</h4>
-                                <div className="checkBOx" onClick={() => coosheHandaler(item._id)}><i class="bi bi-trash3-fill"></i></div>
+                                <div className="checkBOx" onClick={() => coosheHandaler(item._id)}><i class="bi bi-x-circle-fill"></i></div>
                                 {/* {
                                     menuFacId.manufacturer ? menuFacId.manufacturer.includes(item._id) ? (
                                         <div className="checkBOx"><div class="check" onClick={() => coosheHandaler(item._id)}></div></div>

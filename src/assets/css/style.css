@@ -876,6 +876,15 @@ label{
 }
 .dashMenu{
   height: auto;
+  background: none;
+  border: 1px solid #ccc;
+  box-shadow: none;
+}
+.dashMenu .menufecHeading {
+  margin-top: 0rem;
+  color: #000000;
+  font-size: 16px;
+  font-weight: 500 !important;
 }
 .messageTable{
   margin: 100px 0;
