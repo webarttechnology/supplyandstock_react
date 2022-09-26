@@ -332,7 +332,18 @@ export const chatfeedShow = async (data, header) => {
 }
 export const user_order = async (data, header) => {
     try {
-        const url = c.ORDER + "/" + data;
+        const url = c.ORDER + "/buyer/" + data;
+        const res = await axios.get(url,{
+            headers: JSON.parse(header),
+          });
+        return res;
+    } catch (e) {
+        return e.response;
+    }
+}
+export const user_order_seller = async (data, header) => {
+    try {
+        const url = c.ORDER + "/seller/" + data;
         const res = await axios.get(url,{
             headers: JSON.parse(header),
           });

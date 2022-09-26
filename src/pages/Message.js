@@ -72,6 +72,7 @@ const Message = () => {
             setTypeData(data.typing)
             setTypeId(data.user)
             setTypeChatCode(data.chatCode)
+            console.log("dataDesplay", data);
         });
         
         socket.on("receiveChat", (data) => {

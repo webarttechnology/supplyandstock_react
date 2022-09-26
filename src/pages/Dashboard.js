@@ -44,7 +44,7 @@ const Dashboard = ({setIsLogin}) => {
                                         {localStorage.getItem("_userType") === "Buyer" ? (
                                             <button class="nav-link" id="v-pills-order-tab" data-bs-toggle="pill" data-bs-target="#v-pills-order" type="button" role="tab" aria-controls="v-pills-order-tab" aria-selected="false"><span><i class="bi bi-truck"></i></span> Order  </button>
                                         ):(
-                                        ""
+                                            <button class="nav-link" id="v-pills-order-tab" data-bs-toggle="pill" data-bs-target="#v-pills-order" type="button" role="tab" aria-controls="v-pills-order-tab" aria-selected="false"><span><i class="bi bi-truck"></i></span> Order  </button>
                                         ) }
                                         <button class="nav-link" id="v-pills-settings-tab" data-bs-toggle="pill" data-bs-target="#v-pills-settings" type="button" role="tab" aria-controls="v-pills-settings" aria-selected="false"><span> <i class="bi bi-key-fill"></i> </span>  Change password </button>
                                         <button class="nav-link logout" onClick={logOutBtn}><span> <i class="bi bi-box-arrow-left"></i> </span>  Logout </button>
