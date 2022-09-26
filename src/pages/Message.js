@@ -21,6 +21,9 @@ const Message = () => {
     const [userName, setUserName] = useState([])
     const [typeData, setTypeData] = useState("")
     const [typeId, setTypeId] = useState("")
+    const [typeChatCode, setTypeChatCode] = useState("")
+
+    console.log("typeChatCode", typeChatCode);
 
 
 
@@ -28,7 +31,7 @@ const Message = () => {
         const header = localStorage.getItem("_tokenCode");
         try {
             const response = await API.chatRoomlist(localStorage.getItem("__userId"), header) 
-            //console.log("responsedf", response);
+            console.log("responsedf", response);
             response.data.data.map((item, index)=>(
                 setUserName(item.users)
             ))
@@ -52,7 +55,7 @@ const Message = () => {
    }
 
    const messageHandaler = (data) => {
-    socket.emit('typing', {user: data === "" ? "" : localStorage.getItem("__userId"), typing: data === "" ? false : true})
+    socket.emit('typing', {user: data === "" ? "" : localStorage.getItem("__userId"),chatcode: data === "" ? "" : chatCodes, typing: data === "" ? false : true})
     setText(data)
    }
 
@@ -70,6 +73,7 @@ const Message = () => {
         socket.on("display", (data) => {
             setTypeData(data.typing)
             setTypeId(data.user)
+            setTypeChatCode(data.chatCode)
         });
         
         socket.on("receiveChat", (data) => {
@@ -145,12 +149,12 @@ const Message = () => {
                                         <div className='messinput'>
                                             <div id="subscription_area">
                                                 <div class="container">
-                                                    {/* <div className='row'>
+                                                    <div className='row'>
                                                         {typeId === localStorage.getItem("__userId") ? (""):(
                                                             <p className='mb-1 ps-4 text-start'>{typeData ? "Typeing..." : ""}</p>
                                                         )}
                                                         
-                                                    </div> */}
+                                                    </div>
                                                     <div class="row">
                                                     <div class="col-sm-12">
                                                             <div className="mess_type_input">
