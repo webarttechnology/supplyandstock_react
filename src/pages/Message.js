@@ -25,8 +25,6 @@ const Message = () => {
 
     console.log("typeChatCode", typeChatCode);
 
-
-
    const chatRoomShow = async() =>{
         const header = localStorage.getItem("_tokenCode");
         try {
