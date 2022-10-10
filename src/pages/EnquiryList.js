@@ -89,7 +89,16 @@ const EnquiryList = () => {
                                             <i class="bi bi-chat-left-dots-fill chatIcon"></i> 
                                         </Link>
                                     ):(
-                                        <button className='btn btn-primary me-2' onClick={()=> sellerAccept(item._id)}> Accept</button>
+                                        <>
+                                            {localStorage.getItem("_userType") === "Buyer" ? (
+                                                <Link to="/message" state={{ data: "occupation" }} className='btn btn-info me-2'> 
+                                                    <i class="bi bi-chat-left-dots-fill chatIcon"></i> 
+                                                </Link>
+                                            ):(
+                                                <button className='btn btn-primary me-2' onClick={()=> sellerAccept(item._id)}> Accept</button>
+                                            )}
+                                        </>
+                                        
                                     )}
                                 </td>
                             </tr>
