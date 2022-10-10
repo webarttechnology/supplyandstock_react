@@ -1027,7 +1027,6 @@ label{
   background: rgb(155, 106, 108, 27%);
   border-radius: 5px;
   text-align: start;
-  margin-bottom: 15px;
   width: fit-content;
 }
 .isSender{
@@ -1036,7 +1035,6 @@ label{
   float: right;
   border-radius: 5px;
   text-align: end;
-  margin-bottom: 15px;
 }
 .isSender p{
   margin-bottom: 0;
@@ -1051,4 +1049,12 @@ label{
 .messBox{
   background-color: #fff;
   width: 80%;
+}
+
+.usermessName{
+  color: #bfbfbf;
+  text-transform: capitalize;
+  margin-bottom: 18px;
+  font-size: 12px;
+  margin-top: 5px;
 }

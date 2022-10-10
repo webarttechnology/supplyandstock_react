@@ -23,7 +23,7 @@ const Message = () => {
     const [typeId, setTypeId] = useState("")
     const [typeChatCode, setTypeChatCode] = useState("")
 
-    console.log("typeChatCode", typeChatCode);
+    console.log("feedMess", feedMess);
 
    const chatRoomShow = async() =>{
         const header = localStorage.getItem("_tokenCode");
@@ -58,7 +58,7 @@ const Message = () => {
    }
 
    function handleOnEnter(text) {
-    play()
+    // play()
     socket.emit("createChat", {
         senderId: localStorage.getItem("__userId"),
         chatroomId: chatCodes,
@@ -113,7 +113,7 @@ const Message = () => {
                                 </div>
                                 <div className='col-md-9'>
                                                     
-                                    {feedMess.length === 0 ? 
+                                    {chatCodes === "" ? 
                                     (
                                         <img src='https://www.novelvox.com/wp-content/uploads/2022/03/Live-Chat-Banner-Image.png' alt='' />
                                     )
@@ -128,16 +128,18 @@ const Message = () => {
                                                     {feedMess.map((item, index)=>(
                                                         <>
                                                             {localStorage.getItem("__userId") != item.senderId ? (
-                                                                <div className='align-items-end col-md-12 d-flex'>
+                                                                <div className='flex-column col-md-12 d-flex align-items-baseline'>
                                                                     <div className='isResiver'>
                                                                         <p>{item.message[0].msg}</p>
                                                                     </div>
+                                                                    <span className='usermessName'>{item.user.firstName} {item.user.lastName}</span>
                                                                 </div>
                                                             ):(
-                                                                <div className='align-items-end col-md-12 d-flex justify-content-end text-end'>
+                                                                <div className='align-items-end flex-column col-md-12 d-flex justify-content-end text-end'>
                                                                     <div className='isSender'>
                                                                         <p> {item.message[0].msg} </p>
                                                                     </div>
+                                                                    <span className='usermessName'>{item.user.firstName} {item.user.lastName}</span>
                                                                 </div>
                                                             )}
                                                         </>
