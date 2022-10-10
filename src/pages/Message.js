@@ -133,6 +133,7 @@ const Message = () => {
                                                                         <p>{item.message[0].msg}</p>
                                                                     </div>
                                                                     <span className='usermessName'>{item.user.firstName} {item.user.lastName}</span>
+                                                                    <p className='messDate'>{moment(item.createdAt).format("DD-MMM-YY")}</p>
                                                                 </div>
                                                             ):(
                                                                 <div className='align-items-end flex-column col-md-12 d-flex justify-content-end text-end'>
@@ -140,6 +141,7 @@ const Message = () => {
                                                                         <p> {item.message[0].msg} </p>
                                                                     </div>
                                                                     <span className='usermessName'>{item.user.firstName} {item.user.lastName}</span>
+                                                                    <p className='messDate'>{moment(item.createdAt).format("DD-MMM-YY")}</p>
                                                                 </div>
                                                             )}
                                                         </>
