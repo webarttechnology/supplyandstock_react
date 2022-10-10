@@ -59,7 +59,7 @@ const Dashboard = ({setIsLogin}) => {
                                             <EditProfile setIsLogin={setIsLogin} />
                                         </div>
                                         <div class="tab-pane fade" id="v-pills-enqury"  role="tabpanel">
-                                            <EnquiryList/>
+                                            <EnquiryList setIsLogin={setIsLogin} />
                                         </div>
                                         <div class="tab-pane fade" id="v-pills-messages" role="tabpanel">
                                             <Manufactures setIsLogin={setIsLogin} />

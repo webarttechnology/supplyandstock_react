@@ -1,12 +1,12 @@
 import React from 'react'
 import { useState } from 'react';
 import { useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import * as API from "../api/index";
-const EnquiryList = () => {
+const EnquiryList = ({setIsLogin}) => {
     const [allEnqris, setAllEnqris] = useState([])
     console.log("allEnqris", allEnqris);
-
+    const navigate = useNavigate();
     const allEnquery = async () =>{
         const header = localStorage.getItem("_tokenCode");
         try {
@@ -14,10 +14,26 @@ const EnquiryList = () => {
                 const response = await API.buyer_enqueris_id(localStorage.getItem("__userId"), header) 
                 console.log("EnquiryListREs", response);
                 setAllEnqris(response.data.data)
+                if (response.data.success === 2) {
+                    localStorage.removeItem("__userId")
+                    localStorage.removeItem("_tokenCode")
+                    localStorage.removeItem("_userType")
+                    localStorage.removeItem("isLoginCheck")
+                    setIsLogin(localStorage.removeItem("isLoginCheck"));
+                    navigate("/")
+                  }
             }else{
                 const response = await API.seller_enqueris_id(localStorage.getItem("__userId"), header) 
                 console.log("EnquiryListREsSeller", response);
                 setAllEnqris(response.data.data)
+                if (response.data.success === 2) {
+                    localStorage.removeItem("__userId")
+                    localStorage.removeItem("_tokenCode")
+                    localStorage.removeItem("_userType")
+                    localStorage.removeItem("isLoginCheck")
+                    setIsLogin(localStorage.removeItem("isLoginCheck"));
+                    navigate("/")
+                  }
             }
            
         } catch (error) {

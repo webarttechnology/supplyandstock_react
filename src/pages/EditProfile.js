@@ -115,7 +115,7 @@ const upDateSubmitBtn = async () => {
         console.log("mobileData", mobileDatas);
       }else{
         const sellerResponse = await API.manufacturer_saller(localStorage.getItem("__userId"), header)
-        console.log("sellerResponse", sellerResponse);
+        console.log("sellerResponseDetails", sellerResponse);
         if (sellerResponse.data.data === null) {
           localStorage.removeItem("__userId")
           localStorage.removeItem("_tokenCode")
