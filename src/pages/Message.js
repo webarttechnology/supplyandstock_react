@@ -153,6 +153,9 @@ const Message = () => {
                                     <div className="flex-column col-md-12 d-flex align-items-baseline">
                                       <div className="isResiver">
                                         <p>{item.message[0].msg}</p>
+                                        <span className="messTime">{moment(item.createdAt ,"HH:mm").format(
+                                          "hh:mm A"
+                                        )}</span>
                                       </div>
                                       <span className="usermessName">
                                         {item.user.firstName}{" "}
@@ -162,12 +165,16 @@ const Message = () => {
                                         {moment(item.createdAt).format(
                                           "DD-MMM-YY"
                                         )}
+                                        
                                       </p>
                                     </div>
                                   ) : (
                                     <div className="align-items-end flex-column col-md-12 d-flex justify-content-end text-end">
                                       <div className="isSender">
                                         <p> {item.message[0].msg} </p>
+                                        <span className="messTime">{moment(item.createdAt ,"HH:mm").format(
+                                          "hh:mm A"
+                                        )}</span>
                                       </div>
                                       <span className="usermessName">
                                         {item.user.firstName}{" "}
@@ -189,21 +196,21 @@ const Message = () => {
                           <div id="subscription_area">
                             <div class="container">
                               <div className="row">
-                                {typeId === localStorage.getItem("__userId") ? (
+                                {/* {typeId === localStorage.getItem("__userId") ? (
                                   ""
                                 ) : (
                                   <p className="mb-1 ps-4 text-start">
                                     {typeData ? "Typeing..." : ""}
                                   </p>
-                                )}
+                                )} */}
                               </div>
                               <div class="row">
                                 <div class="col-sm-12">
                                   <div className="mess_type_input">
                                     {/* <label for="file-upload" className="custom-file-upload">
-                                                                    <i class="bi bi-paperclip"></i>
-                                                                </label>
-                                                                <input hidden id="file-upload" type="file" /> */}
+                                            <i class="bi bi-paperclip"></i>
+                                        </label>
+                                        <input hidden id="file-upload" type="file" /> */}
                                     <InputEmoji
                                       className="messBox"
                                       value={text}

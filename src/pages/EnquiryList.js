@@ -111,7 +111,7 @@ const EnquiryList = ({setIsLogin}) => {
                                                     <i class="bi bi-chat-left-dots-fill chatIcon"></i> 
                                                 </Link>
                                             ):(
-                                                <button className='btn btn-primary me-2' onClick={()=> sellerAccept(item._id)}> Accept</button>
+                                                <button className='btn btn-warning me-2'> Waiting for approval</button>
                                             )}
                                         </>
                                         
