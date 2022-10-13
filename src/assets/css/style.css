@@ -1067,3 +1067,23 @@ label{
   margin-top: 7px;
   color: #f56c6c;
 }
+.react-responsive-modal-modal label {
+  font-size: 15px;
+  color: #2e2e2e;
+  display: block;
+  margin-bottom: 6px;
+}
+.userSend{
+  background: #be8d93;
+  padding: 10px;
+  height: 45px;
+  border-radius: 10px;
+  margin-left: 10px;
+  width: 7%;
+  color: #fff;
+  cursor: pointer;
+}
+.mess_type_input{
+  display: flex;
+  justify-content: space-between;
+}

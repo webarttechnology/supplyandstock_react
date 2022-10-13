@@ -8,6 +8,14 @@ import InputEmoji from "react-input-emoji";
 import ScrollToBottom from "react-scroll-to-bottom";
 import boopSfx from "../assets/images/messton.mp3";
 import moment from "moment";
+import Modal from "react-responsive-modal";
+const initialData = {
+  manufacturerId:"",
+  product_des:"",
+  unitPrice:"",
+  quantities:"",
+  sellerId:""
+}
 const Message = () => {
   const [play] = useSound(boopSfx);
 
@@ -22,9 +30,8 @@ const Message = () => {
   const [typeData, setTypeData] = useState("");
   const [typeId, setTypeId] = useState("");
   const [typeChatCode, setTypeChatCode] = useState("");
-  console.log("userName", userName);
-
-  console.log("feedMess", feedMess);
+  const [openModal, setOpenModal] = useState(false);
+  const [formData, setFormData] = useState(initialData)
 
   const chatRoomShow = async () => {
     const header = localStorage.getItem("_tokenCode");
@@ -67,6 +74,36 @@ const Message = () => {
     });
   }
 
+
+  const handalerChnages = (e) =>{
+    const { name, value } = e.target;  
+    setFormData({ ...formData, [name]: value });
+  }
+
+
+  const editSellerData = async () => {
+    const header = localStorage.getItem("_tokenCode");
+    try {
+        const reqObj = {
+            buyerId: "buyerId",
+            sellerId:formData.sellerId,
+            enquiryId: "enquerisId",
+            unitPrice: formData.unitPrice,
+            quantities: formData.quantities
+        }
+        console.log("reqObj", reqObj);
+        const response = await API.order_data(reqObj, header);
+        console.log("response", response);
+        if (response.data.success === 1) {
+            closeModal()
+            setFormData(initialData) 
+        }
+    } catch (error) {
+        
+    }
+  }
+
+
   useEffect(() => {
     socket.on("display", (data) => {
       setTypeData(data.typing);
@@ -83,6 +120,12 @@ const Message = () => {
     chatRoomShow();
   }, []);
 
+
+  const closeModal = () =>{
+    setOpenModal(false)
+  }
+
+
   return (
     <>
       <div className="messageTable">
@@ -92,6 +135,9 @@ const Message = () => {
               <div className="message">
                 <div className="row">
                   <div className="col-md-3">
+                    <div className="">
+                      <button className="btn btn-primary" onClick={()=> setOpenModal(true)}>Generate Order</button>
+                    </div>
                     <div className="sideBarUser">
                       <ul className="ps-0">
                         {userList.map((item, index) => (
@@ -219,6 +265,9 @@ const Message = () => {
                                       onEnter={handleOnEnter}
                                       placeholder="Type a message"
                                     />
+                                    <div className="userSend">
+                                      <i class="bi bi-send-fill"></i>
+                                    </div>
                                   </div>
                                 </div>
                               </div>
@@ -234,6 +283,56 @@ const Message = () => {
           </div>
         </div>
       </div>
+      <Modal open={openModal} onClose={closeModal}>
+          <div class="modal-content editSeller">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Order generate</h5>
+            </div>
+            <div class="modal-body">
+              <div class="form-group">
+                  <label for="basicInput">Seller List</label>
+                  <select className="form-control" onChange={handalerChnages} name="sellerId" value={formData.sellerId}>
+                      <option>--- Select ---</option>
+                      {/* {sellerList.map((item, index) => (
+                          <option
+                              value={item.seller._id}
+                          >
+                              {item.seller.firstName} {item.seller.lastName}
+                          </option>
+                      ))} */}
+                  </select>
+              </div>
+              <div class="form-group">
+                  <label for="basicInput">Amount</label>
+                  <input type="text" class="form-control" 
+                      placeholder="Amount" 
+                      onChange={handalerChnages} 
+                      value={formData.unitPrice}
+                      name="unitPrice" />
+              </div>
+              <div class="form-group">
+                  <label for="basicInput">Quantities</label>
+                  <input type="text" class="form-control" placeholder="Quantities" 
+                      onChange={handalerChnages} 
+                      value={formData.quantities}
+                      name="quantities" 
+                  />
+              </div>
+              {/* <div class="form-group">
+                  <label for="basicInput">Product details</label>
+                  <textarea placeholder='Enter product details' rows="5" cols="5" 
+                    value={formData.product_des}
+                    name="product_des"
+                    onChange={handalerChnages} 
+                  className='form-control'></textarea>
+              </div> */}
+            </div>
+            <div class="modal-footer">
+            <button type="button" 
+              class="btn btn-primary" onClick={editSellerData}>Submit</button>
+            </div>
+          </div>
+      </Modal>
     </>
   );
 };

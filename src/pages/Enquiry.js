@@ -137,11 +137,17 @@ useEffect(() => {
                                 value={formData.quantities}
                                 name="quantities"
                             type="text" className="form-control" />
-                            <label className="enqLable"> Size </label>
+                            <label className="enqLable"> Size/Model </label>
                             <input placeholder="Enter size" type="text" 
                                 onChange={handalerChanges}
                                 value={formData.size}
                                 name="size"
+                            className="form-control" />
+                            <label className="enqLable"> Color </label>
+                            <input placeholder="Enter color" type="text" 
+                                onChange={handalerChanges}
+                                value={formData.color}
+                                name="color"
                             className="form-control" />
                             <label className="enqLable"> Product details </label>
                             <textarea className="form-control" 

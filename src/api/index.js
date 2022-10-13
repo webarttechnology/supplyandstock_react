@@ -269,6 +269,20 @@ export const buyer_enqueris = async (data, header) => {
     }
 };
 
+
+// ? UPDATE BUYER
+export const order_data = async (data, header) => {
+    try {
+        const url = c.ORDER;
+        const res = await axios.post(url, data , {
+            headers: JSON.parse(header),
+          });
+        return res;
+    } catch (e) {
+        return e.response;
+    }
+};
+
 export const buyer_enqueris_id = async (data, header) => {
     try {
         const url = c.ENQUIRIES + "/buyer/" + data;
