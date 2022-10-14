@@ -9,12 +9,14 @@ import ScrollToBottom from "react-scroll-to-bottom";
 import boopSfx from "../assets/images/messton.mp3";
 import moment from "moment";
 import Modal from "react-responsive-modal";
+import { toast } from "react-toastify";
 const initialData = {
   manufacturerId:"",
   product_des:"",
   unitPrice:"",
   quantities:"",
-  sellerId:""
+  sellerId:"",
+  productName:""
 }
 const Message = () => {
   const [play] = useSound(boopSfx);
@@ -32,6 +34,10 @@ const Message = () => {
   const [typeChatCode, setTypeChatCode] = useState("");
   const [openModal, setOpenModal] = useState(false);
   const [formData, setFormData] = useState(initialData)
+  const [enquryId, setEnquryId] = useState("")
+  const [buyerId, setBuyerId] = useState("")
+
+  console.log("feedMess", feedMess);
 
   const chatRoomShow = async () => {
     const header = localStorage.getItem("_tokenCode");
@@ -46,8 +52,13 @@ const Message = () => {
     } catch (error) {}
   };
 
-  const chatHistoryShow = async (chatCode) => {
+  const chatHistoryShow = async (chatCode, user, enqueryId) => {
+    user.map((item, index)=>(
+      item.roleId === "3" ? setBuyerId(item._id) : setBuyerId("1")
+    ))
     setChatCodes(chatCode);
+    setUserName(user)
+    setEnquryId(enqueryId)
     const header = localStorage.getItem("_tokenCode");
     try {
       const response = await API.chatfeedShow(chatCode, header);
@@ -67,11 +78,15 @@ const Message = () => {
 
   function handleOnEnter(text) {
     // play()
-    socket.emit("createChat", {
-      senderId: localStorage.getItem("__userId"),
-      chatroomId: chatCodes,
-      message: text,
-    });
+      if (text === "") {
+        
+      }else{
+        socket.emit("createChat", {
+          senderId: localStorage.getItem("__userId"),
+          chatroomId: chatCodes,
+          message: text,
+        });
+      }
   }
 
 
@@ -85,11 +100,12 @@ const Message = () => {
     const header = localStorage.getItem("_tokenCode");
     try {
         const reqObj = {
-            buyerId: "buyerId",
-            sellerId:formData.sellerId,
-            enquiryId: "enquerisId",
+            productName: formData.productName,
+            sellerId: localStorage.getItem("__userId"),
+            enquiryId: enquryId,
             unitPrice: formData.unitPrice,
-            quantities: formData.quantities
+            quantities: formData.quantities,
+            buyerId: buyerId
         }
         console.log("reqObj", reqObj);
         const response = await API.order_data(reqObj, header);
@@ -97,10 +113,32 @@ const Message = () => {
         if (response.data.success === 1) {
             closeModal()
             setFormData(initialData) 
+        }else{
+          toast(response.data.msg, {
+            position: "top-right",
+            autoClose: 5000,
+            type: "error",
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+          });
+          closeModal()
         }
     } catch (error) {
         
     }
+  }
+
+  const messsendHandaler = () => {
+    socket.emit("createChat", {
+      senderId: localStorage.getItem("__userId"),
+      chatroomId: chatCodes,
+      message: text,
+    });
+    setText("")
   }
 
 
@@ -136,27 +174,22 @@ const Message = () => {
                 <div className="row">
                   <div className="col-md-3">
                     <div className="">
-                      <button className="btn btn-primary" onClick={()=> setOpenModal(true)}>Generate Order</button>
+                      
                     </div>
                     <div className="sideBarUser">
                       <ul className="ps-0">
                         {userList.map((item, index) => (
-                          <li onClick={() => chatHistoryShow(item._id)}>
+                          <li onClick={() => chatHistoryShow(item._id, item.users, item.enquiryId)}>
                             {item.users.length === 2 ? (
                               <>
-                                {item.users[0].firstName}{" "}
-                                {item.users[0].lastName},{" "}
-                                {item.users[1].firstName}{" "}
-                                {item.users[1].lastName}
+                                {item.users[0].userCode}{" "},
+                                {item.users[1].userCode}{" "}
                               </>
                             ) : (
                               <>
-                                {item.users[0].firstName}{" "}
-                                {item.users[0].lastName},{" "}
-                                {item.users[1].firstName}{" "}
-                                {item.users[1].lastName},{" "}
-                                {item.users[2].firstName}{" "}
-                                {item.users[2].lastName}
+                                {item.users[0].userCode}{" "},
+                                {item.users[1].userCode}{" "},
+                                {item.users[2].userCode}{" "}
                               </>
                             )}
                           </li>
@@ -173,21 +206,27 @@ const Message = () => {
                     ) : (
                       <>
                         <div className="headerTitle">
-                          <h4>
-                            {userName.length === 2 ? (
-                              <>
-                                {userName[0].firstName} {userName[0].lastName},
-                                {userName[1].firstName} {userName[1].lastName},
-                              </>
-                            ):(
-                              <>
-                                {userName[0].firstName} {userName[0].lastName},
-                                {userName[1].firstName} {userName[1].lastName},
-                                {userName[2].firstName} {userName[2].lastName}
-                              </>
-                            )}
-                            
-                          </h4>
+                          <div className="row">
+                            <div className="col-md-9">
+                                <h4>
+                                  {userName.length === 2 ? (
+                                    <>
+                                      {userName[0].userCode},
+                                      {userName[1].userCode},
+                                    </>
+                                  ):(
+                                    <>
+                                      {userName[0].userCode + "," + userName[1].userCode + "," + userName[2].userCode}
+                                    </>
+                                  )}
+                                  
+                                </h4>
+                            </div>
+                            <div className="col-md-3">
+                              {buyerId >= "3" ? (<button className="btn btn-primary" onClick={()=> setOpenModal(true)}>Generate Order</button>):("")}
+                              
+                            </div>
+                          </div>
                         </div>
                         <div className="messfeed">
                           <div className="row m-0">
@@ -204,8 +243,7 @@ const Message = () => {
                                         )}</span>
                                       </div>
                                       <span className="usermessName">
-                                        {item.user.firstName}{" "}
-                                        {item.user.lastName}
+                                        {item.user.userCode}
                                       </span>
                                       <p className="messDate">
                                         {moment(item.createdAt).format(
@@ -223,8 +261,7 @@ const Message = () => {
                                         )}</span>
                                       </div>
                                       <span className="usermessName">
-                                        {item.user.firstName}{" "}
-                                        {item.user.lastName}
+                                        {item.user.userCode}{" "}
                                       </span>
                                       <p className="messDate">
                                         {moment(item.createdAt).format(
@@ -265,9 +302,11 @@ const Message = () => {
                                       onEnter={handleOnEnter}
                                       placeholder="Type a message"
                                     />
-                                    <div className="userSend">
+                                    <button 
+                                      disabled={!text}
+                                      className="userSend" onClick={messsendHandaler}>
                                       <i class="bi bi-send-fill"></i>
-                                    </div>
+                                    </button>
                                   </div>
                                 </div>
                               </div>
@@ -290,17 +329,12 @@ const Message = () => {
             </div>
             <div class="modal-body">
               <div class="form-group">
-                  <label for="basicInput">Seller List</label>
-                  <select className="form-control" onChange={handalerChnages} name="sellerId" value={formData.sellerId}>
-                      <option>--- Select ---</option>
-                      {/* {sellerList.map((item, index) => (
-                          <option
-                              value={item.seller._id}
-                          >
-                              {item.seller.firstName} {item.seller.lastName}
-                          </option>
-                      ))} */}
-                  </select>
+                  <label for="basicInput">Product name</label>
+                  <input type="text" class="form-control" 
+                      placeholder="Product name" 
+                      onChange={handalerChnages} 
+                      value={formData.productName}
+                      name="productName" />
               </div>
               <div class="form-group">
                   <label for="basicInput">Amount</label>

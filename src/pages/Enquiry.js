@@ -8,7 +8,8 @@ const initialData = {
     manufacturerId:"",
     product_des:"",
     size:"",
-    quantities:""
+    quantities:"",
+    color:""
 }
 
 const Enquiry = () => {
@@ -42,7 +43,8 @@ const upDateSubmitBtn = async () =>{
             manufacturerId: formData.manufacturerId,
             product_des:formData.product_des,
             size: formData.size,
-            quantities: formData.quantities
+            quantities: formData.quantities,
+            color: formData.color
         }
         console.log("reqObj", reqObj);
         const response = await API.buyer_enqueris(reqObj, header)

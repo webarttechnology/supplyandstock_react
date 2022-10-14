@@ -5,8 +5,10 @@ import { Link, useNavigate } from 'react-router-dom';
 import * as API from "../api/index";
 const EnquiryList = ({setIsLogin}) => {
     const [allEnqris, setAllEnqris] = useState([])
-    console.log("allEnqris", allEnqris);
+    
     const navigate = useNavigate();
+
+
     const allEnquery = async () =>{
         const header = localStorage.getItem("_tokenCode");
         try {
@@ -42,7 +44,6 @@ const EnquiryList = ({setIsLogin}) => {
     }
 
     const sellerAccept = async (enqrId) => {
-        console.log("enqrId", enqrId);
         const header = localStorage.getItem("_tokenCode");
         try {
             const reqObj = {
@@ -114,7 +115,6 @@ const EnquiryList = ({setIsLogin}) => {
                                                 <button className='btn btn-warning me-2'> Waiting for approval</button>
                                             )}
                                         </>
-                                        
                                     )}
                                 </td>
                             </tr>
