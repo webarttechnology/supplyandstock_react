@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router";
 import useSound from "use-sound";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import * as API from "../api/index";
 import { io } from "socket.io-client";
 import InputEmoji from "react-input-emoji";
@@ -261,6 +261,11 @@ const Message = () => {
                                       <div className="flex-column col-md-12 d-flex align-items-baseline">
                                         <div class="isResiver">
                                           <p><div dangerouslySetInnerHTML={{__html: item.message[0].msg}} /></p>
+                                          {item.message[0].btn === "payment" ? (
+                                            <div class="comandBtn">
+                                              <a class="buttonS" target="_blank" href={item.message[0].link}>Payment</a>
+                                            </div>
+                                          ): "" } 
                                           <span className="messTime">
                                               {diffDatHour < 24 ? (
                                                 <>
@@ -274,6 +279,8 @@ const Message = () => {
                                                 </>
                                               )}
                                           </span>
+                                               
+
                                         </div>
                                         <span className="usermessName">
                                           {item.user.userCode}
@@ -292,10 +299,16 @@ const Message = () => {
                                                         <span class="buttonSr" onClick={()=> regectMessage()}>Reject</span>
                                                     </div>
                                                 </>
-                                            ):("")}
+                                            ): ""}
                                             </>
                                           )}
                                           
+                                          {item.message[0].btn === "payment" ? (
+                                            <div class="comandBtn">
+                                              <span class="buttonS" onClick={()=> messageAccept()}>Payment</span>
+                                            </div>
+                                          ): "" }      
+
                                           <span className="messTime">
                                               {diffDatHour < 24 ? (
                                                 <>
