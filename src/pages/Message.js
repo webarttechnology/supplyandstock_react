@@ -7,9 +7,11 @@ import { io } from "socket.io-client";
 import InputEmoji from "react-input-emoji";
 import ScrollToBottom from "react-scroll-to-bottom";
 import boopSfx from "../assets/images/messton.mp3";
-import moment from "moment";
+//import moment from "moment";
+import moment from 'moment-timezone'
 import Modal from "react-responsive-modal";
 import { toast } from "react-toastify";
+import { TIMEZONE } from "../api/constant";
 const initialData = {
   manufacturerId:"",
   product_des:"",
@@ -36,8 +38,12 @@ const Message = () => {
   const [formData, setFormData] = useState(initialData)
   const [enquryId, setEnquryId] = useState("")
   const [buyerId, setBuyerId] = useState("")
+  const [chatrCode, setChatrCode] = useState("")
+  const [sallerid, setSallerid] = useState("")
 
   console.log("feedMess", feedMess);
+
+
 
   const chatRoomShow = async () => {
     const header = localStorage.getItem("_tokenCode");
@@ -52,17 +58,18 @@ const Message = () => {
     } catch (error) {}
   };
 
-  const chatHistoryShow = async (chatCode, user, enqueryId) => {
+  const chatHistoryShow = async (chatCode, user, enqueryId, chatroomCode) => {
     user.map((item, index)=>(
-      item.roleId === "3" ? setBuyerId(item._id) : setBuyerId("1")
+      item.roleId === "3" ? setBuyerId(item._id) : item.roleId === "2" ? setSallerid(item.userCode) : setBuyerId("1")
     ))
     setChatCodes(chatCode);
     setUserName(user)
     setEnquryId(enqueryId)
+    setChatrCode(chatroomCode)
     const header = localStorage.getItem("_tokenCode");
     try {
       const response = await API.chatfeedShow(chatCode, header);
-      //console.log("response", response);
+      
       setFeedMess(response.data.data);
     } catch (error) {}
   };
@@ -105,7 +112,8 @@ const Message = () => {
             enquiryId: enquryId,
             unitPrice: formData.unitPrice,
             quantities: formData.quantities,
-            buyerId: buyerId
+            buyerId: buyerId,
+            chatroomId: chatCodes
         }
         console.log("reqObj", reqObj);
         const response = await API.order_data(reqObj, header);
@@ -139,6 +147,22 @@ const Message = () => {
       message: text,
     });
     setText("")
+  }
+
+  const messageAccept = () => {
+    try {
+      
+    } catch (error) {
+      
+    }
+  }
+
+  const regectMessage = () => {
+    try {
+      
+    } catch (error) {
+      
+    }
   }
 
 
@@ -179,7 +203,7 @@ const Message = () => {
                     <div className="sideBarUser">
                       <ul className="ps-0">
                         {userList.map((item, index) => (
-                          <li onClick={() => chatHistoryShow(item._id, item.users, item.enquiryId)}>
+                          <li onClick={() => chatHistoryShow(item._id, item.users, item.enquiryId, item.enquiry)}>
                             {item.users.length === 2 ? (
                               <>
                                 {item.users[0].userCode}{" "},
@@ -209,18 +233,12 @@ const Message = () => {
                           <div className="row">
                             <div className="col-md-9">
                                 <h4>
-                                  {userName.length === 2 ? (
-                                    <>
-                                      {userName[0].userCode},
-                                      {userName[1].userCode},
-                                    </>
-                                  ):(
-                                    <>
-                                      {userName[0].userCode + "," + userName[1].userCode + "," + userName[2].userCode}
-                                    </>
-                                  )}
-                                  
+                                Product name : {chatrCode[0].productName}
                                 </h4>
+                                <h4>
+                                 Product details :  {chatrCode[0].product_des}
+                                </h4>
+                                <h4>Seller Id : {sallerid}</h4>
                             </div>
                             <div className="col-md-3">
                               {buyerId >= "3" ? (<button className="btn btn-primary" onClick={()=> setOpenModal(true)}>Generate Order</button>):("")}
@@ -231,47 +249,75 @@ const Message = () => {
                         <div className="messfeed">
                           <div className="row m-0">
                             <ScrollToBottom className="scroll">
-                              {feedMess.map((item, index) => (
-                                <>
+                              {feedMess.map((item, index) => {
+                                const diffDatHour = moment(new Date()).diff(
+                                  moment(item.createdAt),
+                                  "hours"
+                                ); 
+                                return (
+                                  <>
                                   {localStorage.getItem("__userId") !=
-                                  item.senderId ? (
-                                    <div className="flex-column col-md-12 d-flex align-items-baseline">
-                                      <div className="isResiver">
-                                        <p>{item.message[0].msg}</p>
-                                        <span className="messTime">{moment(item.createdAt ,"HH:mm").format(
-                                          "hh:mm A"
-                                        )}</span>
+                                    item.senderId ? (
+                                      <div className="flex-column col-md-12 d-flex align-items-baseline">
+                                        <div class="isResiver">
+                                          <p><div dangerouslySetInnerHTML={{__html: item.message[0].msg}} /></p>
+                                          <span className="messTime">
+                                              {diffDatHour < 24 ? (
+                                                <>
+                                                  {moment.utc(item.createdAt).tz(TIMEZONE).format('h:m A')}
+                                                </>
+                                              ):(
+                                                <>
+                                                  {moment(item.createdAt).format(
+                                                    "DD-MMM-YY"
+                                                  )}
+                                                </>
+                                              )}
+                                          </span>
+                                        </div>
+                                        <span className="usermessName">
+                                          {item.user.userCode}
+                                        </span>
                                       </div>
-                                      <span className="usermessName">
-                                        {item.user.userCode}
-                                      </span>
-                                      <p className="messDate">
-                                        {moment(item.createdAt).format(
-                                          "DD-MMM-YY"
-                                        )}
-                                        
-                                      </p>
-                                    </div>
-                                  ) : (
-                                    <div className="align-items-end flex-column col-md-12 d-flex justify-content-end text-end">
-                                      <div className="isSender">
-                                        <p> {item.message[0].msg} </p>
-                                        <span className="messTime">{moment(item.createdAt ,"HH:mm").format(
-                                          "hh:mm A"
-                                        )}</span>
+                                    ) : (
+                                      <div className="align-items-end flex-column col-md-12 d-flex justify-content-end text-end">
+                                        <div className="isSender">
+                                          <p><div dangerouslySetInnerHTML={{__html: item.message[0].msg}} /></p>
+                                          {localStorage.getItem("_userType") === "Buyer" ? (""):(
+                                            <>
+                                              {item.message[0].btn === "accept" ? (
+                                                <>
+                                                    <div class="comandBtn">
+                                                        <span class="buttonS" onClick={()=> messageAccept()}>Accept</span>
+                                                        <span class="buttonSr" onClick={()=> regectMessage()}>Reject</span>
+                                                    </div>
+                                                </>
+                                            ):("")}
+                                            </>
+                                          )}
+                                          
+                                          <span className="messTime">
+                                              {diffDatHour < 24 ? (
+                                                <>
+                                                  {moment.utc(item.createdAt).tz(TIMEZONE).format('h:m A')}
+                                                </>
+                                              ):(
+                                                <>
+                                                  {moment(item.createdAt).format(
+                                                    "DD-MMM-YY"
+                                                  )}
+                                                </>
+                                              )}
+                                          </span>
+                                        </div>
+                                        <span className="usermessName">
+                                          {item.user.userCode}{" "}
+                                        </span>
                                       </div>
-                                      <span className="usermessName">
-                                        {item.user.userCode}{" "}
-                                      </span>
-                                      <p className="messDate">
-                                        {moment(item.createdAt).format(
-                                          "DD-MMM-YY"
-                                        )}
-                                      </p>
-                                    </div>
-                                  )}
-                                </>
-                              ))}
+                                    )}
+                                  </>
+                                )
+                              })}
                             </ScrollToBottom>
                           </div>
                         </div>

@@ -44,7 +44,8 @@ const upDateSubmitBtn = async () =>{
             product_des:formData.product_des,
             size: formData.size,
             quantities: formData.quantities,
-            color: formData.color
+            color: formData.color,
+            
         }
         console.log("reqObj", reqObj);
         const response = await API.buyer_enqueris(reqObj, header)

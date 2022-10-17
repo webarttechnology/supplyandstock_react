@@ -927,7 +927,7 @@ label{
   color: #424b54;
   font-weight: 600 !important;
   margin-bottom: 0;
-  font-size: 19px;
+  font-size: 15px;
 }
 
 .scroll{
@@ -1056,6 +1056,7 @@ label{
   text-transform: capitalize;
   font-size: 12px;
   margin-top: 5px;
+  margin-bottom: 15px;
 }
 .messDate{
   font-size: 12px;
@@ -1086,4 +1087,49 @@ label{
 .mess_type_input{
   display: flex;
   justify-content: space-between;
+}
+.buttonS{
+  background-color: #0d6efd;
+  padding: 3px 7px;
+  font-size: 13px;
+  margin-top: 15px;
+  color: #fff;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-right: 8px;
+}
+.buttonSr{
+  background-color: #fd0d0d;
+  padding: 3px 7px;
+  font-size: 13px;
+  margin-top: 15px;
+  color: #fff;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.comandBtn{
+  display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+.proDetails li{
+  display: block;
+  font-size: 15px;
+}
+.headingPd{
+  font-size: 15px;
+  color: #fff;
+}
+.proDetails li strong{
+  color: #f89a9a;
+}
+.isSender .headingPd{
+  color: #000000;
+}
+.isSender .proDetails li{
+  color: #424B54;
+}
+.isSender .isResiver{
+  background: none;
+  padding: 0;
 }
