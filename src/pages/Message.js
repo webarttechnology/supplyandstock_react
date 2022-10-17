@@ -408,7 +408,7 @@ const Message = () => {
               </div> */}
             </div>
             <div class="modal-footer">
-            <button type="button" 
+            <button type="button" disabled={!formData.productName || !formData.unitPrice || !formData.quantities}
               class="btn btn-primary" onClick={editSellerData}>Submit</button>
             </div>
           </div>

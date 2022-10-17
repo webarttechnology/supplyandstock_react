@@ -70,7 +70,7 @@ const Header = ({isLogin}) => {
                     
                     <li>
                       <Link to="/" className="countSec">
-                        <i class="bi bi-heart-fill "></i>
+                        <i class="bi bi-bell-fill"></i>
                         <span className="countBang">0</span>
                       </Link>
                     </li>

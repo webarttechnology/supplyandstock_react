@@ -1029,6 +1029,10 @@ label{
   text-align: start;
   width: fit-content;
 }
+.isResiver p .isResiver{
+  background: none;
+  padding: 0;
+}
 .isSender{
   padding: 7px 15px;
   background: #fff;
