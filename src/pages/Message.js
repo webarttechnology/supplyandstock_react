@@ -43,6 +43,9 @@ const Message = () => {
 
   console.log("feedMess", feedMess);
 
+  // socket.emit("chatroom", {
+  //   userCode: localStorage.getItem("__userId"),
+  // });
 
 
   const chatRoomShow = async () => {
@@ -54,12 +57,12 @@ const Message = () => {
       );
       console.log("responsedf", response);
       response.data.data.map((item, index) => setUserName(item.users));
-      setUserList(response.data.data);
+      //setUserList(response.data.data);
     } catch (error) {}
   };
 
   const chatHistoryShow = async (chatCode, user, enqueryId, chatroomCode) => {
-    user.map((item, index)=>(
+    user.map((item, index)=> (
       item.roleId === "3" ? setBuyerId(item._id) : item.roleId === "2" ? setSallerid(item.userCode) : setBuyerId("1")
     ))
     setChatCodes(chatCode);
@@ -83,7 +86,6 @@ const Message = () => {
   };
 
   function handleOnEnter(text) {
-    // play()
       if (text === "") {
         
       }else{
@@ -121,14 +123,6 @@ const Message = () => {
           socket.emit("getChatHistory", {
             chatroomId: chatCodes,
           });
-          
-          // socket.on("orderreceiveChat", (data) => {
-          //   console.log("biswajit");
-          //   console.log("receiveChat", data);
-          //   setFeedMess(data);
-          // });
-          // const response = await API.chatfeedShow(chatCodes, header);
-          // setFeedMess(response.data.data);
             closeModal()
             setFormData(initialData) 
            
@@ -171,8 +165,9 @@ const Message = () => {
         const response = await API.payment_link(reqObj, header)
         console.log("response", response);
         if (response.data.success === 1) {
-          const response = await API.chatfeedShow(chatCodes, header);
-          setFeedMess(response.data.data);
+          socket.emit("getChatHistory", {
+            chatroomId: chatCodes,
+          });
         }
       } catch (error) {
         
@@ -186,8 +181,9 @@ const Message = () => {
         const response = await API.payment_link(reqObj, header)
         console.log("response", response);
         if (response.data.success === 1) {
-          const response = await API.chatfeedShow(chatCodes, header);
-          setFeedMess(response.data.data);
+          socket.emit("getChatHistory", {
+            chatroomId: chatCodes,
+          });
         }
       } catch (error) {
         
@@ -207,8 +203,9 @@ const Message = () => {
         const response = await API.payment_link_gent(reqObj, header)
         console.log("response", response);
         if (response.data.success === 1) {
-          const response = await API.chatfeedShow(chatCodes, header);
-          setFeedMess(response.data.data);
+          socket.emit("getChatHistory", {
+            chatroomId: chatCodes,
+          });
         }
       } catch (error) {
         
@@ -229,6 +226,13 @@ const Message = () => {
 
 
   useEffect(() => {
+
+    
+    socket.on("receiveChatRoom", (data) => {
+      console.log("receiveChatRoom", data);
+      setUserList(data);
+    });
+
     socket.on("display", (data) => {
       setTypeData(data.typing);
       setTypeId(data.user);
@@ -272,12 +276,14 @@ const Message = () => {
                               <>
                                 {item.users[0].userCode}{" "},
                                 {item.users[1].userCode}{" "}
+                                 {`${item.unseenCount}`}
                               </>
                             ) : (
                               <>
                                 {item.users[0].userCode}{" "},
                                 {item.users[1].userCode}{" "},
                                 {item.users[2].userCode}{" "}
+                                <span className="countMess">{`${item.unseenCount}`}</span>
                               </>
                             )}
                           </li>
