@@ -1097,10 +1097,11 @@ label{
   padding: 3px 7px;
   font-size: 13px;
   margin-top: 15px;
-  color: #fff;
+  color: #fff !important;
   border-radius: 5px;
   cursor: pointer;
   margin-right: 8px;
+  text-decoration: none;
 }
 .buttonSr{
   background-color: #fd0d0d;

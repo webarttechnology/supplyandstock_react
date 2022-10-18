@@ -69,7 +69,6 @@ const Message = () => {
     const header = localStorage.getItem("_tokenCode");
     try {
       const response = await API.chatfeedShow(chatCode, header);
-      
       setFeedMess(response.data.data);
     } catch (error) {}
   };
@@ -119,8 +118,20 @@ const Message = () => {
         const response = await API.order_data(reqObj, header);
         console.log("response", response);
         if (response.data.success === 1) {
+          socket.emit("getChatHistory", {
+            chatroomId: chatCodes,
+          });
+          
+          // socket.on("orderreceiveChat", (data) => {
+          //   console.log("biswajit");
+          //   console.log("receiveChat", data);
+          //   setFeedMess(data);
+          // });
+          // const response = await API.chatfeedShow(chatCodes, header);
+          // setFeedMess(response.data.data);
             closeModal()
             setFormData(initialData) 
+           
         }else{
           toast(response.data.msg, {
             position: "top-right",
@@ -149,13 +160,64 @@ const Message = () => {
     setText("")
   }
 
-  const messageAccept = () => {
+  const messageAccept = async() => {
+    const header = localStorage.getItem("_tokenCode");
+    if (localStorage.getItem("_userType") === "Buyer") {
+      try {
+        const reqObj = {
+          chatroomId: chatCodes,
+          buyerId: localStorage.getItem("__userId")
+        }
+        const response = await API.payment_link(reqObj, header)
+        console.log("response", response);
+        if (response.data.success === 1) {
+          const response = await API.chatfeedShow(chatCodes, header);
+          setFeedMess(response.data.data);
+        }
+      } catch (error) {
+        
+      }
+    }else{
+      try {
+        const reqObj = {
+          chatroomId: chatCodes,
+          sellerId: localStorage.getItem("__userId")
+        }
+        const response = await API.payment_link(reqObj, header)
+        console.log("response", response);
+        if (response.data.success === 1) {
+          const response = await API.chatfeedShow(chatCodes, header);
+          setFeedMess(response.data.data);
+        }
+      } catch (error) {
+        
+      }
+    }
+    
+  }
+
+  const paymentLinkgenater = async () => {
+    const header = localStorage.getItem("_tokenCode");
     try {
-      
+      try {
+        const reqObj = {
+          chatroomId: chatCodes,
+          sellerId: localStorage.getItem("__userId")
+        }
+        const response = await API.payment_link_gent(reqObj, header)
+        console.log("response", response);
+        if (response.data.success === 1) {
+          const response = await API.chatfeedShow(chatCodes, header);
+          setFeedMess(response.data.data);
+        }
+      } catch (error) {
+        
+      }
     } catch (error) {
       
     }
   }
+
 
   const regectMessage = () => {
     try {
@@ -178,6 +240,8 @@ const Message = () => {
       console.log("receiveChat", data);
       setFeedMess(data);
     });
+
+
 
     chatRoomShow();
   }, []);
@@ -241,8 +305,11 @@ const Message = () => {
                                 <h4>Seller Id : {sallerid}</h4>
                             </div>
                             <div className="col-md-3">
-                              {buyerId >= "3" ? (<button className="btn btn-primary" onClick={()=> setOpenModal(true)}>Generate Order</button>):("")}
-                              
+                            {localStorage.getItem("_userType") === "Buyer" ? (""):(
+                              <>
+                                 {buyerId !== "3" ? (<button className="btn btn-primary" onClick={()=> setOpenModal(true)}>Generate Order</button>):("")}
+                              </>
+                            )}
                             </div>
                           </div>
                         </div>
@@ -261,11 +328,39 @@ const Message = () => {
                                       <div className="flex-column col-md-12 d-flex align-items-baseline">
                                         <div class="isResiver">
                                           <p><div dangerouslySetInnerHTML={{__html: item.message[0].msg}} /></p>
-                                          {item.message[0].btn === "payment" ? (
-                                            <div class="comandBtn">
-                                              <a class="buttonS" target="_blank" href={item.message[0].link}>Payment</a>
-                                            </div>
-                                          ): "" } 
+                                          {localStorage.getItem("_userType") === "Buyer"? (
+                                            <>
+                                              {item.message[0].btn === "accept" ? (
+                                                <>
+                                                    <div class="comandBtn">
+                                                        <span class="buttonS" onClick={()=> messageAccept()}>Accept</span>
+                                                        <span class="buttonSr" onClick={()=> regectMessage()}>Reject</span>
+                                                    </div>
+                                                </>
+                                            ): ""}
+                                            </>
+                                          ):("")}
+                                          
+                                            {item.message[0].btn === "paymentLink" ? (
+                                              <div class="comandBtn">
+                                                <span class="buttonS" onClick={paymentLinkgenater}>Generate Payment link</span>
+                                              </div>
+                                            ): "" } 
+                                          
+
+                                          {localStorage.getItem("_userType") === "Buyer" ? (
+                                              <>
+                                              {item.message[0].btn === "payment" ? (
+                                                <div class="comandBtn">
+                                                  <a href={item.message[0].link} class="buttonS">Pay Now</a>
+                                                </div>
+                                              ): "" } 
+                                            </>
+                                            ):(
+                                            ""
+                                          )}
+
+
                                           <span className="messTime">
                                               {diffDatHour < 24 ? (
                                                 <>
@@ -279,8 +374,6 @@ const Message = () => {
                                                 </>
                                               )}
                                           </span>
-                                               
-
                                         </div>
                                         <span className="usermessName">
                                           {item.user.userCode}
@@ -290,7 +383,7 @@ const Message = () => {
                                       <div className="align-items-end flex-column col-md-12 d-flex justify-content-end text-end">
                                         <div className="isSender">
                                           <p><div dangerouslySetInnerHTML={{__html: item.message[0].msg}} /></p>
-                                          {localStorage.getItem("_userType") === "Buyer" ? (""):(
+                                          {localStorage.getItem("_userType") === "Buyer"? (
                                             <>
                                               {item.message[0].btn === "accept" ? (
                                                 <>
@@ -301,14 +394,7 @@ const Message = () => {
                                                 </>
                                             ): ""}
                                             </>
-                                          )}
-                                          
-                                          {item.message[0].btn === "payment" ? (
-                                            <div class="comandBtn">
-                                              <span class="buttonS" onClick={()=> messageAccept()}>Payment</span>
-                                            </div>
-                                          ): "" }      
-
+                                          ):("")}
                                           <span className="messTime">
                                               {diffDatHour < 24 ? (
                                                 <>

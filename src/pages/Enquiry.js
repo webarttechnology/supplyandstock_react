@@ -9,7 +9,8 @@ const initialData = {
     product_des:"",
     size:"",
     quantities:"",
-    color:""
+    color:"",
+    productName: ""
 }
 
 const Enquiry = () => {
@@ -45,7 +46,7 @@ const upDateSubmitBtn = async () =>{
             size: formData.size,
             quantities: formData.quantities,
             color: formData.color,
-            
+            productName: formData.productName,
         }
         console.log("reqObj", reqObj);
         const response = await API.buyer_enqueris(reqObj, header)
@@ -134,6 +135,12 @@ useEffect(() => {
                                     </option>
                                 ))}
                             </select>
+                            <label className="enqLable">Product name</label>
+                            <input placeholder="Product name" 
+                                onChange={handalerChanges}
+                                value={formData.productName}
+                                name="productName"
+                            type="text" className="form-control" />
                             <label className="enqLable">Quantities </label>
                             <input placeholder="Enter quantities" 
                                 onChange={handalerChanges}

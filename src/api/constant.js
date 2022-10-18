@@ -13,3 +13,4 @@ export const NOTIFICATIONS = `${URL}/notification`;
 export const CHATROOM = `${URL}/chatroom`;
 export const CHAT = `${URL}/chat`;
 export const ORDER = `${URL}/order`;
+export const PAYMENT = `${URL}/payment`;

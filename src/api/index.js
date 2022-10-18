@@ -283,6 +283,33 @@ export const order_data = async (data, header) => {
     }
 };
 
+
+// ? UPDATE BUYER
+export const payment_link = async (data, header) => {
+    try {
+        const url = c.PAYMENT + "/request";
+        const res = await axios.post(url, data , {
+            headers: JSON.parse(header),
+          });
+        return res;
+    } catch (e) {
+        return e.response;
+    }
+};
+
+export const payment_link_gent = async (data, header) => {
+    try {
+        const url = c.PAYMENT;
+        const res = await axios.post(url, data , {
+            headers: JSON.parse(header),
+          });
+        return res;
+    } catch (e) {
+        return e.response;
+    }
+};
+
+
 export const buyer_enqueris_id = async (data, header) => {
     try {
         const url = c.ENQUIRIES + "/buyer/" + data;
