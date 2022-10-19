@@ -102,13 +102,13 @@ const EnquiryList = ({setIsLogin}) => {
                                 <td>{item.product_des}</td>
                                 <td>
                                     {item.isActive === "1" ? (
-                                        <Link to="/message" state={{ data: "occupation" }} className='btn btn-info me-2'> 
+                                        <Link to="/message" state={{ data: "mess" }} className='btn btn-info me-2'> 
                                             <i class="bi bi-chat-left-dots-fill chatIcon"></i> 
                                         </Link>
                                     ):(
                                         <>
                                             {localStorage.getItem("_userType") === "Buyer" ? (
-                                                <Link to="/message" state={{ data: "occupation" }} className='btn btn-info me-2'> 
+                                                <Link to="/message" state={{ data: "mess" }} className='btn btn-info me-2'> 
                                                     <i class="bi bi-chat-left-dots-fill chatIcon"></i> 
                                                 </Link>
                                             ):(

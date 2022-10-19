@@ -40,13 +40,8 @@ const Message = () => {
   const [buyerId, setBuyerId] = useState("")
   const [chatrCode, setChatrCode] = useState("")
   const [sallerid, setSallerid] = useState("")
-
-  console.log("feedMess", feedMess);
-
-  // socket.emit("chatroom", {
-  //   userCode: localStorage.getItem("__userId"),
-  // });
-
+  const [msssCount, setMsssCount] = useState([])
+  console.log("msssCount", msssCount);
 
   const chatRoomShow = async () => {
     const header = localStorage.getItem("_tokenCode");
@@ -56,15 +51,29 @@ const Message = () => {
         header
       );
       console.log("responsedf", response);
-      response.data.data.map((item, index) => setUserName(item.users));
-      //setUserList(response.data.data);
+      //response.data.data.map((item, index) => setUserName(item.users));
+     
+      const chatroomArray = []
+      response.data.data.map((item, index) => {
+        chatroomArray[item.chatroomCode] = {id:item._id, user:item.users, enquiryId:item.enquiryId, enquiry:item.enquiry  }
+      })
+
+
+
+
+
+      setUserList(response.data.data);
     } catch (error) {}
   };
 
   const chatHistoryShow = async (chatCode, user, enqueryId, chatroomCode) => {
+    console.log("user", user);
     user.map((item, index)=> (
       item.roleId === "3" ? setBuyerId(item._id) : item.roleId === "2" ? setSallerid(item.userCode) : setBuyerId("1")
     ))
+
+
+
     setChatCodes(chatCode);
     setUserName(user)
     setEnquryId(enqueryId)
@@ -90,10 +99,11 @@ const Message = () => {
         
       }else{
         socket.emit("createChat", {
-          senderId: localStorage.getItem("__userId"),
+          senderId: buyerId,
           chatroomId: chatCodes,
           message: text,
         });
+        chatRoomShowing()
       }
   }
 
@@ -120,12 +130,12 @@ const Message = () => {
         const response = await API.order_data(reqObj, header);
         console.log("response", response);
         if (response.data.success === 1) {
+          chatRoomShowing()
           socket.emit("getChatHistory", {
             chatroomId: chatCodes,
           });
             closeModal()
             setFormData(initialData) 
-           
         }else{
           toast(response.data.msg, {
             position: "top-right",
@@ -151,6 +161,7 @@ const Message = () => {
       chatroomId: chatCodes,
       message: text,
     });
+    chatRoomShowing()
     setText("")
   }
 
@@ -165,6 +176,7 @@ const Message = () => {
         const response = await API.payment_link(reqObj, header)
         console.log("response", response);
         if (response.data.success === 1) {
+          chatRoomShowing()
           socket.emit("getChatHistory", {
             chatroomId: chatCodes,
           });
@@ -181,6 +193,7 @@ const Message = () => {
         const response = await API.payment_link(reqObj, header)
         console.log("response", response);
         if (response.data.success === 1) {
+          chatRoomShowing()
           socket.emit("getChatHistory", {
             chatroomId: chatCodes,
           });
@@ -203,6 +216,7 @@ const Message = () => {
         const response = await API.payment_link_gent(reqObj, header)
         console.log("response", response);
         if (response.data.success === 1) {
+          chatRoomShowing()
           socket.emit("getChatHistory", {
             chatroomId: chatCodes,
           });
@@ -224,15 +238,23 @@ const Message = () => {
     }
   }
 
+  const chatRoomShowing = () => {
+    socket.emit("chatroom", {
+      userCode: localStorage.getItem("__userId"),
+    });
+  }
 
   useEffect(() => {
-
     
     socket.on("receiveChatRoom", (data) => {
+     
       console.log("receiveChatRoom", data);
-      setUserList(data);
-    });
-
+      if (buyerId !== localStorage.getItem("__userId")) {
+        setUserList(data);
+      }
+      
+    })
+    
     socket.on("display", (data) => {
       setTypeData(data.typing);
       setTypeId(data.user);
@@ -244,8 +266,6 @@ const Message = () => {
       console.log("receiveChat", data);
       setFeedMess(data);
     });
-
-
 
     chatRoomShow();
   }, []);
@@ -274,15 +294,19 @@ const Message = () => {
                           <li onClick={() => chatHistoryShow(item._id, item.users, item.enquiryId, item.enquiry)}>
                             {item.users.length === 2 ? (
                               <>
-                                {item.users[0].userCode}{" "},
-                                {item.users[1].userCode}{" "}
-                                 {`${item.unseenCount}`}
+                                <span>
+                                  {item.users[0].userCode}{" "},
+                                  {item.users[1].userCode}{" "}
+                                  {`${item.unseenCount}`}
+                                </span>
                               </>
                             ) : (
                               <>
-                                {item.users[0].userCode}{" "},
-                                {item.users[1].userCode}{" "},
-                                {item.users[2].userCode}{" "}
+                                <span className="userCoden">
+                                  {item.users[0].userCode}{" "},
+                                  {item.users[1].userCode}{" "},
+                                  {item.users[2].userCode}{" "}
+                                </span>
                                 <span className="countMess">{`${item.unseenCount}`}</span>
                               </>
                             )}

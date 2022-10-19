@@ -1140,8 +1140,15 @@ label{
 }
 .countMess{
   background: #ac0000;
-  width: 30px;
-  height: 30px;
+  width: 25px;
+  height: 25px;
   border-radius: 50%;
   padding: 5px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 5px;
+}
+.userCoden{
+  display: inline-block;
 }
