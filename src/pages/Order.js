@@ -56,9 +56,9 @@ useEffect(() => {
                   
                   <td>
                       <ul className='ps-0'>
-                        <li><strong>Product details : </strong> {item.enquiry[0].product_des}</li>
-                        <li><strong>Quantities : </strong> {item.enquiry[0].quantities}</li>
-                        <li><strong>Size : </strong> {item.enquiry[0].size}</li>
+                        <li><strong>Product name : </strong> {item.productName}</li>
+                        <li><strong>Quantities : </strong> {item.quantities}</li>
+                        <li><strong>Final amount : </strong> {item.finalAmount}</li>
                       </ul>
                   </td>
                   {/* <td>
