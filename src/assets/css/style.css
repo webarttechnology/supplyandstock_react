@@ -1151,4 +1151,10 @@ label{
 }
 .userCoden{
   display: inline-block;
+  margin-right: 5px;
+}
+.userCodenc:nth-child(2) .userCoden{
+  width: 20px;
+  height: 20px;
+  background-color: #00c48c;
 }

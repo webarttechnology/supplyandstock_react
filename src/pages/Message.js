@@ -213,8 +213,7 @@ const Message = ({setTotalNotification}) => {
         const response = await API.payment_link_gent(reqObj, header)
         console.log("response", response);
         if (response.data.success === 1) {
-          commonReedMess()
-          chatRoomShowing()
+          // chatRoomShowing()
           socket.emit("getChatHistory", {
             chatroomId: chatCodes,
           });
@@ -312,24 +311,24 @@ const Message = ({setTotalNotification}) => {
                                 {item.users.length === 2 ? (
                                   <>
                                     <span>
-                                      {item.users[0].userCode}{" "},
+                                      {/* {item.users[0].userCode}{" "},
                                       {item.users[1].userCode}{" "}
-                                      {`${item.unseenCount}`}
+                                      {`${item.unseenCount}`} */}
                                     </span>
                                   </>
                                 ) : (
                                   <>
-                                    <span className="userCoden">
+                                    <span className="userCodenc">
                                       {localStorage.getItem("_userType") === "Buyer" ? (
                                         <>
                                           {item.users.map((userItm, index)=>(
-                                            userItm.roleId === "1" ? "" : userItm.roleId === "3" ? ` ${userItm.userCode} (Me) , ` : `${userItm.userCode} ,`
+                                            <span className="userCoden"> {userItm.roleId === "1" ? "" : userItm.roleId === "3" ? ` ${userItm.userCode} (Me) ,` : `${userItm.userCode} `}</span>
                                           ))}
                                         </>
                                       ) : (
                                         <>
                                           {item.users.map((userItm, index)=>(
-                                            userItm.roleId === "1" ? "" : userItm.roleId === "2" ? ` ${userItm.userCode} (Me) , ` : `${userItm.userCode} ,`
+                                            userItm.roleId === "1" ? "" : userItm.roleId === "2" ? ` ${userItm.userCode} (Me) ,` : `${userItm.userCode}`
                                           ))}
                                         </>
                                       ) }
