@@ -323,7 +323,7 @@ const Message = ({setTotalNotification}) => {
                                       {localStorage.getItem("_userType") === "Buyer" ? (
                                         <>
                                           {item.users.map((userItm, index)=>(
-                                            userItm.roleId === "1" ? "" : userItm.roleId === "2" ? ` ${userItm.userCode} (Me) , ` : `${userItm.userCode} ,`
+                                            userItm.roleId === "1" ? "" : userItm.roleId === "3" ? ` ${userItm.userCode} (Me) , ` : `${userItm.userCode} ,`
                                           ))}
                                         </>
                                       ) : (
