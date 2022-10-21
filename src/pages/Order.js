@@ -58,7 +58,7 @@ useEffect(() => {
                       <ul className='ps-0'>
                         <li><strong>Product name : </strong> {item.productName}</li>
                         <li><strong>Quantities : </strong> {item.quantities}</li>
-                        <li><strong>Final amount : </strong> {item.finalAmount}</li>
+                        <li><strong>Price : </strong> $ {item.finalAmount}</li>
                       </ul>
                   </td>
                   {/* <td>

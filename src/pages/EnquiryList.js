@@ -81,6 +81,7 @@ const EnquiryList = ({setIsLogin}) => {
                     ):(
                         <>
                             <th scope="col">#</th>
+                            <th scope="col">Manufacturer</th>
                             <th scope="col">Product details</th>
                             <th scope="col">Quantities</th>
                             <th scope="col">Size</th>
@@ -125,6 +126,7 @@ const EnquiryList = ({setIsLogin}) => {
                         {allEnqris.map((item, index)=>(
                             <tr key={index}>
                                 <th scope="row">{index + 1}</th>
+                                <td>{item.manufacturer.name}</td>
                                 <td>{item.enquiry.product_des}</td>
                                 <td>{item.enquiry.quantities}</td>
                                 <td>{item.enquiry.size}</td>

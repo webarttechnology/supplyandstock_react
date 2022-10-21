@@ -17,10 +17,11 @@ const AppRouter = () => {
   const [isLogin, setIsLogin] = useState(
     JSON.parse(localStorage.getItem("isLoginCheck"))
   );
-  console.log("isLogin",isLogin);
+  const [totalNotification, setTotalNotification] = useState("")
+  console.log("totalNotification", totalNotification);
   return (
     <Router>
-      {isLogin ? (<Header isLogin={isLogin} />):(<Header isLogin={isLogin} />)}
+      {isLogin ? (<Header isLogin={isLogin} totalNotification={totalNotification} />):(<Header isLogin={isLogin} totalNotification={totalNotification} />)}
       <ToastContainer />
       <Routes>
         <Route path="/" element={<Home />} />
@@ -30,7 +31,7 @@ const AppRouter = () => {
         <Route path="/buyer/signup" element={<SignupBuyer setIsLogin={setIsLogin}  />} />
         <Route path="/user-dashboard" element={<Dashboard setIsLogin={setIsLogin} />} />
         <Route path="/edit-profile" element={<EditProfile />} />
-        <Route path="/message" element={<Message />} />
+        <Route path="/message" element={<Message setTotalNotification={setTotalNotification}/>} />
         <Route path="/enquiry" element={<Enquiry />} />
       </Routes>
       <Footer/>

@@ -371,6 +371,21 @@ export const chatfeedShow = async (data, header) => {
         return e.response;
     }
 }
+
+
+export const chatreedMess = async (data, header) => {
+    try {
+        const url = c.CHAT;
+        const res = await axios.patch(url, data,{
+            headers: JSON.parse(header),
+          });
+        return res;
+    } catch (e) {
+        return e.response;
+    }
+}
+
+
 export const user_order = async (data, header) => {
     try {
         const url = c.ORDER + "/buyer/" + data;

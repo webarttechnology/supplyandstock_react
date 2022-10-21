@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import logo from "../assets/images/logo.png";
-const Header = ({isLogin}) => {
+const Header = ({isLogin, totalNotification}) => {
   const [search, setSearch] = useState(false)
 
   const searchShows = () =>{
@@ -71,7 +71,7 @@ const Header = ({isLogin}) => {
                     <li>
                       <Link to="/" className="countSec">
                         <i class="bi bi-bell-fill"></i>
-                        <span className="countBang">0</span>
+                        <span className="countBang">{totalNotification}</span>
                       </Link>
                     </li>
                     <li>

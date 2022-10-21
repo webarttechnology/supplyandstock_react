@@ -20,7 +20,7 @@ const initialData = {
   sellerId:"",
   productName:""
 }
-const Message = () => {
+const Message = ({setTotalNotification}) => {
   const [play] = useSound(boopSfx);
 
   const socket = io("http://api.supplywestock.com:3001");
@@ -40,8 +40,11 @@ const Message = () => {
   const [buyerId, setBuyerId] = useState("")
   const [chatrCode, setChatrCode] = useState("")
   const [sallerid, setSallerid] = useState("")
-  const [msssCount, setMsssCount] = useState([])
-  console.log("msssCount", msssCount);
+  const [sellerMssId, setSellerMssId] = useState("")
+
+  console.log("sellerMssId", sellerMssId);
+
+  console.log("feedMess", feedMess);
 
   const chatRoomShow = async () => {
     const header = localStorage.getItem("_tokenCode");
@@ -51,15 +54,19 @@ const Message = () => {
         header
       );
       console.log("responsedf", response);
-      //response.data.data.map((item, index) => setUserName(item.users));
+      response.data.data.map((item, index) => setTotalNotification(item.unseenCount));
       setUserList(response.data.data);
     } catch (error) {}
   };
 
   const chatHistoryShow = async (chatCode, user, enqueryId, chatroomCode) => {
-    console.log("user", user);
+    
+    commonReedMess();
     user.map((item, index)=> (
-      item.roleId === "3" ? setBuyerId(item._id) : item.roleId === "2" ? setSallerid(item.userCode) : setBuyerId("1")
+      item.roleId === "3" ? setBuyerId(item._id) : item.roleId === "2" ? (
+        setSellerMssId(item._id) ,
+        setSallerid(item.userCode)
+      ) : setBuyerId("1")
     ))
     setChatCodes(chatCode);
     setUserName(user)
@@ -90,7 +97,8 @@ const Message = () => {
           chatroomId: chatCodes,
           message: text,
         });
-        // chatRoomShowing()
+        commonReedMess()
+        chatRoomShowing()
       }
   }
   const handalerChnages = (e) =>{
@@ -112,10 +120,11 @@ const Message = () => {
             chatroomId: chatCodes
         }
         console.log("reqObj", reqObj);
+        
         const response = await API.order_data(reqObj, header);
         console.log("response", response);
         if (response.data.success === 1) {
-          // chatRoomShowing()
+          chatRoomShowing()
           socket.emit("getChatHistory", {
             chatroomId: chatCodes,
           });
@@ -146,7 +155,8 @@ const Message = () => {
       chatroomId: chatCodes,
       message: text,
     });
-    // chatRoomShowing()
+    commonReedMess()
+    chatRoomShowing()
     setText("")
   }
 
@@ -161,7 +171,8 @@ const Message = () => {
         const response = await API.payment_link(reqObj, header)
         console.log("response", response);
         if (response.data.success === 1) {
-          // chatRoomShowing()
+          commonReedMess()
+          chatRoomShowing()
           socket.emit("getChatHistory", {
             chatroomId: chatCodes,
           });
@@ -178,7 +189,7 @@ const Message = () => {
         const response = await API.payment_link(reqObj, header)
         console.log("response", response);
         if (response.data.success === 1) {
-          // chatRoomShowing()
+          chatRoomShowing()
           socket.emit("getChatHistory", {
             chatroomId: chatCodes,
           });
@@ -198,10 +209,12 @@ const Message = () => {
           chatroomId: chatCodes,
           sellerId: localStorage.getItem("__userId")
         }
+        console.log("reqObj", reqObj);
         const response = await API.payment_link_gent(reqObj, header)
         console.log("response", response);
         if (response.data.success === 1) {
-          // chatRoomShowing()
+          commonReedMess()
+          chatRoomShowing()
           socket.emit("getChatHistory", {
             chatroomId: chatCodes,
           });
@@ -225,20 +238,37 @@ const Message = () => {
 
   const chatRoomShowing = () => {
     socket.emit("chatroom", {
-      userCode: localStorage.getItem("__userId"),
+      userCode: localStorage.getItem("_userType") === "Buyer" ? sellerMssId  : buyerId,
     });
+  }
+
+  const commonReedMess = async () => {
+    const header = localStorage.getItem("_tokenCode");
+    try {
+      const reqObj = {
+        senderId: localStorage.getItem("__userId"),
+        chatroomId: chatCodes,
+      }
+      console.log("reqObj", reqObj);
+      
+      const response = await API.chatreedMess(reqObj, header)
+      console.log("commonReedMess", response);
+      if (response.data.success === 1) {
+        chatRoomShow()
+      }
+    } catch (error) {
+      
+    }
   }
 
   useEffect(() => {
     
-    // socket.on("receiveChatRoom", (data) => {
-     
-    //   console.log("receiveChatRoom", data);
-    //   if (buyerId !== localStorage.getItem("__userId")) {
-    //     setUserList(data);
-    //   }
-      
-    // })
+    socket.on("receiveChatRoom", (data) => {
+      console.log("receiveChatRoom", data);
+      if (data.showid === localStorage.getItem("__userId")) {
+        setUserList(data.chatroom);
+      }
+    })
     
     socket.on("display", (data) => {
       setTypeData(data.typing);
@@ -275,28 +305,47 @@ const Message = () => {
                     </div>
                     <div className="sideBarUser">
                       <ul className="ps-0">
-                        {userList.map((item, index) => (
-                          <li onClick={() => chatHistoryShow(item._id, item.users, item.enquiryId, item.enquiry)}>
-                            {item.users.length === 2 ? (
-                              <>
-                                <span>
-                                  {item.users[0].userCode}{" "},
-                                  {item.users[1].userCode}{" "}
-                                  {`${item.unseenCount}`}
-                                </span>
-                              </>
-                            ) : (
-                              <>
-                                <span className="userCoden">
-                                  {item.users[0].userCode}{" "},
-                                  {item.users[1].userCode}{" "},
-                                  {item.users[2].userCode}{" "}
-                                </span>
-                                {/* <span className="countMess">{`${item.unseenCount}`}</span> */}
-                              </>
-                            )}
-                          </li>
-                        ))}
+                        {userList.map((item, index) => {
+                          setTotalNotification(item.unseenCount)
+                          return (
+                            <li onClick={() => chatHistoryShow(item._id, item.users, item.enquiryId, item.enquiry)}>
+                                {item.users.length === 2 ? (
+                                  <>
+                                    <span>
+                                      {item.users[0].userCode}{" "},
+                                      {item.users[1].userCode}{" "}
+                                      {`${item.unseenCount}`}
+                                    </span>
+                                  </>
+                                ) : (
+                                  <>
+                                    <span className="userCoden">
+                                      {localStorage.getItem("_userType") === "Buyer" ? (
+                                        <>
+                                          {item.users.map((userItm, index)=>(
+                                            userItm.roleId === "1" ? "" : userItm.roleId === "2" ? ` ${userItm.userCode} (Me) , ` : `${userItm.userCode} ,`
+                                          ))}
+                                        </>
+                                      ) : (
+                                        <>
+                                          {item.users.map((userItm, index)=>(
+                                            userItm.roleId === "1" ? "" : userItm.roleId === "2" ? ` ${userItm.userCode} (Me) , ` : `${userItm.userCode} ,`
+                                          ))}
+                                        </>
+                                      ) }
+                                      
+                                    </span>
+                                    {item.unseenCount === 0 ? "" : (
+                                      <>
+                                        <span className="countMess">{item.unseenCount}</span>
+                                      </>
+                                    )}
+                                  
+                                  </>
+                                )}
+                              </li>
+                          )
+                        })}
                       </ul>
                     </div>
                   </div>
@@ -312,10 +361,10 @@ const Message = () => {
                           <div className="row">
                             <div className="col-md-9">
                                 <h4>
-                                Product name : {chatrCode[0].productName}
+                                  Product name : {chatrCode[0].productName}
                                 </h4>
                                 <h4>
-                                 Product details :  {chatrCode[0].product_des}
+                                  Product details :  {chatrCode[0].product_des}
                                 </h4>
                                 <h4>Seller Id : {sallerid}</h4>
                             </div>
@@ -367,7 +416,7 @@ const Message = () => {
                                               <>
                                               {item.message[0].btn === "payment" ? (
                                                 <div class="comandBtn">
-                                                  <a href={item.message[0].link} class="buttonS">Pay Now</a>
+                                                  <a target="_blank" href={item.message[0].link} class="buttonS">Pay Now</a>
                                                 </div>
                                               ): "" } 
                                             </>
@@ -391,7 +440,12 @@ const Message = () => {
                                           </span>
                                         </div>
                                         <span className="usermessName">
-                                          {item.user.userCode}
+                                          {item.user.userCode === "Admin" ? "":(
+                                            <>
+                                              # {item.user.userCode}
+                                            </>
+                                          ) }
+                                          
                                         </span>
                                       </div>
                                     ) : (
@@ -425,7 +479,8 @@ const Message = () => {
                                           </span>
                                         </div>
                                         <span className="usermessName">
-                                          {item.user.userCode}{" "}
+                                          {/* # {item.user.userCode}{" "} */}
+                                          # {item.user.userCode} (Me)
                                         </span>
                                       </div>
                                     )}
@@ -497,9 +552,9 @@ const Message = () => {
                       name="productName" />
               </div>
               <div class="form-group">
-                  <label for="basicInput">Amount</label>
+                  <label for="basicInput">Price</label>
                   <input type="text" class="form-control" 
-                      placeholder="Amount" 
+                      placeholder="Price" 
                       onChange={handalerChnages} 
                       value={formData.unitPrice}
                       name="unitPrice" />
