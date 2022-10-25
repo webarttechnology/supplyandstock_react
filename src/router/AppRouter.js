@@ -6,35 +6,59 @@ import Home from "../components/Home";
 import Dashboard from "../pages/Dashboard";
 import EditProfile from "../pages/EditProfile";
 import Login from "../pages/Login";
-import Logins from "../components/Logins"
+import Logins from "../components/Logins";
 import { ToastContainer } from "react-toastify";
 import Enquiry from "../pages/Enquiry";
 import SignupBuyer from "../components/SignupBuyer";
 import SignupSeller from "../pages/SignupSeller";
 import Message from "../pages/Message";
+import PaymentSuccuess from "../pages/paymentSuccuess";
 
 const AppRouter = () => {
   const [isLogin, setIsLogin] = useState(
     JSON.parse(localStorage.getItem("isLoginCheck"))
   );
-  const [totalNotification, setTotalNotification] = useState("")
+  const [totalNotification, setTotalNotification] = useState("");
   console.log("totalNotification", totalNotification);
   return (
     <Router>
-      {isLogin ? (<Header isLogin={isLogin} totalNotification={totalNotification} />):(<Header isLogin={isLogin} totalNotification={totalNotification} />)}
+      {isLogin ? (
+        <Header isLogin={isLogin} totalNotification={totalNotification} />
+      ) : (
+        <Header isLogin={isLogin} totalNotification={totalNotification} />
+      )}
       <ToastContainer />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/seller/login" element={<Login setIsLogin={setIsLogin}  />} />
-        <Route path="/seller/signup" element={<SignupSeller setIsLogin={setIsLogin}  />} />
-        <Route path="/buyer/login" element={<Logins setIsLogin={setIsLogin}  />} />
-        <Route path="/buyer/signup" element={<SignupBuyer setIsLogin={setIsLogin}  />} />
-        <Route path="/user-dashboard" element={<Dashboard setIsLogin={setIsLogin} />} />
+        <Route
+          path="/seller/login"
+          element={<Login setIsLogin={setIsLogin} />}
+        />
+        <Route
+          path="/seller/signup"
+          element={<SignupSeller setIsLogin={setIsLogin} />}
+        />
+        <Route
+          path="/buyer/login"
+          element={<Logins setIsLogin={setIsLogin} />}
+        />
+        <Route
+          path="/buyer/signup"
+          element={<SignupBuyer setIsLogin={setIsLogin} />}
+        />
+        <Route
+          path="/user-dashboard"
+          element={<Dashboard setIsLogin={setIsLogin} />}
+        />
         <Route path="/edit-profile" element={<EditProfile />} />
-        <Route path="/message" element={<Message setTotalNotification={setTotalNotification}/>} />
+        <Route
+          path="/message"
+          element={<Message setTotalNotification={setTotalNotification} />}
+        />
         <Route path="/enquiry" element={<Enquiry />} />
+        <Route path="/payment/succuess/:id" element={<PaymentSuccuess />} />
       </Routes>
-      <Footer/>
+      <Footer />
     </Router>
   );
 };
