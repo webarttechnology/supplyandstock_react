@@ -20,6 +20,7 @@ const AppRouter = () => {
   );
   const [totalNotification, setTotalNotification] = useState("");
   console.log("totalNotification", totalNotification);
+
   return (
     <Router>
       {isLogin ? (

@@ -1,9 +1,15 @@
 import React, { useState } from "react";
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import logo from "../assets/images/logo.png";
+import { io } from "socket.io-client";
+import { SOCEKT } from "../api/constant";
 const Header = ({ isLogin, totalNotification }) => {
   const [search, setSearch] = useState(false);
+  const [notification, setNotification] = useState([]);
+  const [messCunt, setMessCunt] = useState(0);
 
+  const socket = io(SOCEKT);
   const searchShows = () => {
     if (search) {
       setSearch(false);
@@ -11,6 +17,27 @@ const Header = ({ isLogin, totalNotification }) => {
       setSearch(true);
     }
   };
+
+  const notificationrender = () => {
+    socket.emit("notification", {
+      id: localStorage.getItem("__userId"),
+    });
+  };
+
+  useEffect(() => {
+    notificationrender();
+    socket.on("receiveNotification", (data) => {
+      console.log("receiveNotification", data.notification);
+      if (data.show === localStorage.getItem("__userId")) {
+        setNotification(data.notification);
+        data.notification.map((item, index) =>
+          item.showFor.includes(localStorage.getItem("__userId"))
+            ? setMessCunt(1)
+            : setMessCunt(0)
+        );
+      }
+    });
+  }, []);
 
   return (
     <>
@@ -85,21 +112,28 @@ const Header = ({ isLogin, totalNotification }) => {
                       <li>
                         <Link to="#" className="countSec ballDrop">
                           <i class="bi bi-bell-fill"></i>
-                          <span className="countBang">{totalNotification}</span>
+                          <span className="countBang">
+                            {messCunt === 1 ? (
+                              <>{notification.length}</>
+                            ) : (
+                              <>{notification.length}</>
+                            )}
+                          </span>
                           <ul className="submenu">
-                            <li>
-                              <span>notification1</span>
-                              <span className="ms-2">
-                                <i class="bi bi-eye-fill"></i>
-                              </span>
-                            </li>
-                            <li>notification1</li>
-                            <li>notification1</li>
-                            <li>notification1</li>
-                            <li>notification1</li>
-                            <li>notification1</li>
-                            <li>notification1</li>
-                            <li>notification1</li>
+                            {notification.map((item, index) =>
+                              item.showFor.includes(
+                                localStorage.getItem("__userId")
+                              ) ? (
+                                <li>
+                                  <span>{item.message}</span>
+                                  {/* <span className="ms-2">
+                                    <i class="bi bi-eye-fill"></i>
+                                  </span> */}
+                                </li>
+                              ) : (
+                                ""
+                              )
+                            )}
                           </ul>
                         </Link>
                       </li>

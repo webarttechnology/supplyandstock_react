@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
-import { IMG } from "../api/constant";
+import { IMG, SOCEKT } from "../api/constant";
+import { io } from "socket.io-client";
 import * as API from "../api/index";
 
 const initialData = {
@@ -15,6 +16,7 @@ const initialData = {
 };
 
 const Enquiry = () => {
+  const socket = io(SOCEKT);
   const navigate = useNavigate();
   const [menufacData, setMenufacData] = useState([]);
   const [formData, setFormData] = useState(initialData);
@@ -50,7 +52,11 @@ const Enquiry = () => {
       const response = await API.buyer_enqueris(reqObj, header);
       console.log("response", response);
       if (response.data.success === 1) {
-        //navigate("/user-dashboard")
+        response.data.sellerId.map((item, index) =>
+          socket.emit("notification", {
+            id: item,
+          })
+        );
         setFormData(initialData);
         toast(response.data.msg, {
           position: "top-right",

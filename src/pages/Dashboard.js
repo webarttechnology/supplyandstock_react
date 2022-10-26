@@ -6,6 +6,9 @@ import { useLocation, useNavigate } from "react-router";
 import EnquiryList from "./EnquiryList";
 import Order from "./Order";
 import UserDashBoard from "./UserDashBoard";
+import { io } from "socket.io-client";
+import { SOCEKT, URL } from "../api/constant";
+import { useEffect } from "react";
 const Dashboard = ({ setIsLogin }) => {
   const loaction = useLocation();
   const navigate = useNavigate();
@@ -19,6 +22,14 @@ const Dashboard = ({ setIsLogin }) => {
       navigate("/");
     }
   };
+
+  const socket = io(SOCEKT);
+
+  useEffect(() => {
+    socket.emit("notification", {
+      id: localStorage.getItem("__userId"),
+    });
+  }, []);
 
   return (
     <>

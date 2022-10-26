@@ -124,6 +124,9 @@ const Message = ({ setTotalNotification }) => {
       const response = await API.order_data(reqObj, header);
       console.log("response", response);
       if (response.data.success === 1) {
+        socket.emit("notification", {
+          id: buyerId,
+        });
         chatRoomShowing();
         socket.emit("getChatHistory", {
           chatroomId: chatCodes,
