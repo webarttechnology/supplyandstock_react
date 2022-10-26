@@ -1235,3 +1235,38 @@ tr {
 .loaderImg {
   width: 50%;
 }
+.submenu {
+  display: none;
+  position: absolute;
+  background: #fff;
+  padding: 15px;
+  border-radius: 10px;
+  right: 0;
+  top: 36px;
+  width: fit-content;
+  height: 200px;
+  overflow-y: scroll;
+  text-align: start;
+}
+.submenu li {
+  display: flex !important;
+  color: #424b54;
+  margin-bottom: 9px;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 3px;
+  justify-content: space-around;
+}
+.submenu li:last-child {
+  border-bottom: none;
+}
+.ballDrop:hover .submenu {
+  display: block;
+}
+.submenu h5 {
+  background: #424b54;
+  color: #fff;
+  padding: 5px 15px;
+  font-size: 15px;
+  font-weight: bold !important;
+  border-radius: 5px;
+}

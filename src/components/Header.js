@@ -1,17 +1,16 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import logo from "../assets/images/logo.png";
-const Header = ({isLogin, totalNotification}) => {
-  const [search, setSearch] = useState(false)
+const Header = ({ isLogin, totalNotification }) => {
+  const [search, setSearch] = useState(false);
 
-  const searchShows = () =>{
+  const searchShows = () => {
     if (search) {
-      setSearch(false)
-    }else{
-      setSearch(true)
+      setSearch(false);
+    } else {
+      setSearch(true);
     }
-    
-  }
+  };
 
   return (
     <>
@@ -26,12 +25,23 @@ const Header = ({isLogin, totalNotification}) => {
             <div className="col-md-4 text-end">
               {isLogin ? (
                 <>
-                {localStorage.getItem("_userType") === "Buyer" ? (<Link to="/enquiry" className="loginBtn me-4 enquery">Enquiry</Link>):("")}
-                  
-                  <Link to="/user-dashboard" className="loginBtn">Dashboard</Link>
+                  {localStorage.getItem("_userType") === "Buyer" ? (
+                    <Link to="/enquiry" className="loginBtn me-4 enquery">
+                      Enquiry
+                    </Link>
+                  ) : (
+                    ""
+                  )}
+
+                  <Link to="/user-dashboard" className="loginBtn">
+                    Dashboard
+                  </Link>
                 </>
-              ):(<Link to="/buyer/login" className="loginBtn">login</Link>)}
-              
+              ) : (
+                <Link to="/buyer/login" className="loginBtn">
+                  login
+                </Link>
+              )}
             </div>
           </div>
         </div>
@@ -62,28 +72,51 @@ const Header = ({isLogin, totalNotification}) => {
                 <ul>
                   {search === false ? (
                     <>
-                    {isLogin ? (<li>
-                      <Link to="/user-dashboard">
-                        <i class="bi bi-person-circle"></i>
-                      </Link>
-                    </li>):("")}
-                    
-                    <li>
-                      <Link to="/" className="countSec">
-                        <i class="bi bi-bell-fill"></i>
-                        <span className="countBang">{totalNotification}</span>
-                      </Link>
-                    </li>
-                    <li>
-                      <Link to="/" className="countSec">
-                        <i class="bi bi-bag-fill"></i>
-                        <span className="countBang">0</span>
-                      </Link>
-                    </li>
+                      {isLogin ? (
+                        <li>
+                          <Link to="/user-dashboard">
+                            <i class="bi bi-person-circle"></i>
+                          </Link>
+                        </li>
+                      ) : (
+                        ""
+                      )}
+
+                      <li>
+                        <Link to="#" className="countSec ballDrop">
+                          <i class="bi bi-bell-fill"></i>
+                          <span className="countBang">{totalNotification}</span>
+                          <ul className="submenu">
+                            <li>
+                              <span>notification1</span>
+                              <span className="ms-2">
+                                <i class="bi bi-eye-fill"></i>
+                              </span>
+                            </li>
+                            <li>notification1</li>
+                            <li>notification1</li>
+                            <li>notification1</li>
+                            <li>notification1</li>
+                            <li>notification1</li>
+                            <li>notification1</li>
+                            <li>notification1</li>
+                          </ul>
+                        </Link>
+                      </li>
+                      <li>
+                        <Link to="/" className="countSec">
+                          <i class="bi bi-bag-fill"></i>
+                          <span className="countBang">0</span>
+                        </Link>
+                      </li>
                     </>
-                  ):(
+                  ) : (
                     <li className="searchBox">
-                      <input placeholder="Search here" type="text" className="seacrhBoxSr" />
+                      <input
+                        placeholder="Search here"
+                        type="text"
+                        className="seacrhBoxSr"
+                      />
                     </li>
                   )}
                   <li className="searchTuch">
