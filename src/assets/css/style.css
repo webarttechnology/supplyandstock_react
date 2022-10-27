@@ -1171,11 +1171,12 @@ tr {
 .userCoden {
   display: inline-block;
   margin-right: 5px;
+  border-right: 1px solid #ccc;
+  padding-right: 5px;
+  line-height: 13px;
 }
-.userCodenc:nth-child(2) .userCoden {
-  width: 20px;
-  height: 20px;
-  background-color: #00c48c;
+.userCoden:last-child {
+  border-right: none;
 }
 .chekIcon {
   border-radius: 200px;
@@ -1248,6 +1249,7 @@ tr {
   overflow-y: scroll;
   text-align: start;
   box-shadow: 0px 0px 10px #5a5a5a;
+  z-index: 99;
 }
 .submenu li {
   display: flex !important;

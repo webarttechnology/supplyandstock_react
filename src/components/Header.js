@@ -18,6 +18,14 @@ const Header = ({ isLogin, totalNotification }) => {
     }
   };
 
+  const notificationhide = (messId) => {
+    try {
+      const reqOObj = {
+        id: messId,
+      };
+    } catch (error) {}
+  };
+
   const notificationrender = () => {
     socket.emit("notification", {
       id: localStorage.getItem("__userId"),
@@ -120,19 +128,27 @@ const Header = ({ isLogin, totalNotification }) => {
                             )}
                           </span>
                           <ul className="submenu">
-                            {notification.map((item, index) =>
-                              item.showFor.includes(
-                                localStorage.getItem("__userId")
-                              ) ? (
-                                <li>
-                                  <span>{item.message}</span>
-                                  {/* <span className="ms-2">
+                            {notification.length === 0 ? (
+                              ""
+                            ) : (
+                              <>
+                                {notification.map((item, index) =>
+                                  item.showFor.includes(
+                                    localStorage.getItem("__userId")
+                                  ) ? (
+                                    <li
+                                      onClick={() => notificationhide(item._id)}
+                                    >
+                                      <span>{item.message}</span>
+                                      {/* <span className="ms-2">
                                     <i class="bi bi-eye-fill"></i>
                                   </span> */}
-                                </li>
-                              ) : (
-                                ""
-                              )
+                                    </li>
+                                  ) : (
+                                    ""
+                                  )
+                                )}
+                              </>
                             )}
                           </ul>
                         </Link>

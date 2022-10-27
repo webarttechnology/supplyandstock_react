@@ -169,6 +169,7 @@ const Message = ({ setTotalNotification }) => {
           chatroomId: chatCodes,
           buyerId: localStorage.getItem("__userId"),
         };
+        console.log("reqObj", reqObj);
         const response = await API.payment_link(reqObj, header);
         console.log("response", response);
         if (response.data.success === 1) {
@@ -248,6 +249,9 @@ const Message = ({ setTotalNotification }) => {
   };
 
   useEffect(() => {
+    socket.emit("notification", {
+      id: localStorage.getItem("__userId"),
+    });
     socket.on("receiveChatRoom", (data) => {
       console.log("receiveChatRoom", data);
       if (data.showid === localStorage.getItem("__userId")) {
@@ -278,10 +282,10 @@ const Message = ({ setTotalNotification }) => {
       <div className="messageTable">
         <div className="container">
           <div className="row justify-content-center">
-            <div className="col-md-10">
+            <div className="col-md-11">
               <div className="message">
                 <div className="row">
-                  <div className="col-md-3">
+                  <div className="col-md-4">
                     <div className=""></div>
                     <div className="sideBarUser">
                       <ul className="ps-0">
@@ -318,20 +322,22 @@ const Message = ({ setTotalNotification }) => {
                                             {userItm.roleId === "1"
                                               ? ""
                                               : userItm.roleId === "3"
-                                              ? ` ${userItm.userCode} (Me) ,`
+                                              ? ` ${userItm.userCode} (Me)`
                                               : `${userItm.userCode} `}
                                           </span>
                                         ))}
                                       </>
                                     ) : (
                                       <>
-                                        {item.users.map((userItm, index) =>
-                                          userItm.roleId === "1"
-                                            ? ""
-                                            : userItm.roleId === "2"
-                                            ? ` ${userItm.userCode} (Me) ,`
-                                            : `${userItm.userCode}`
-                                        )}
+                                        {item.users.map((userItm, index) => (
+                                          <span className="userCoden">
+                                            {userItm.roleId === "1"
+                                              ? ""
+                                              : userItm.roleId === "2"
+                                              ? ` ${userItm.userCode} (Me)`
+                                              : `${userItm.userCode}`}
+                                          </span>
+                                        ))}
                                       </>
                                     )}
                                   </span>
@@ -352,7 +358,7 @@ const Message = ({ setTotalNotification }) => {
                       </ul>
                     </div>
                   </div>
-                  <div className="col-md-9">
+                  <div className="col-md-8">
                     {chatCodes === "" ? (
                       <img
                         src="https://www.novelvox.com/wp-content/uploads/2022/03/Live-Chat-Banner-Image.png"
