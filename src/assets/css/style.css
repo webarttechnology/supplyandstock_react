@@ -1251,6 +1251,11 @@ tr {
   box-shadow: 0px 0px 10px #5a5a5a;
   z-index: 99;
 }
+.noHadding {
+  color: #2e2e2e;
+  font-weight: 600 !important;
+  text-align: center;
+}
 .submenu li {
   display: flex !important;
   color: #424b54;

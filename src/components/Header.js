@@ -4,10 +4,13 @@ import { Link } from "react-router-dom";
 import logo from "../assets/images/logo.png";
 import { io } from "socket.io-client";
 import { SOCEKT } from "../api/constant";
+import * as API from "../api/index";
 const Header = ({ isLogin, totalNotification }) => {
   const [search, setSearch] = useState(false);
   const [notification, setNotification] = useState([]);
   const [messCunt, setMessCunt] = useState(0);
+
+  console.log("notification", notification);
 
   const socket = io(SOCEKT);
   const searchShows = () => {
@@ -18,11 +21,18 @@ const Header = ({ isLogin, totalNotification }) => {
     }
   };
 
-  const notificationhide = (messId) => {
+  const notificationhide = async (messId) => {
+    const header = localStorage.getItem("_tokenCode");
     try {
-      const reqOObj = {
+      const reqObj = {
         id: messId,
       };
+      console.log("reqOObj", reqObj);
+      const response = await API.noification_hide(reqObj, header);
+      console.log("noification_hide", response);
+      if (response.data.success === 1) {
+        notificationrender();
+      }
     } catch (error) {}
   };
 
@@ -35,7 +45,7 @@ const Header = ({ isLogin, totalNotification }) => {
   useEffect(() => {
     notificationrender();
     socket.on("receiveNotification", (data) => {
-      console.log("receiveNotification", data.notification);
+      console.log("receiveNotification", data);
       if (data.show === localStorage.getItem("__userId")) {
         setNotification(data.notification);
         data.notification.map((item, index) =>
@@ -129,7 +139,7 @@ const Header = ({ isLogin, totalNotification }) => {
                           </span>
                           <ul className="submenu">
                             {notification.length === 0 ? (
-                              ""
+                              <h4 className="noHadding">No notification</h4>
                             ) : (
                               <>
                                 {notification.map((item, index) =>

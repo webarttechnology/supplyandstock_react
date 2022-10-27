@@ -313,6 +313,18 @@ export const payment_link_gent = async (data, header) => {
   }
 };
 
+export const noification_hide = async (data, header) => {
+  try {
+    const url = c.PUSHNOTIFICATION;
+    const res = await axios.patch(url, data, {
+      headers: JSON.parse(header),
+    });
+    return res;
+  } catch (e) {
+    return e.response;
+  }
+};
+
 export const buyer_enqueris_id = async (data, header) => {
   try {
     const url = c.ENQUIRIES + "/buyer/" + data;

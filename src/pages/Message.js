@@ -62,7 +62,7 @@ const Message = ({ setTotalNotification }) => {
   };
 
   const chatHistoryShow = async (chatCode, user, enqueryId, chatroomCode) => {
-    commonReedMess();
+    commonReedMess(chatCode);
     user.map((item, index) =>
       item.roleId === "3"
         ? setBuyerId(item._id)
@@ -231,12 +231,12 @@ const Message = ({ setTotalNotification }) => {
     });
   };
 
-  const commonReedMess = async () => {
+  const commonReedMess = async (chtCod) => {
     const header = localStorage.getItem("_tokenCode");
     try {
       const reqObj = {
         senderId: localStorage.getItem("__userId"),
-        chatroomId: chatCodes,
+        chatroomId: chtCod,
       };
       console.log("reqObj", reqObj);
 
