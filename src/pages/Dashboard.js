@@ -9,8 +9,11 @@ import UserDashBoard from "./UserDashBoard";
 import { io } from "socket.io-client";
 import { SOCEKT, URL } from "../api/constant";
 import { useEffect } from "react";
+import { Link } from "react-router-dom";
 const Dashboard = ({ setIsLogin }) => {
   const loaction = useLocation();
+  console.log("loaction", loaction);
+
   const navigate = useNavigate();
   const logOutBtn = () => {
     localStorage.removeItem("__userId");
@@ -128,21 +131,24 @@ const Dashboard = ({ setIsLogin }) => {
                         </>
                       )}
                       {localStorage.getItem("_userType") === "Buyer" ? (
-                        <button
-                          class="nav-link"
-                          id="v-pills-order-tab"
-                          data-bs-toggle="pill"
-                          data-bs-target="#v-pills-order"
-                          type="button"
-                          role="tab"
-                          aria-controls="v-pills-order-tab"
-                          aria-selected="false"
-                        >
-                          <span>
-                            <i class="bi bi-truck"></i>
-                          </span>{" "}
-                          Order{" "}
-                        </button>
+                        <>
+                          <Link to="/order">order</Link>
+                          <button
+                            class="nav-link"
+                            id="v-pills-order-tab"
+                            data-bs-toggle="pill"
+                            data-bs-target="#v-pills-order"
+                            type="button"
+                            role="tab"
+                            aria-controls="v-pills-order-tab"
+                            aria-selected="false"
+                          >
+                            <span>
+                              <i class="bi bi-truck"></i>
+                            </span>{" "}
+                            Order{" "}
+                          </button>
+                        </>
                       ) : (
                         <button
                           class="nav-link"

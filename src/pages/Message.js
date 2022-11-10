@@ -20,7 +20,7 @@ const initialData = {
   sellerId: "",
   productName: "",
 };
-const Message = ({ setTotalNotification }) => {
+const Message = ({ setTotalNotification, setNotification, setMessCunt }) => {
   const [play] = useSound(boopSfx);
 
   const socket = io("http://api.supplywestock.com:3001");
@@ -248,7 +248,13 @@ const Message = ({ setTotalNotification }) => {
     } catch (error) {}
   };
 
+  const notificationrender = () => {
+    socket.emit("notification", {
+      id: localStorage.getItem("__userId"),
+    });
+  };
   useEffect(() => {
+    notificationrender();
     socket.emit("notification", {
       id: localStorage.getItem("__userId"),
     });
@@ -277,6 +283,11 @@ const Message = ({ setTotalNotification }) => {
     setOpenModal(false);
   };
 
+  useEffect(() => {
+    socket.emit("notification", {
+      id: localStorage.getItem("__userId"),
+    });
+  }, []);
   return (
     <>
       <div className="messageTable">
@@ -403,6 +414,9 @@ const Message = ({ setTotalNotification }) => {
                                   moment(item.createdAt),
                                   "hours"
                                 );
+                                const { timeZone } =
+                                  Intl.DateTimeFormat().resolvedOptions();
+
                                 return (
                                   <>
                                     {localStorage.getItem("__userId") !=
@@ -490,7 +504,7 @@ const Message = ({ setTotalNotification }) => {
                                               <>
                                                 {moment
                                                   .utc(item.createdAt)
-                                                  .tz(TIMEZONE)
+                                                  .tz(timeZone)
                                                   .format("h:m A")}
                                               </>
                                             ) : (
@@ -557,7 +571,7 @@ const Message = ({ setTotalNotification }) => {
                                               <>
                                                 {moment
                                                   .utc(item.createdAt)
-                                                  .tz(TIMEZONE)
+                                                  .tz(timeZone)
                                                   .format("h:m A")}
                                               </>
                                             ) : (

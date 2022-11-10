@@ -8,14 +8,14 @@ import Partner from "./Partner";
 import UserSection from "./UserSection";
 
 const Home = () => {
-  const loaction = useLocation()
+  const loaction = useLocation();
 
   return (
     <>
-      <Banner/>
+      <Banner />
       {/* <UserSection/> */}
-      <Partner/>
-      <OurStory />
+      {/* <Partner/> */}
+      {/* <OurStory /> */}
       {/* <GetTouch/> */}
     </>
   );

@@ -13,6 +13,7 @@ import SignupBuyer from "../components/SignupBuyer";
 import SignupSeller from "../pages/SignupSeller";
 import Message from "../pages/Message";
 import PaymentSuccuess from "../pages/paymentSuccuess";
+import Order from "../pages/Order";
 
 const AppRouter = () => {
   const [isLogin, setIsLogin] = useState(
@@ -51,6 +52,7 @@ const AppRouter = () => {
           path="/user-dashboard"
           element={<Dashboard setIsLogin={setIsLogin} />}
         />
+        <Route path="/order" element={<Order setIsLogin={setIsLogin} />} />
         <Route path="/edit-profile" element={<EditProfile />} />
         <Route
           path="/message"

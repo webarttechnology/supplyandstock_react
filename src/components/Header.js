@@ -3,14 +3,21 @@ import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import logo from "../assets/images/logo.png";
 import { io } from "socket.io-client";
-import { SOCEKT } from "../api/constant";
+import { SOCEKT, TIMEZONE } from "../api/constant";
 import * as API from "../api/index";
+import Drawer from "react-modern-drawer";
+import "react-modern-drawer/dist/index.css";
+import moment from "moment-timezone";
 const Header = ({ isLogin, totalNotification }) => {
   const [search, setSearch] = useState(false);
   const [notification, setNotification] = useState([]);
   const [messCunt, setMessCunt] = useState(0);
 
-  console.log("notification", notification);
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggleDrawer = () => {
+    setIsOpen((prevState) => !prevState);
+  };
 
   const socket = io(SOCEKT);
   const searchShows = () => {
@@ -67,7 +74,68 @@ const Header = ({ isLogin, totalNotification }) => {
                 <img src={logo} alt="" />
               </div>
             </div>
-            <div className="col-md-4 text-end">
+            <div className="col-md-4 mobileView text-end">
+              <button className="mobileToggal" onClick={toggleDrawer}>
+                <i class="bi bi-list"></i>
+              </button>
+              <li>
+                <Link to="#" className="countSec ballDrop mobileNotif">
+                  <i class="bi bi-bell-fill"></i>
+                  <span className="countBang">
+                    {messCunt === 1 ? (
+                      <>{notification.length}</>
+                    ) : (
+                      <>{notification.length}</>
+                    )}
+                  </span>
+                  <ul className="submenu">
+                    {notification.length === 0 ? (
+                      <h4 className="noHadding">No notification</h4>
+                    ) : (
+                      <>
+                        {notification.map((item, index) => {
+                          const diffDatHour = moment(new Date()).diff(
+                            moment(item.createdAt),
+                            "hours"
+                          );
+                          return (
+                            <>
+                              {item.showFor.includes(
+                                localStorage.getItem("__userId")
+                              ) ? (
+                                <li
+                                //onClick={() => notificationhide(item._id)}
+                                >
+                                  <span>{item.message}</span>
+                                  <span className="ms-2 dateTimef">
+                                    {diffDatHour < 24 ? (
+                                      <>
+                                        {moment
+                                          .utc(item.createdAt)
+                                          .tz(TIMEZONE)
+                                          .format("h:m A")}
+                                      </>
+                                    ) : (
+                                      <>
+                                        {moment(item.createdAt).format(
+                                          "DD-MMM-YY"
+                                        )}
+                                      </>
+                                    )}
+                                  </span>
+                                </li>
+                              ) : (
+                                ""
+                              )}
+                            </>
+                          );
+                        })}
+                      </>
+                    )}
+                  </ul>
+                </Link>
+              </li>
+
               {isLogin ? (
                 <>
                   {localStorage.getItem("_userType") === "Buyer" ? (
@@ -77,15 +145,9 @@ const Header = ({ isLogin, totalNotification }) => {
                   ) : (
                     ""
                   )}
-
-                  <Link to="/user-dashboard" className="loginBtn">
-                    Dashboard
-                  </Link>
                 </>
               ) : (
-                <Link to="/buyer/login" className="loginBtn">
-                  login
-                </Link>
+                ""
               )}
             </div>
           </div>
@@ -106,13 +168,13 @@ const Header = ({ isLogin, totalNotification }) => {
                   <li>
                     <Link to="/">OUR STORY</Link>
                   </li> */}
-                  <li>
+                  {/* <li>
                     <Link to="/">CONTACT</Link>
-                  </li>
+                  </li> */}
                 </ul>
               </div>
             </div>
-            <div className="col-md-3 text-end">
+            <div className="col-md-6 text-end">
               <div className="rightMenu">
                 <ul>
                   {search === false ? (
@@ -142,33 +204,54 @@ const Header = ({ isLogin, totalNotification }) => {
                               <h4 className="noHadding">No notification</h4>
                             ) : (
                               <>
-                                {notification.map((item, index) =>
-                                  item.showFor.includes(
-                                    localStorage.getItem("__userId")
-                                  ) ? (
-                                    <li
-                                      onClick={() => notificationhide(item._id)}
-                                    >
-                                      <span>{item.message}</span>
-                                      {/* <span className="ms-2">
-                                    <i class="bi bi-eye-fill"></i>
-                                  </span> */}
-                                    </li>
-                                  ) : (
-                                    ""
-                                  )
-                                )}
+                                {notification.map((item, index) => {
+                                  const diffDatHour = moment(new Date()).diff(
+                                    moment(item.createdAt),
+                                    "hours"
+                                  );
+                                  return (
+                                    <>
+                                      {item.showFor.includes(
+                                        localStorage.getItem("__userId")
+                                      ) ? (
+                                        <li
+                                        //onClick={() => notificationhide(item._id)}
+                                        >
+                                          <span>{item.message}</span>
+                                          <span className="ms-2 dateTimef">
+                                            {diffDatHour < 24 ? (
+                                              <>
+                                                {moment
+                                                  .utc(item.createdAt)
+                                                  .tz(TIMEZONE)
+                                                  .format("h:m A")}
+                                              </>
+                                            ) : (
+                                              <>
+                                                {moment(item.createdAt).format(
+                                                  "DD-MMM-YY"
+                                                )}
+                                              </>
+                                            )}
+                                          </span>
+                                        </li>
+                                      ) : (
+                                        ""
+                                      )}
+                                    </>
+                                  );
+                                })}
                               </>
                             )}
                           </ul>
                         </Link>
                       </li>
-                      <li>
+                      {/* <li>
                         <Link to="/" className="countSec">
                           <i class="bi bi-bag-fill"></i>
                           <span className="countBang">0</span>
                         </Link>
-                      </li>
+                      </li> */}
                     </>
                   ) : (
                     <li className="searchBox">
@@ -184,11 +267,97 @@ const Header = ({ isLogin, totalNotification }) => {
                       <i class="bi bi-search"></i>
                     </Link>
                   </li>
+                  {isLogin ? (
+                    <li>
+                      <Link to="/user-dashboard" className="loginBtn">
+                        Dashboard
+                      </Link>
+                    </li>
+                  ) : (
+                    <Link to="/buyer/login" className="loginBtn">
+                      login
+                    </Link>
+                  )}
                 </ul>
               </div>
             </div>
           </div>
         </div>
+      </div>
+      {/* MOBILE MENU FUNCATIONALTY */}
+      <div className="mobileMenu">
+        <Drawer
+          open={isOpen}
+          onClose={toggleDrawer}
+          direction="right"
+          className="bla bla bla"
+        >
+          <div className="mobileheader">
+            <div className="d-flex justify-content-between px-3 menuHeader">
+              <h3>Menu</h3>
+              <span
+                onClick={() => setIsOpen(false)}
+                className="fs-4 pt-2 text-white"
+              >
+                <i class="bi bi-x-lg"></i>
+              </span>
+            </div>
+            <ul className="manuunderList">
+              <li>
+                <Link onClick={() => setIsOpen(false)} to="/">
+                  Home
+                </Link>
+              </li>
+              {isLogin ? (
+                <li>
+                  <Link onClick={() => setIsOpen(false)} to="/user-dashboard">
+                    My Account
+                  </Link>
+                </li>
+              ) : (
+                ""
+              )}
+
+              {isLogin ? (
+                <>
+                  {localStorage.getItem("_userType") === "Buyer" ? (
+                    <>
+                      <li>
+                        <Link to="/enquiry" onClick={() => setIsOpen(false)}>
+                          Enquiry
+                        </Link>
+                      </li>
+                      <li>
+                        <Link
+                          onClick={() => setIsOpen(false)}
+                          to="/user-dashboard"
+                        >
+                          Dashboard
+                        </Link>
+                      </li>
+                    </>
+                  ) : (
+                    ""
+                  )}
+                </>
+              ) : (
+                <li>
+                  <Link to="/buyer/login" onClick={() => setIsOpen(false)}>
+                    login
+                  </Link>
+                </li>
+              )}
+
+              <li className="mt-3 px-2">
+                <input
+                  type="text"
+                  className="form-control"
+                  placeholder="Search here"
+                />
+              </li>
+            </ul>
+          </div>
+        </Drawer>
       </div>
     </>
   );

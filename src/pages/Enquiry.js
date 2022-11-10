@@ -196,7 +196,7 @@ const Enquiry = () => {
                   </div>
                   <div className="col-md-4">
                     <span class="bannerBtn text-center w-100">
-                      <Link to="/user-dashboard">Back</Link>
+                      <Link to="/user-dashboard">Close</Link>
                     </span>
                   </div>
                 </div>
