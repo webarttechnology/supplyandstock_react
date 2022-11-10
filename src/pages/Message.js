@@ -11,7 +11,7 @@ import boopSfx from "../assets/images/messton.mp3";
 import moment from "moment-timezone";
 import Modal from "react-responsive-modal";
 import { toast } from "react-toastify";
-import { TIMEZONE } from "../api/constant";
+import { SOCEKT, TIMEZONE } from "../api/constant";
 const initialData = {
   manufacturerId: "",
   product_des: "",
@@ -23,8 +23,7 @@ const initialData = {
 const Message = ({ setTotalNotification, setNotification, setMessCunt }) => {
   const [play] = useSound(boopSfx);
 
-  const socket = io("http://api.supplywestock.com:3001");
-  console.log("socket", socket);
+  const socket = io(SOCEKT);
   const loaction = useLocation();
   const [userList, setUserList] = useState([]);
   const [feedMess, setFeedMess] = useState([]);
@@ -42,7 +41,6 @@ const Message = ({ setTotalNotification, setNotification, setMessCunt }) => {
   const [sallerid, setSallerid] = useState("");
   const [sellerMssId, setSellerMssId] = useState("");
 
-  console.log("sellerMssId", sellerMssId);
 
   console.log("feedMess", feedMess);
 
@@ -75,6 +73,7 @@ const Message = ({ setTotalNotification, setNotification, setMessCunt }) => {
     setEnquryId(enqueryId);
     setChatrCode(chatroomCode);
     const header = localStorage.getItem("_tokenCode");
+
     try {
       const response = await API.chatfeedShow(chatCode, header);
       setFeedMess(response.data.data);
