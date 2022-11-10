@@ -30,7 +30,7 @@ const Banner = () => {
                       </Link>
                     </div>
                     <div className="col-md-6">
-                      <Link to="/user-dashboard" state={{ data: "1" }}>
+                      <Link to="/order" state={{ data: "1" }}>
                         <div className="buyerBannrBox">
                           <h3>Past orders</h3>
                         </div>

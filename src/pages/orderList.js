@@ -9,7 +9,8 @@ import UserDashBoard from "./UserDashBoard";
 import { io } from "socket.io-client";
 import { SOCEKT, URL } from "../api/constant";
 import { useEffect } from "react";
-const Dashboard = ({ setIsLogin }) => {
+import { Link } from "react-router-dom";
+const OrderList = ({ setIsLogin }) => {
   const loaction = useLocation();
   console.log("loaction", loaction);
 
@@ -49,7 +50,7 @@ const Dashboard = ({ setIsLogin }) => {
                       aria-orientation="vertical"
                     >
                       <button
-                        class="nav-link active"
+                        class="nav-link "
                         id="v-pills-home-tab"
                         data-bs-toggle="pill"
                         data-bs-target="#v-pills-home"
@@ -132,7 +133,7 @@ const Dashboard = ({ setIsLogin }) => {
                       {localStorage.getItem("_userType") === "Buyer" ? (
                         <>
                           <button
-                            class="nav-link"
+                            class="nav-link active"
                             id="v-pills-order-tab"
                             data-bs-toggle="pill"
                             data-bs-target="#v-pills-order"
@@ -192,7 +193,7 @@ const Dashboard = ({ setIsLogin }) => {
                   <div className="col-md-8">
                     <div class="tab-content" id="v-pills-tabContent">
                       <div
-                        class="tab-pane fade show active"
+                        class="tab-pane fade "
                         id="v-pills-home"
                         role="tabpanel"
                         aria-labelledby="v-pills-home-tab"
@@ -222,7 +223,7 @@ const Dashboard = ({ setIsLogin }) => {
                         <Manufactures setIsLogin={setIsLogin} />
                       </div>
                       <div
-                        class="tab-pane fade"
+                        class="tab-pane fade show active"
                         id="v-pills-order"
                         role="tabpanel"
                         aria-labelledby="v-pills-profile-tab"
@@ -249,4 +250,4 @@ const Dashboard = ({ setIsLogin }) => {
   );
 };
 
-export default Dashboard;
+export default OrderList;

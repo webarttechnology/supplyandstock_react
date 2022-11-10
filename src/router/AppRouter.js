@@ -14,6 +14,7 @@ import SignupSeller from "../pages/SignupSeller";
 import Message from "../pages/Message";
 import PaymentSuccuess from "../pages/paymentSuccuess";
 import Order from "../pages/Order";
+import OrderList from "../pages/orderList";
 
 const AppRouter = () => {
   const [isLogin, setIsLogin] = useState(
@@ -52,7 +53,7 @@ const AppRouter = () => {
           path="/user-dashboard"
           element={<Dashboard setIsLogin={setIsLogin} />}
         />
-        <Route path="/order" element={<Order setIsLogin={setIsLogin} />} />
+        <Route path="/order" element={<OrderList setIsLogin={setIsLogin} />} />
         <Route path="/edit-profile" element={<EditProfile />} />
         <Route
           path="/message"
