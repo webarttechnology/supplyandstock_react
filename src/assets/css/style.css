@@ -793,20 +793,6 @@ tr {
   color: #424b54;
   font-size: 31px;
 }
-
-@media only screen and (max-width: 768px) {
-  .bannerSec {
-    padding: 15px;
-  }
-  .bannerSec .nav-pills {
-    border-right: none;
-    border-bottom: 1px solid #ccc;
-  }
-  .footer img {
-    width: 50%;
-    margin-top: 15px;
-  }
-}
 .sectionBtm {
   width: 80%;
   margin: 22px auto 15px;
@@ -1360,4 +1346,72 @@ tr {
     top: -15px;
     right: -8px;
   }
+  .bannerSec {
+    padding: 15px;
+  }
+  .bannerSec .nav-pills {
+    border-right: none;
+    border-bottom: 1px solid #ccc;
+  }
+  .footer img {
+    width: 50%;
+    margin-top: 15px;
+  }
+  .usertypeBox{
+    margin-top: 1rem;
+  }
+  .bannerHome{
+    padding: 5px 0 20px;
+  }
+  .main{
+    width: 90%;
+  }
+  .signup span {
+    margin-left: 1rem;
+  }
+  .signup .formErrorAlrt{
+    width: 90%;
+  }
+  .main input{
+    width: 90%;
+  }
+  .mobileNumberF{
+    width: 60% !important;
+  }
+  .bannerSec .nav-pills{
+    margin-right: 0 !important;
+    padding-right: 0px;
+  }
+  .messageTable {
+    margin: 40px 0 !important;
+  }
+  .sideBarUser{
+    border-bottom: 1px solid #ccc;
+    height: 185px !important;
+    margin-bottom: 15px;
+    border-right: none !important;
+  }
+  .userSend {
+    padding: 5px;
+    height: 40px;
+    border-radius: 6px;
+    width: 15%;
+  }
+  .message{
+    padding: 10px;
+  }
+  .userDashboard{
+    padding: 40px 0px;
+  }
+  .footer{
+    padding: 25px 0px 20px;
+  }
+  .buyerBannrBox{
+    margin-bottom: 10px;
+  }
+  .enqurybtn{
+    margin-bottom: 20px;
+  }
 }
+
+

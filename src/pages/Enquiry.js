@@ -122,7 +122,7 @@ const Enquiry = () => {
 
   return (
     <>
-      <div className="userDashboard">
+      <div className="userDashboard ">
         <div className="container">
           <div className="row justify-content-center">
             <div className="col-md-6">
@@ -188,7 +188,7 @@ const Enquiry = () => {
                 <div className="justify-content-center mt-4 row">
                   <div className="col-md-4">
                     <span
-                      class="bannerBtn text-center w-100"
+                      class="bannerBtn text-center w-100 enqurybtn"
                       onClick={btnDisabl ? validationBtn : upDateSubmitBtn}
                     >
                       Submit
