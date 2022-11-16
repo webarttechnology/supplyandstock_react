@@ -1412,6 +1412,15 @@ tr {
   .enqurybtn{
     margin-bottom: 20px;
   }
+  .react-responsive-modal-modal {
+    max-width: -webkit-fill-available;
+  }
+  .modal-body .form-control{
+    width: 50%;
+  }
+
+
+
 }
 
 
