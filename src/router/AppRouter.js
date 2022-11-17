@@ -15,6 +15,8 @@ import Message from "../pages/Message";
 import PaymentSuccuess from "../pages/paymentSuccuess";
 import Order from "../pages/Order";
 import OrderList from "../pages/orderList";
+import TermsAndConditions from "../pages/TermsAndConditions";
+import Shipping from "../pages/Shipping";
 
 const AppRouter = () => {
   const [isLogin, setIsLogin] = useState(
@@ -33,10 +35,7 @@ const AppRouter = () => {
       <ToastContainer />
       <Routes>
         <Route path="/home" element={<Home />} />
-        <Route
-          path="/"
-          element={<Login setIsLogin={setIsLogin} />}
-        />
+        <Route path="/" element={<Login setIsLogin={setIsLogin} />} />
         <Route
           path="/seller/signup"
           element={<SignupSeller setIsLogin={setIsLogin} />}
@@ -61,6 +60,8 @@ const AppRouter = () => {
         />
         <Route path="/enquiry" element={<Enquiry />} />
         <Route path="/payment/succuess/:id" element={<PaymentSuccuess />} />
+        <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
+        <Route path="/shipping" element={<Shipping />} />
       </Routes>
       <Footer />
     </Router>

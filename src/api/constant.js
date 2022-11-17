@@ -5,8 +5,8 @@ export const IMG = "http://api.supplywestock.com/";
 // ? ====== BASE URL ======
 //export const SOCEKT = "http://192.168.1.182:3001";
 export const SOCEKT = "http://api.supplywestock.com:3001";
-//export const URL = "http://api.supplywestock.com:3001/v1";
-export const URL = "http://192.168.1.182:3001/v1";
+export const URL = "http://api.supplywestock.com:3001/v1";
+//export const URL = "http://192.168.1.182:3001/v1";
 
 export const BUYER = `${URL}/buyers`;
 export const SELLER = `${URL}/sellers`;

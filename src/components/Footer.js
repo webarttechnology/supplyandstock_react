@@ -13,13 +13,10 @@ const Footer = () => {
               <div className="fotterMenu">
                 <ul className="ps-0">
                   <li>
-                    <Link to="/">CONTACT</Link>
+                    <Link to="/terms-and-conditions">TERMS OF SERVICES</Link>
                   </li>
                   <li>
-                    <Link to="/">TERMS OF SERVICES</Link>
-                  </li>
-                  <li>
-                    <Link to="/"> SHIPPING AND RETURNS</Link>
+                    <Link to="/shipping"> SHIPPING AND RETURNS</Link>
                   </li>
                 </ul>
               </div>

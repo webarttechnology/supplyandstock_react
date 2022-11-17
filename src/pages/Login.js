@@ -234,7 +234,6 @@ const emaitVerifaction = async () =>{
       const response = await API.user_buyer_mailVerifi(reqObj)
       console.log("buyerresponse", response);
       if (response.data.success === 1) {
-       
         localStorage.setItem("isLoginCheck", true);
         setIsLogin(localStorage.getItem("isLoginCheck"))
         localStorage.setItem("_userType", selected)
