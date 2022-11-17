@@ -1547,3 +1547,8 @@ main {
   margin-bottom: 13px;
   cursor: pointer;
 }
+.dropOff {
+  display: block;
+  text-align: end;
+  cursor: pointer;
+}

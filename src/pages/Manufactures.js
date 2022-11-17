@@ -18,20 +18,17 @@ const Manufactures = ({ setIsLogin }) => {
 
   const handalerChange = async (data) => {
     const header = localStorage.getItem("_tokenCode");
-    var itemId = [];
-    data.map((item, index) => {
-      itemId = item.id;
-    });
     try {
       const reqObj = {
         id: localStorage.getItem("__userId"),
-        manufacturer: itemId,
+        manufacturer: data,
       };
       console.log("reqObj", reqObj);
       const response = await API.choose_manufacturer_saller(reqObj, header);
       console.log("Choosresponse", response);
       if (response.data.success === 1) {
         MenufactursGet();
+        setIsDrop(false);
       }
     } catch (error) {}
   };
@@ -116,8 +113,8 @@ const Manufactures = ({ setIsLogin }) => {
               type="text"
               className="form-control"
               placeholder="Search here..."
-              onFocus={onfocuseHander}
-              onChange={searchHandaler}
+              //onFocus={onfocuseHander}
+              //onChange={searchHandaler}
             />
             {isDrop ? (
               <>
@@ -126,9 +123,17 @@ const Manufactures = ({ setIsLogin }) => {
                     <h5 className="text-center">Data Not Found</h5>
                   ) : (
                     <>
+                      <span
+                        className="dropOff"
+                        onClick={() => setIsDrop(false)}
+                      >
+                        <i class="bi bi-x-lg"></i>
+                      </span>
                       <ul className="dropDown">
                         {menufacData.map((item, index) => (
-                          <li>{item.value}</li>
+                          <li onClick={() => handalerChange(item.id)}>
+                            {item.value}
+                          </li>
                         ))}
                       </ul>
                     </>

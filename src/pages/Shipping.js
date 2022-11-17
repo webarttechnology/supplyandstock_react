@@ -1,6 +1,10 @@
 import React from "react";
+import { useEffect } from "react";
 
 const Shipping = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   return (
     <>
       <div className="termCond">
