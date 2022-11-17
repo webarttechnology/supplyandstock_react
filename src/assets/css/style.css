@@ -1526,3 +1526,24 @@ main {
 .accept-button[aria-hidden="true"] {
   display: none;
 }
+.dropDown {
+  background: #fff;
+  height: 200px;
+  overflow-y: scroll;
+}
+.dropBox {
+  background-color: #fff;
+  padding: 15px;
+  box-shadow: 0px 0px 20px #ccc;
+  border-radius: 10px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -ms-border-radius: 10px;
+  -o-border-radius: 10px;
+}
+.dropDown li {
+  padding-bottom: 6px;
+  border-bottom: 1px solid #e9e9e9;
+  margin-bottom: 13px;
+  cursor: pointer;
+}

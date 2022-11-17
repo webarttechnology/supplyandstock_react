@@ -197,6 +197,19 @@ export const menufactursGet = async (data) => {
   }
 };
 
+export const menufact_search = async (data, header) => {
+  try {
+    const url = c.MENUFACTURS + "/search/" + data;
+    const res = await axios.get(url, {
+      headers: JSON.parse(header),
+    });
+    //const res = await axios.post(url, data);
+    return res;
+  } catch (e) {
+    return e.response;
+  }
+};
+
 // ? manufacturer_saller)by id
 export const manufacturer_saller = async (data, header) => {
   try {
