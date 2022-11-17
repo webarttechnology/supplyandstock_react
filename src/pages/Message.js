@@ -293,7 +293,7 @@ const Message = ({ setTotalNotification, setNotification, setMessCunt }) => {
         <div className="container">
           <div className="row justify-content-center">
             <div className="col-md-11">
-              <div className="message">
+              <div className="messageC">
                 <div className="row">
                   <div className="col-md-4">
                     <div className=""></div>

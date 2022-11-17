@@ -32,9 +32,9 @@ const AppRouter = () => {
       )}
       <ToastContainer />
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/home" element={<Home />} />
         <Route
-          path="/seller/login"
+          path="/"
           element={<Login setIsLogin={setIsLogin} />}
         />
         <Route

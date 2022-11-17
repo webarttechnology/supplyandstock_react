@@ -743,10 +743,7 @@ const Logins = ({ setIsLogin }) => {
                   <p className="sectionBtm">
                     Don't have account ? <Link to="/buyer/signup">Sign up</Link>
                   </p>
-                  <p className="sectionBtm">
-                    Login as Seller ? <Link to="/seller/login">Login</Link> ||
-                    Register As Seller ? <Link to="/seller/signup">Signup</Link>
-                  </p>
+                  
                 </div>
               </div>
               {/* <div class="login">

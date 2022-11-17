@@ -160,7 +160,7 @@ const Header = ({ isLogin, totalNotification }) => {
               <div className="headerMenu">
                 <ul className="ps-0 mobileMenu">
                   <li>
-                    <Link to="/">Home</Link>
+                    <Link to="/home">Home</Link>
                   </li>
                   {/* <li>
                     <Link to="/">Shop</Link>
@@ -174,7 +174,7 @@ const Header = ({ isLogin, totalNotification }) => {
                 </ul>
               </div>
             </div>
-            <div className="col-md-6 text-end">
+            <div className="col-md-7 text-end">
               <div className="rightMenu">
                 <ul>
                   {search === false ? (

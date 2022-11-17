@@ -768,7 +768,7 @@ const closeModal = () =>{
                   <>
                     <input type="checkbox" id="chk" aria-hidden="true"/>
                       <div class="signup">
-                          <label for="chk" aria-hidden="true">Login</label>
+                          <label for="chk" aria-hidden="true">Seller Login Form</label>
                           <div className="loginCont">
                               <span>Email id</span>
                               <input onChange={loginHandaler} 
@@ -786,6 +786,10 @@ const closeModal = () =>{
                               <Link className="forgotPass"  to="#" onClick={() => setOpenModal(true)}>Forgot Password ?</Link>
                               <p className='sectionBtm'>
                                 Don't have account ? <Link to="/seller/signup">Sign up</Link>
+                              </p>
+                              <p className="sectionBtm">
+                                Login as Buyer ? <Link to="/buyer/login">Login</Link> ||
+                                Register As Buyer ? <Link to="/buyer/signup">Signup</Link>
                               </p>
                          </div>
                       </div>

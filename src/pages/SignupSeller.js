@@ -768,7 +768,7 @@ const closeModal = () =>{
                   <>
                     {/* <input type="checkbox" id="chk" aria-hidden="true"/> */}
                       <div class="signup">
-                          <label for="chk" aria-hidden="true">Sign up</label>
+                          <label for="chk" aria-hidden="true">Seller Sign up</label>
                           <p className="formErrorAlrt">{errorMsg}</p>
                           <span>First Name</span>
                           <input 
