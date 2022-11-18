@@ -274,10 +274,9 @@ const Header = ({ isLogin, totalNotification }) => {
                       </Link>
                     </li>
                   ) : (
-                    ""
-                    // <Link to="/" className="loginBtn">
-                    //   login
-                    // </Link>
+                    <Link to="/" className="loginBtn">
+                      login
+                    </Link>
                   )}
                 </ul>
               </div>
