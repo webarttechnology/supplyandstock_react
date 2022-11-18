@@ -113,8 +113,8 @@ const Manufactures = ({ setIsLogin }) => {
               type="text"
               className="form-control"
               placeholder="Search here..."
-              //onFocus={onfocuseHander}
-              //onChange={searchHandaler}
+              onFocus={onfocuseHander}
+              onChange={searchHandaler}
             />
             {isDrop ? (
               <>
