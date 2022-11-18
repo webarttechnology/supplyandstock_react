@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
-const Banner = () => {
+import CommonModal from "./CommonModal";
+const Banner = ({ commonModal, setCommonModal }) => {
   return (
     <>
       <div className="bannerHome">
@@ -48,7 +49,7 @@ const Banner = () => {
                 <div className="col-md-2">
                   <div className="usertypeBox">
                     <span>
-                      <Link to="/buyer/login">
+                      <Link to="#" onClick={() => setCommonModal(true)}>
                         Buyer <i class="bi bi-arrow-right"></i>
                       </Link>
                       {/* <div className="userBtn">
@@ -76,6 +77,7 @@ const Banner = () => {
           )}
         </div>
       </div>
+      <CommonModal commonModal={commonModal} setCommonModal={setCommonModal} />
     </>
   );
 };

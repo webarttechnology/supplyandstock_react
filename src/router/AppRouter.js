@@ -23,7 +23,7 @@ const AppRouter = () => {
     JSON.parse(localStorage.getItem("isLoginCheck"))
   );
   const [totalNotification, setTotalNotification] = useState("");
-  console.log("totalNotification", totalNotification);
+  const [commonModal, setCommonModal] = useState(false);
 
   return (
     <Router>
@@ -34,20 +34,34 @@ const AppRouter = () => {
       )}
       <ToastContainer />
       <Routes>
-        <Route path="/home" element={<Home />} />
-        <Route path="/" element={<Login setIsLogin={setIsLogin} />} />
+        <Route
+          path="/home"
+          element={
+            <Home setCommonModal={setCommonModal} commonModal={commonModal} />
+          }
+        />
+        <Route
+          path="/"
+          element={
+            <Login
+              setCommonModal={setCommonModal}
+              commonModal={commonModal}
+              setIsLogin={setIsLogin}
+            />
+          }
+        />
         <Route
           path="/seller/signup"
           element={<SignupSeller setIsLogin={setIsLogin} />}
         />
-        <Route
+        {/* <Route
           path="/buyer/login"
           element={<Logins setIsLogin={setIsLogin} />}
-        />
-        <Route
+        /> */}
+        {/* <Route
           path="/buyer/signup"
           element={<SignupBuyer setIsLogin={setIsLogin} />}
-        />
+        /> */}
         <Route
           path="/user-dashboard"
           element={<Dashboard setIsLogin={setIsLogin} />}

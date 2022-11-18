@@ -1552,3 +1552,18 @@ main {
   text-align: end;
   cursor: pointer;
 }
+.forgot img {
+  width: 100%;
+}
+.modalContent {
+  text-align: center;
+  font-weight: 400 !important;
+}
+.tremUl {
+  padding-left: 45px;
+}
+.tremUl li {
+  padding-bottom: 20px;
+  list-style: circle;
+  font-weight: 400;
+}
