@@ -126,7 +126,7 @@ const Manufactures = ({ setIsLogin }) => {
             <input
               type="text"
               className="form-control"
-              placeholder="Search here..."
+              placeholder="Search manufactures"
               onFocus={onfocuseHander}
               onChange={searchHandaler}
             />
