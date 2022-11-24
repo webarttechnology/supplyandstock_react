@@ -4,18 +4,18 @@ import * as API from "../api/index";
 import { Vortex } from "react-loader-spinner";
 import { useNavigate } from "react-router";
 import Select from "react-select";
+import { alphabetData } from "../helpers/commonData";
 
 const Manufactures = ({ setIsLogin }) => {
   const navigate = useNavigate();
   const [menufacData, setMenufacData] = useState([]);
-  const [checked, setChecked] = useState("");
   const [menuFacId, setMenuFacId] = useState([]);
   const [loader, setLoader] = useState(false);
   const [menuId, setMenuId] = useState("");
-  const [selectedOption, setSelectedOption] = useState([]);
-  const [selectData, setSelectData] = useState("");
   const [isDrop, setIsDrop] = useState(false);
-
+  const [menuClickData, setMenuClickData] = useState([]);
+  const [isChecked, setIsChecked] = useState(false);
+  const [menuSelectid, setMenuSelectid] = useState([]);
   const handalerChange = async (data) => {
     const header = localStorage.getItem("_tokenCode");
     try {
@@ -73,6 +73,11 @@ const Manufactures = ({ setIsLogin }) => {
       );
       console.log("response79", sellerResponse);
       setMenuFacId(sellerResponse.data.data.manufacturer);
+      const menuSelectArry = [];
+      sellerResponse.data.data.manufacturer.map((item, index) =>
+        menuSelectArry.push(item._id)
+      );
+      setMenuSelectid(menuSelectArry);
     } catch (error) {}
   };
 
@@ -97,6 +102,15 @@ const Manufactures = ({ setIsLogin }) => {
         setMenufacData(response.data.data);
       } catch (error) {}
     }
+  };
+
+  const manufacturesListAdd = async (data) => {
+    const header = localStorage.getItem("_tokenCode");
+    try {
+      const response = await API.menufact_search(data, header);
+      console.log("ClickData", response);
+      setMenuClickData(response.data.data);
+    } catch (error) {}
   };
 
   useEffect(() => {
@@ -143,6 +157,36 @@ const Manufactures = ({ setIsLogin }) => {
             ) : (
               ""
             )}
+            <h4 className="alphLable">Alphabetic search</h4>
+            <ul className="alphabetList">
+              {alphabetData.map((item, index) => (
+                <li key={index} onClick={() => manufacturesListAdd(item)}>
+                  {item}
+                </li>
+              ))}
+            </ul>
+            {menuClickData.length === 0 ? (
+              ""
+            ) : (
+              <div className="menuFatchDataList">
+                <ul className="menuFectunderList">
+                  {menuClickData.map((item, index) => (
+                    <li key={index}>
+                      {/* <span className="checkBox"></span> */}
+                      <input
+                        className="checkBoxList"
+                        id={item.id}
+                        checked={menuSelectid.includes(item.id) ? true : false}
+                        onChange={() => handalerChange(item.id)}
+                        type="checkbox"
+                      />{" "}
+                      {item.value}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
             {/* <Select
               isMulti
               onChange={(data) => handalerChange(data)}
@@ -151,33 +195,36 @@ const Manufactures = ({ setIsLogin }) => {
               //value={skillArray[index]}
             /> */}
           </div>
-        </div>
-        <div className="row mt-5">
-          {menuFacId === null
-            ? ""
-            : menuFacId.map((item, index) => (
-                <div className="col-md-4 text-center" key={index}>
-                  <div className="menuimgBox dashMenu">
-                    <div className="align-items-center d-flex justify-content-between">
-                      <h4 className="menufecHeading">{item.name}</h4>
-                      <div
-                        className="checkBOx"
-                        onClick={() => coosheHandaler(item._id)}
-                      >
-                        <i class="bi bi-x-circle-fill"></i>
-                      </div>
-                      {/* {
+          <div className="col-md-4">
+            <div className="getMenuUser">
+              {menuFacId === null
+                ? ""
+                : menuFacId.map((item, index) => (
+                    <div className="col-md-12 text-center p-0" key={index}>
+                      <div className="menuimgBox dashMenu">
+                        <div className="align-items-center d-flex justify-content-between">
+                          <h4 className="menufecHeading">{item.name}</h4>
+                          <div
+                            className="checkBOx"
+                            onClick={() => coosheHandaler(item._id)}
+                          >
+                            <i class="bi bi-x-circle-fill"></i>
+                          </div>
+                          {/* {
                                     menuFacId.manufacturer ? menuFacId.manufacturer.includes(item._id) ? (
                                         <div className="checkBOx"><div class="check" onClick={() => coosheHandaler(item._id)}></div></div>
                                     ):(
                                         <div className="checkBOx" onClick={() => coosheHandaler(item._id , 1)}></div>
                                     ):("")
                                 } */}
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                </div>
-              ))}
+                  ))}
+            </div>
+          </div>
         </div>
+        <div className="row mt-5"></div>
       </div>
     </>
   );

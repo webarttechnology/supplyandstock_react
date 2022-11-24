@@ -731,9 +731,13 @@ label {
 }
 .checkBox {
   background-color: #fff;
-  width: 20px;
-  height: 20px;
-  border-radius: 5px;
+  width: 17px;
+  height: 17px;
+  border-radius: 3px;
+  display: inline-block;
+  border: 1px solid #ccc;
+  margin-right: 6px;
+  cursor: pointer;
 }
 .checkBOx {
   width: 33px;
@@ -1566,4 +1570,45 @@ main {
   padding-bottom: 20px;
   list-style: circle;
   font-weight: 400;
+}
+.alphabetList {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.alphabetList li {
+  display: inline-block;
+  font-size: 16px;
+  text-transform: uppercase;
+  /* padding: 0px 5px 0 0; */
+  cursor: pointer;
+  font-weight: 400;
+}
+.alphLable {
+  font-size: 16px;
+  margin-top: 10px;
+  font-weight: 500 !important;
+}
+.menuFatchDataList {
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin-top: 15px;
+  border-radius: 7px;
+}
+.menuFectunderList {
+  height: 300px;
+  overflow-y: scroll;
+}
+.menuFectunderList li {
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+}
+.checkBoxList {
+  margin-right: 5px;
+}
+.getMenuUser {
+  height: 420px;
+  overflow-y: scroll;
 }

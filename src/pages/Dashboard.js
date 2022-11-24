@@ -38,7 +38,7 @@ const Dashboard = ({ setIsLogin }) => {
       <div className="userDashboard">
         <div className="container">
           <div className="row justify-content-center">
-            <div className="col-md-10">
+            <div className="col-md-12">
               <div className="bannerSec">
                 <div className="row">
                   <div className="col-md-4">

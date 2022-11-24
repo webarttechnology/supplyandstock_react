@@ -28,55 +28,133 @@ const AppRouter = () => {
   return (
     <Router>
       {isLogin ? (
-        <Header isLogin={isLogin} totalNotification={totalNotification} />
-      ) : (
-        <Header isLogin={isLogin} totalNotification={totalNotification} />
-      )}
-      <ToastContainer />
-      <Routes>
-        <Route
-          path="/home"
-          element={
-            <Home setCommonModal={setCommonModal} commonModal={commonModal} />
-          }
-        />
-        <Route
-          path="/"
-          element={
-            <Login
-              setCommonModal={setCommonModal}
-              commonModal={commonModal}
-              setIsLogin={setIsLogin}
+        <>
+          <Header isLogin={isLogin} totalNotification={totalNotification} />
+          <Routes>
+            <Route
+              path="/home"
+              element={
+                <Home
+                  setCommonModal={setCommonModal}
+                  commonModal={commonModal}
+                />
+              }
             />
-          }
-        />
-        <Route
-          path="/seller/signup"
-          element={<SignupSeller setIsLogin={setIsLogin} />}
-        />
-        {/* <Route
+            {/* <Route
+              path="/"
+              element={
+                <Login
+                  setCommonModal={setCommonModal}
+                  commonModal={commonModal}
+                  setIsLogin={setIsLogin}
+                />
+              }
+            /> */}
+            {/* <Route
+              path="/seller/signup"
+              element={<SignupSeller setIsLogin={setIsLogin} />}
+            /> */}
+            {/* <Route
           path="/buyer/login"
           element={<Logins setIsLogin={setIsLogin} />}
         /> */}
-        {/* <Route
+            {/* <Route
           path="/buyer/signup"
           element={<SignupBuyer setIsLogin={setIsLogin} />}
         /> */}
-        <Route
-          path="/user-dashboard"
-          element={<Dashboard setIsLogin={setIsLogin} />}
-        />
-        <Route path="/order" element={<OrderList setIsLogin={setIsLogin} />} />
-        <Route path="/edit-profile" element={<EditProfile />} />
-        <Route
-          path="/message"
-          element={<Message setTotalNotification={setTotalNotification} />}
-        />
-        <Route path="/enquiry" element={<Enquiry />} />
-        <Route path="/payment/succuess/:id" element={<PaymentSuccuess />} />
-        <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
-        <Route path="/shipping" element={<Shipping />} />
-      </Routes>
+            <Route path="/" element={<Dashboard setIsLogin={setIsLogin} />} />
+            <Route
+              path="/user-dashboard"
+              element={<Dashboard setIsLogin={setIsLogin} />}
+            />
+            <Route
+              path="/order"
+              element={<OrderList setIsLogin={setIsLogin} />}
+            />
+            <Route path="/edit-profile" element={<EditProfile />} />
+            <Route
+              path="/message"
+              element={<Message setTotalNotification={setTotalNotification} />}
+            />
+            <Route path="/enquiry" element={<Enquiry />} />
+            <Route path="/payment/succuess/:id" element={<PaymentSuccuess />} />
+            <Route
+              path="/terms-and-conditions"
+              element={<TermsAndConditions />}
+            />
+            <Route path="/shipping" element={<Shipping />} />
+          </Routes>
+        </>
+      ) : (
+        <>
+          <Header isLogin={isLogin} totalNotification={totalNotification} />
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <Login
+                  setCommonModal={setCommonModal}
+                  commonModal={commonModal}
+                  setIsLogin={setIsLogin}
+                />
+              }
+            />
+            <Route
+              path="/home"
+              element={
+                <Home
+                  setCommonModal={setCommonModal}
+                  commonModal={commonModal}
+                />
+              }
+            />
+            <Route
+              path="/login"
+              element={
+                <Login
+                  setCommonModal={setCommonModal}
+                  commonModal={commonModal}
+                  setIsLogin={setIsLogin}
+                />
+              }
+            />
+            <Route
+              path="/seller/signup"
+              element={<SignupSeller setIsLogin={setIsLogin} />}
+            />
+            {/* <Route
+          path="/buyer/login"
+          element={<Logins setIsLogin={setIsLogin} />}
+        /> */}
+            {/* <Route
+          path="/buyer/signup"
+          element={<SignupBuyer setIsLogin={setIsLogin} />}
+        /> */}
+            <Route
+              path="/user-dashboard"
+              element={<Dashboard setIsLogin={setIsLogin} />}
+            />
+            <Route
+              path="/order"
+              element={<OrderList setIsLogin={setIsLogin} />}
+            />
+            <Route path="/edit-profile" element={<EditProfile />} />
+            <Route
+              path="/message"
+              element={<Message setTotalNotification={setTotalNotification} />}
+            />
+            <Route path="/enquiry" element={<Enquiry />} />
+            <Route path="/payment/succuess/:id" element={<PaymentSuccuess />} />
+            <Route
+              path="/terms-and-conditions"
+              element={<TermsAndConditions />}
+            />
+            <Route path="/shipping" element={<Shipping />} />
+          </Routes>
+        </>
+      )}
+      <ToastContainer />
+
       <Footer />
     </Router>
   );
