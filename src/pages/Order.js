@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import * as API from "../api/index";
-const Order = () => {
+const Order = ({ setOrderCount }) => {
   const [allEnqris, setAllEnqris] = useState([]);
 
   const allEnquery = async () => {
@@ -23,6 +23,7 @@ const Order = () => {
         );
         console.log("order", response);
         setAllEnqris(response.data.data);
+        setOrderCount(response.data.data);
       }
     } catch (error) {}
   };

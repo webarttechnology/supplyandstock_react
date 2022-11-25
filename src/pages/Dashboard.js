@@ -9,10 +9,10 @@ import UserDashBoard from "./UserDashBoard";
 import { io } from "socket.io-client";
 import { SOCEKT, URL } from "../api/constant";
 import { useEffect } from "react";
+import { useState } from "react";
 const Dashboard = ({ setIsLogin }) => {
-  const loaction = useLocation();
-  console.log("loaction", loaction);
-
+  const [orderCount, setOrderCount] = useState([]);
+  const [menuFetch, setMenuFetch] = useState([]);
   const navigate = useNavigate();
   const logOutBtn = () => {
     localStorage.removeItem("__userId");
@@ -197,7 +197,10 @@ const Dashboard = ({ setIsLogin }) => {
                         role="tabpanel"
                         aria-labelledby="v-pills-home-tab"
                       >
-                        <UserDashBoard />
+                        <UserDashBoard
+                          menuFetch={menuFetch}
+                          orderCount={orderCount}
+                        />
                       </div>
                       <div
                         class="tab-pane fade"
@@ -219,7 +222,10 @@ const Dashboard = ({ setIsLogin }) => {
                         id="v-pills-messages"
                         role="tabpanel"
                       >
-                        <Manufactures setIsLogin={setIsLogin} />
+                        <Manufactures
+                          setMenuFetch={setMenuFetch}
+                          setIsLogin={setIsLogin}
+                        />
                       </div>
                       <div
                         class="tab-pane fade"
@@ -227,7 +233,7 @@ const Dashboard = ({ setIsLogin }) => {
                         role="tabpanel"
                         aria-labelledby="v-pills-profile-tab"
                       >
-                        <Order />
+                        <Order setOrderCount={setOrderCount} />
                       </div>
                       <div
                         class="tab-pane fade"

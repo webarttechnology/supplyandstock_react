@@ -6,7 +6,7 @@ import { useNavigate } from "react-router";
 import Select from "react-select";
 import { alphabetData } from "../helpers/commonData";
 
-const Manufactures = ({ setIsLogin }) => {
+const Manufactures = ({ setIsLogin, setMenuFetch }) => {
   const navigate = useNavigate();
   const [menufacData, setMenufacData] = useState([]);
   const [menuFacId, setMenuFacId] = useState([]);
@@ -73,6 +73,7 @@ const Manufactures = ({ setIsLogin }) => {
       );
       console.log("response79", sellerResponse);
       setMenuFacId(sellerResponse.data.data.manufacturer);
+      setMenuFetch(sellerResponse.data.data.manufacturer);
       const menuSelectArry = [];
       sellerResponse.data.data.manufacturer.map((item, index) =>
         menuSelectArry.push(item._id)

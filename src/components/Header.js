@@ -159,9 +159,14 @@ const Header = ({ isLogin, totalNotification }) => {
             <div className="col-md-5 ps-0">
               <div className="headerMenu">
                 <ul className="ps-0 mobileMenu">
-                  <li>
-                    <Link to="/home">Home</Link>
-                  </li>
+                  {isLogin ? (
+                    ""
+                  ) : (
+                    <li>
+                      <Link to="/home">Home</Link>
+                    </li>
+                  )}
+
                   {/* <li>
                     <Link to="/">Shop</Link>
                   </li>
@@ -303,11 +308,6 @@ const Header = ({ isLogin, totalNotification }) => {
               </span>
             </div>
             <ul className="manuunderList">
-              <li>
-                <Link onClick={() => setIsOpen(false)} to="/">
-                  Home
-                </Link>
-              </li>
               {isLogin ? (
                 <li>
                   <Link onClick={() => setIsOpen(false)} to="/user-dashboard">
@@ -315,7 +315,11 @@ const Header = ({ isLogin, totalNotification }) => {
                   </Link>
                 </li>
               ) : (
-                ""
+                <li>
+                  <Link onClick={() => setIsOpen(false)} to="/">
+                    Home
+                  </Link>
+                </li>
               )}
 
               {isLogin ? (

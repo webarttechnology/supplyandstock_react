@@ -1316,6 +1316,9 @@ tr {
 
 /* ? MOBILE RESPONSIVE MENU ADD */
 @media only screen and (max-width: 768px) {
+  .menuFatchDataList {
+    margin-bottom: 15px;
+  }
   .mobileMenu {
     display: block;
   }
