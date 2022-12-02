@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { IMG } from "../api/constant";
 import * as API from "../api/index";
-import { Vortex } from "react-loader-spinner";
+import { ThreeDots, Vortex } from "react-loader-spinner";
 import { useNavigate } from "react-router";
 import Select from "react-select";
 import { alphabetData } from "../helpers/commonData";
@@ -14,9 +14,11 @@ const Manufactures = ({ setIsLogin, setMenuFetch }) => {
   const [menuId, setMenuId] = useState("");
   const [isDrop, setIsDrop] = useState(false);
   const [menuClickData, setMenuClickData] = useState([]);
-  const [isChecked, setIsChecked] = useState(false);
+  const [isChecked, setIsChecked] = useState("");
   const [menuSelectid, setMenuSelectid] = useState([]);
+
   const handalerChange = async (data) => {
+    setLoader(true);
     const header = localStorage.getItem("_tokenCode");
     try {
       const reqObj = {
@@ -71,6 +73,9 @@ const Manufactures = ({ setIsLogin, setMenuFetch }) => {
         localStorage.getItem("__userId"),
         header
       );
+      if (sellerResponse.data.success === 1) {
+        setLoader(false);
+      }
       console.log("response79", sellerResponse);
       setMenuFacId(sellerResponse.data.data.manufacturer);
       setMenuFetch(sellerResponse.data.data.manufacturer);
@@ -170,21 +175,41 @@ const Manufactures = ({ setIsLogin, setMenuFetch }) => {
               ""
             ) : (
               <div className="menuFatchDataList">
-                <ul className="menuFectunderList">
-                  {menuClickData.map((item, index) => (
-                    <li key={index}>
-                      {/* <span className="checkBox"></span> */}
-                      <input
-                        className="checkBoxList"
-                        id={item.id}
-                        checked={menuSelectid.includes(item.id) ? true : false}
-                        onChange={() => handalerChange(item.id)}
-                        type="checkbox"
-                      />{" "}
-                      {item.value}
-                    </li>
-                  ))}
-                </ul>
+                {loader ? (
+                  <ul className="menuFectunderList d-flex align-items-center justify-content-center">
+                    <ThreeDots
+                      height="30"
+                      width="100%"
+                      radius="9"
+                      color="#9b6a6cdb"
+                      ariaLabel="three-dots-loading"
+                      wrapperStyle={{}}
+                      wrapperClassName=""
+                      visible={true}
+                    />
+                  </ul>
+                ) : (
+                  <ul className="menuFectunderList">
+                    {menuClickData.map((item, index) => (
+                      <li key={index}>
+                        <input
+                          className="checkBoxList"
+                          id={index}
+                          checked={
+                            menuSelectid.includes(item.id) ? true : false
+                          }
+                          // checked={
+                          //   menuClickData.includes(isChecked) ? true : false
+                          // }
+                          onChange={() => handalerChange(item.id)}
+                          type="checkbox"
+                        />
+
+                        {item.value}
+                      </li>
+                    ))}
+                  </ul>
+                )}
               </div>
             )}
 
@@ -211,13 +236,6 @@ const Manufactures = ({ setIsLogin, setMenuFetch }) => {
                           >
                             <i class="bi bi-x-circle-fill"></i>
                           </div>
-                          {/* {
-                                    menuFacId.manufacturer ? menuFacId.manufacturer.includes(item._id) ? (
-                                        <div className="checkBOx"><div class="check" onClick={() => coosheHandaler(item._id)}></div></div>
-                                    ):(
-                                        <div className="checkBOx" onClick={() => coosheHandaler(item._id , 1)}></div>
-                                    ):("")
-                                } */}
                         </div>
                       </div>
                     </div>

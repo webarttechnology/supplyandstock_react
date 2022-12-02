@@ -24,6 +24,7 @@ li {
   padding: 15px 0;
   border-bottom: 1px solid var(--them_primaryColor);
 }
+
 .loginBtn {
   background-color: var(--them_primaryColor);
   border: none;
@@ -36,6 +37,14 @@ li {
   color: #000 !important;
   text-decoration: none;
   line-height: 47px;
+  cursor: pointer;
+}
+.react-responsive-modal-modal {
+  max-width: 96% !important;
+}
+.exit {
+  background-color: red !important;
+  color: #fff !important;
 }
 .headertp {
   border-bottom: 1px solid var(--them_primaryColor);
@@ -702,7 +711,7 @@ label {
   padding: 50px 0;
 }
 .react-responsive-modal-modal .modal-content {
-  width: 500px;
+  /* width: 500px; */
   border: none;
 }
 .editPro .mobileNumberF {
@@ -1313,7 +1322,12 @@ tr {
 .mobileNotif {
   display: none;
 }
-
+/* .tramsCondi {
+  width: 1000px !important;
+} */
+.tramsCondi img {
+  width: 100%;
+}
 /* ? MOBILE RESPONSIVE MENU ADD */
 @media only screen and (max-width: 768px) {
   .menuFatchDataList {

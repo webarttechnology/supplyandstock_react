@@ -120,7 +120,13 @@ const AppRouter = () => {
             />
             <Route
               path="/seller/signup"
-              element={<SignupSeller setIsLogin={setIsLogin} />}
+              element={
+                <SignupSeller
+                  setCommonModal={setCommonModal}
+                  commonModal={commonModal}
+                  setIsLogin={setIsLogin}
+                />
+              }
             />
             {/* <Route
           path="/buyer/login"

@@ -9,6 +9,7 @@ import { cuntryData } from "../helpers/commonData";
 import Modal from "react-responsive-modal";
 import NumberFormat from "react-number-format";
 import { ThreeDots } from "react-loader-spinner";
+import CommonModal from "../components/CommonModal";
 const initialData = {
   firstName: "",
   lastName: "",
@@ -27,7 +28,7 @@ const initialDatalogPass = {
   confirmPassword: "",
 };
 
-const SignupSeller = ({ setIsLogin }) => {
+const SignupSeller = ({ setIsLogin, commonModal, setCommonModal }) => {
   // ???? SELLERS LOGIN AND SIGNUP PAGE
 
   const navigate = useNavigate();
@@ -42,6 +43,8 @@ const SignupSeller = ({ setIsLogin }) => {
   const [newEmailData, setNewEmailData] = useState("");
   const [isForgot, setIsForgot] = useState(0);
   const [passWordData, setPassWordData] = useState(initialDatalogPass);
+  const [iAgree, setIAgree] = useState(false);
+  const [finalAgreeData, setFinalAgreeData] = useState([]);
 
   //ERROR-MSGS
   const [errorMsg, setErrorMsg] = useState("");
@@ -113,6 +116,56 @@ const SignupSeller = ({ setIsLogin }) => {
   const handleCountrySelect = (e) => {
     setDialCode(e.target.value);
   };
+
+  const agreeButton = async () => {
+    try {
+      const response = await API.user_registration_seller(finalAgreeData);
+      console.log("sssresponse", response);
+      if (response.data.success === 1) {
+        setCommonModal(false);
+        const headerObj = {
+          Authorization: `Bearer ${response.data.token_code}`,
+        };
+        localStorage.setItem("_tokenCode", JSON.stringify(headerObj));
+        localStorage.setItem("_userType", selected);
+        setLoading(false);
+        setIsEmail(1);
+        localStorage.setItem("__userId", response.data.data._id);
+      } else {
+        toast(response.data.msg, {
+          position: "top-right",
+          autoClose: 5000,
+          type: "error",
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
+        setCommonModal(false);
+        //setErrorMsg(response.data.msg)
+        setLoading(false);
+      }
+    } catch (error) {}
+  };
+
+  const agreeExit = () => {
+    setCommonModal(false);
+    toast("Your registration is incomplete", {
+      position: "top-right",
+      autoClose: 5000,
+      type: "error",
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "colored",
+    });
+    setLoading(false);
+  };
+
   // ?=========== submit handaler ============
   const submitHandaler = async () => {
     setLoading(true);
@@ -121,6 +174,8 @@ const SignupSeller = ({ setIsLogin }) => {
       setLoading(false);
       return;
     }
+
+    setCommonModal(true);
     if (selected === "Buyer") {
       try {
         const reqObj = {
@@ -168,39 +223,38 @@ const SignupSeller = ({ setIsLogin }) => {
           password: formData.password,
         };
         console.log("sssreqObj", reqObj);
-
+        setFinalAgreeData(reqObj);
         if (formData.mobileNo === "") {
           setMobileErrorInner("Please enter your mobile number.");
         } else if (formData.mobileNo.length < 10) {
           setMobileErrorInner("Please enter valid mobile number");
         } else {
-          const response = await API.user_registration_seller(reqObj);
-          console.log("sssresponse", response);
-          if (response.data.success === 1) {
-            const headerObj = {
-              Authorization: `Bearer ${response.data.token_code}`,
-            };
-
-            localStorage.setItem("_tokenCode", JSON.stringify(headerObj));
-            localStorage.setItem("_userType", selected);
-            setLoading(false);
-            setIsEmail(1);
-            localStorage.setItem("__userId", response.data.data._id);
-          } else {
-            toast(response.data.msg, {
-              position: "top-right",
-              autoClose: 5000,
-              type: "error",
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-              theme: "colored",
-            });
-            //setErrorMsg(response.data.msg)
-            setLoading(false);
-          }
+          // const response = await API.user_registration_seller(reqObj);
+          // console.log("sssresponse", response);
+          // if (response.data.success === 1) {
+          //   const headerObj = {
+          //     Authorization: `Bearer ${response.data.token_code}`,
+          //   };
+          //   localStorage.setItem("_tokenCode", JSON.stringify(headerObj));
+          //   localStorage.setItem("_userType", selected);
+          //   setLoading(false);
+          //   setIsEmail(1);
+          //   localStorage.setItem("__userId", response.data.data._id);
+          // } else {
+          //   toast(response.data.msg, {
+          //     position: "top-right",
+          //     autoClose: 5000,
+          //     type: "error",
+          //     hideProgressBar: false,
+          //     closeOnClick: true,
+          //     pauseOnHover: true,
+          //     draggable: true,
+          //     progress: undefined,
+          //     theme: "colored",
+          //   });
+          //   //setErrorMsg(response.data.msg)
+          //   setLoading(false);
+          // }
         }
       } catch (error) {}
     }
@@ -926,7 +980,13 @@ const SignupSeller = ({ setIsLogin }) => {
           )}
         </div>
       </div>
-
+      <CommonModal
+        trams={true}
+        agreeButton={agreeButton}
+        commonModal={commonModal}
+        setCommonModal={setCommonModal}
+        agreeExit={agreeExit}
+      />
       <Modal open={openModal} onClose={closeModal}>
         <div class="modal-content">
           <div class="modal-header">
