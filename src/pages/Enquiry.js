@@ -32,7 +32,6 @@ const Enquiry = () => {
     try {
       const response = await API.menufactursGet(header);
       setMenufacData(response.data.data);
-      console.log("response", response);
     } catch (error) {}
   };
 
@@ -48,9 +47,9 @@ const Enquiry = () => {
         color: formData.color,
         productName: formData.productName,
       };
-      console.log("reqObj", reqObj);
+
       const response = await API.buyer_enqueris(reqObj, header);
-      console.log("response", response);
+
       if (response.data.success === 1) {
         response.data.sellerId.map((item, index) =>
           socket.emit("notification", {

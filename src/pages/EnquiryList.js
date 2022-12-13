@@ -16,7 +16,7 @@ const EnquiryList = ({ setIsLogin }) => {
           localStorage.getItem("__userId"),
           header
         );
-        console.log("EnquiryListREs", response);
+
         setAllEnqris(response.data.data);
         if (response.data.success === 2) {
           localStorage.removeItem("__userId");
@@ -31,7 +31,7 @@ const EnquiryList = ({ setIsLogin }) => {
           localStorage.getItem("__userId"),
           header
         );
-        console.log("EnquiryListREsSeller", response);
+
         setAllEnqris(response.data.data);
         if (response.data.success === 2) {
           localStorage.removeItem("__userId");
@@ -56,7 +56,6 @@ const EnquiryList = ({ setIsLogin }) => {
       if (response.data.success === 200) {
         allEnquery();
       }
-      console.log("response", response);
     } catch (error) {}
   };
 

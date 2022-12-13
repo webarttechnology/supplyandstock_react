@@ -12,7 +12,6 @@ import { useEffect } from "react";
 import { Link } from "react-router-dom";
 const OrderList = ({ setIsLogin }) => {
   const loaction = useLocation();
-  console.log("loaction", loaction);
 
   const navigate = useNavigate();
   const logOutBtn = () => {

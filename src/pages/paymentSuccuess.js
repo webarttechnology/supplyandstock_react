@@ -7,7 +7,6 @@ const PaymentSuccuess = () => {
   const parame = useParams();
   const [paymentStatus, setPaymentStatus] = useState("");
   const [loader, setLoader] = useState(true);
-  console.log("parame", parame);
 
   const paymentStatus_details = async () => {
     const header = localStorage.getItem("_tokenCode");
@@ -16,7 +15,6 @@ const PaymentSuccuess = () => {
         session_id: parame.id,
       };
       const response = await API.payment_details(reqObj, header);
-      console.log("response", response);
       if (response.data.success === 1) {
         setLoader(false);
       } else {

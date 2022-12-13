@@ -25,9 +25,9 @@ const Manufactures = ({ setIsLogin, setMenuFetch }) => {
         id: localStorage.getItem("__userId"),
         manufacturer: data,
       };
-      console.log("reqObj", reqObj);
+
       const response = await API.choose_manufacturer_saller(reqObj, header);
-      console.log("Choosresponse", response);
+
       if (response.data.success === 1) {
         MenufactursGet();
         setIsDrop(false);
@@ -45,9 +45,9 @@ const Manufactures = ({ setIsLogin, setMenuFetch }) => {
         id: localStorage.getItem("__userId"),
         manufacturer: itemId,
       };
-      console.log("reqObj", reqObj);
+
       const response = await API.remove_manufacturer_saller(reqObj, header);
-      console.log("remresponse", response);
+
       if (response.data.success === 1) {
         MenufactursGet();
         setLoader(false);
@@ -68,7 +68,7 @@ const Manufactures = ({ setIsLogin, setMenuFetch }) => {
     try {
       const response = await API.menufactursGet(header);
       setMenufacData(response.data.data);
-      console.log("response74", response);
+
       const sellerResponse = await API.manufacturer_saller(
         localStorage.getItem("__userId"),
         header
@@ -76,7 +76,7 @@ const Manufactures = ({ setIsLogin, setMenuFetch }) => {
       if (sellerResponse.data.success === 1) {
         setLoader(false);
       }
-      console.log("response79", sellerResponse);
+
       setMenuFacId(sellerResponse.data.data.manufacturer);
       setMenuFetch(sellerResponse.data.data.manufacturer);
       const menuSelectArry = [];
@@ -104,7 +104,7 @@ const Manufactures = ({ setIsLogin, setMenuFetch }) => {
       const header = localStorage.getItem("_tokenCode");
       try {
         const response = await API.menufact_search(e.target.value, header);
-        console.log("searchHandaler", response);
+
         setMenufacData(response.data.data);
       } catch (error) {}
     }
@@ -114,7 +114,7 @@ const Manufactures = ({ setIsLogin, setMenuFetch }) => {
     const header = localStorage.getItem("_tokenCode");
     try {
       const response = await API.menufact_search(data, header);
-      console.log("ClickData", response);
+
       setMenuClickData(response.data.data);
     } catch (error) {}
   };

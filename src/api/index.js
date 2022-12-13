@@ -53,8 +53,6 @@ export const user_buyer_mailVerifi = async (data) => {
 export const user_buyer_resendOtp = async (data) => {
   try {
     const url = c.BUYER + "/send-otp/" + data;
-
-    console.log("url", url);
     const res = await axios.get(url, data);
     return res;
   } catch (e) {
@@ -341,7 +339,7 @@ export const noification_hide = async (data, header) => {
 export const buyer_enqueris_id = async (data, header) => {
   try {
     const url = c.ENQUIRIES + "/buyer/" + data;
-    console.log("url", url);
+
     const res = await axios.get(url, {
       headers: JSON.parse(header),
     });

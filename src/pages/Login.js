@@ -130,10 +130,8 @@ const Login = ({ setIsLogin, setCommonModal, commonModal }) => {
           mobileNo: +1 + formData.mobileNo,
           password: formData.password,
         };
-        console.log("bbbreqObj", reqObj);
 
         const response = await API.user_registration_buyer(reqObj);
-        console.log("response", response);
         if (response.data.success === 1) {
           const headerObj = {
             Authorization: `Bearer ${response.data.token_code}`,
@@ -167,7 +165,6 @@ const Login = ({ setIsLogin, setCommonModal, commonModal }) => {
           mobileNo: `+1${formData.mobileNo}`,
           password: formData.password,
         };
-        console.log("sssreqObj", reqObj);
 
         if (formData.mobileNo === "") {
           setMobileErrorInner("Please enter your mobile number.");
@@ -175,7 +172,7 @@ const Login = ({ setIsLogin, setCommonModal, commonModal }) => {
           setMobileErrorInner("Please enter valid mobile number");
         } else {
           const response = await API.user_registration_seller(reqObj);
-          console.log("sssresponse", response);
+
           if (response.data.success === 1) {
             const headerObj = {
               Authorization: `Bearer ${response.data.token_code}`,
@@ -214,10 +211,9 @@ const Login = ({ setIsLogin, setCommonModal, commonModal }) => {
           id: formData.email,
           otp: OTP,
         };
-        console.log("reqObj", reqObj);
 
         const response = await API.user_buyer_mailVerifi(reqObj);
-        console.log("buyerresponse", response);
+
         if (response.data.success === 1) {
           localStorage.setItem("isLoginCheck", true);
           setIsLogin(localStorage.getItem("isLoginCheck"));
@@ -234,7 +230,7 @@ const Login = ({ setIsLogin, setCommonModal, commonModal }) => {
           otp: OTP,
         };
         const response = await API.user_seller_mailVerifi(reqObj);
-        console.log("sellerresponse", response);
+
         if (response.data.success === 1) {
           localStorage.setItem("isLoginCheck", true);
           setIsLogin(localStorage.getItem("isLoginCheck"));
@@ -254,14 +250,12 @@ const Login = ({ setIsLogin, setCommonModal, commonModal }) => {
         const response = await API.user_buyer_resendOtp(
           localStorage.getItem("__userId")
         );
-        console.log("bbresponse", response);
       } catch (error) {}
     } else {
       try {
         const response = await API.user_seller_resendOtp(
           localStorage.getItem("__userId")
         );
-        console.log("SSSresponse", response);
       } catch (error) {}
     }
   };
@@ -274,9 +268,9 @@ const Login = ({ setIsLogin, setCommonModal, commonModal }) => {
           emailId: loginData.emailId,
           password: loginData.password,
         };
-        console.log("bbbreqObj", reqObj);
+
         const response = await API.user_login_buyer(reqObj);
-        console.log("bbbresponse", response);
+
         if (response.data.success === 1) {
           localStorage.setItem("isLoginCheck", true);
           setIsLogin(localStorage.getItem("isLoginCheck"));
@@ -307,9 +301,9 @@ const Login = ({ setIsLogin, setCommonModal, commonModal }) => {
           emailId: loginData.emailId,
           password: loginData.password,
         };
-        console.log("ssreqObj", reqObj);
+
         const response = await API.user_login_seller(reqObj);
-        console.log("sssresponse", response);
+
         if (response.data.success === 1) {
           localStorage.setItem("isLoginCheck", true);
           setIsLogin(localStorage.getItem("isLoginCheck"));
@@ -344,9 +338,9 @@ const Login = ({ setIsLogin, setCommonModal, commonModal }) => {
         const reqObj = {
           emailId: newEmailData,
         };
-        console.log("reqObj", reqObj);
+
         const response = await API.forgot_password_buyer(reqObj);
-        console.log("response", response);
+
         if (response.data.success === 1) {
           toast(response.data.message, {
             position: "top-right",
@@ -379,9 +373,9 @@ const Login = ({ setIsLogin, setCommonModal, commonModal }) => {
         const reqObj = {
           emailId: newEmailData,
         };
-        console.log("reqObj", reqObj);
+
         const response = await API.forgot_password_saller(reqObj);
-        console.log("response", response);
+
         if (response.data.success === 1) {
           toast(response.data.message, {
             position: "top-right",
@@ -420,7 +414,7 @@ const Login = ({ setIsLogin, setCommonModal, commonModal }) => {
           otp: OTP,
         };
         const response = await API.user_buyer_mailVerifi(reqObj);
-        console.log("bbbresponse", response);
+
         if (response.data.success === 1) {
           setIsForgot(2);
           setOtpError("");
@@ -438,7 +432,6 @@ const Login = ({ setIsLogin, setCommonModal, commonModal }) => {
         } else {
           setOtpError(response.data.msg);
         }
-        console.log("ssbresponse", response);
       }
     } catch (error) {}
   };
@@ -470,10 +463,10 @@ const Login = ({ setIsLogin, setCommonModal, commonModal }) => {
         password: passWordData.password,
         otp: OTP,
       };
-      console.log("reqObj", reqObj);
+
       if (selectedForgot === "Buyer") {
         const response = await API.reset_password_buyer(reqObj);
-        console.log("bbbresponse", response);
+
         if (response.data.success === 1) {
           closeModal();
           toast(response.data.msg, {
@@ -490,9 +483,8 @@ const Login = ({ setIsLogin, setCommonModal, commonModal }) => {
           setIsForgot(0);
         }
       } else {
-        console.log("seller");
         const response = await API.reset_password_saller(reqObj);
-        console.log("bbbresponse", response);
+
         if (response.data.success === 1) {
           closeModal();
           toast(response.data.msg, {

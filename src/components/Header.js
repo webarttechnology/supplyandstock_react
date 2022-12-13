@@ -34,9 +34,9 @@ const Header = ({ isLogin, totalNotification }) => {
       const reqObj = {
         id: messId,
       };
-      console.log("reqOObj", reqObj);
+
       const response = await API.noification_hide(reqObj, header);
-      console.log("noification_hide", response);
+
       if (response.data.success === 1) {
         notificationrender();
       }
@@ -52,7 +52,6 @@ const Header = ({ isLogin, totalNotification }) => {
   useEffect(() => {
     notificationrender();
     socket.on("receiveNotification", (data) => {
-      console.log("receiveNotification", data);
       if (data.show === localStorage.getItem("__userId")) {
         setNotification(data.notification);
         data.notification.map((item, index) =>

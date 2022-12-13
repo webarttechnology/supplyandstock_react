@@ -41,9 +41,6 @@ const Message = ({ setTotalNotification, setNotification, setMessCunt }) => {
   const [sallerid, setSallerid] = useState("");
   const [sellerMssId, setSellerMssId] = useState("");
 
-
-  console.log("feedMess", feedMess);
-
   const chatRoomShow = async () => {
     const header = localStorage.getItem("_tokenCode");
     try {
@@ -51,7 +48,7 @@ const Message = ({ setTotalNotification, setNotification, setMessCunt }) => {
         localStorage.getItem("__userId"),
         header
       );
-      console.log("responsedf", response);
+
       response.data.data.map((item, index) =>
         setTotalNotification(item.unseenCount)
       );
@@ -118,10 +115,9 @@ const Message = ({ setTotalNotification, setNotification, setMessCunt }) => {
         buyerId: buyerId,
         chatroomId: chatCodes,
       };
-      console.log("reqObj", reqObj);
 
       const response = await API.order_data(reqObj, header);
-      console.log("response", response);
+
       if (response.data.success === 1) {
         socket.emit("notification", {
           id: buyerId,
@@ -168,9 +164,7 @@ const Message = ({ setTotalNotification, setNotification, setMessCunt }) => {
           chatroomId: chatCodes,
           buyerId: localStorage.getItem("__userId"),
         };
-        console.log("reqObj", reqObj);
         const response = await API.payment_link(reqObj, header);
-        console.log("response", response);
         if (response.data.success === 1) {
           commonReedMess();
           chatRoomShowing();
@@ -186,7 +180,7 @@ const Message = ({ setTotalNotification, setNotification, setMessCunt }) => {
           sellerId: localStorage.getItem("__userId"),
         };
         const response = await API.payment_link(reqObj, header);
-        console.log("response", response);
+
         if (response.data.success === 1) {
           chatRoomShowing();
           socket.emit("getChatHistory", {
@@ -205,9 +199,7 @@ const Message = ({ setTotalNotification, setNotification, setMessCunt }) => {
           chatroomId: chatCodes,
           sellerId: localStorage.getItem("__userId"),
         };
-        console.log("reqObj", reqObj);
         const response = await API.payment_link_gent(reqObj, header);
-        console.log("response", response);
         if (response.data.success === 1) {
           // chatRoomShowing()
           socket.emit("getChatHistory", {
@@ -237,10 +229,8 @@ const Message = ({ setTotalNotification, setNotification, setMessCunt }) => {
         senderId: localStorage.getItem("__userId"),
         chatroomId: chtCod,
       };
-      console.log("reqObj", reqObj);
 
       const response = await API.chatreedMess(reqObj, header);
-      console.log("commonReedMess", response);
       if (response.data.success === 1) {
         chatRoomShow();
       }
@@ -258,7 +248,6 @@ const Message = ({ setTotalNotification, setNotification, setMessCunt }) => {
       id: localStorage.getItem("__userId"),
     });
     socket.on("receiveChatRoom", (data) => {
-      console.log("receiveChatRoom", data);
       if (data.showid === localStorage.getItem("__userId")) {
         setUserList(data.chatroom);
       }
@@ -271,7 +260,6 @@ const Message = ({ setTotalNotification, setNotification, setMessCunt }) => {
     });
 
     socket.on("receiveChat", (data) => {
-      console.log("receiveChat", data);
       setFeedMess(data);
     });
 

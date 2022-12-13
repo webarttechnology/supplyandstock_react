@@ -14,14 +14,12 @@ const Order = ({ setOrderCount }) => {
           localStorage.getItem("__userId"),
           header
         );
-        console.log("orderbb", response);
         setAllEnqris(response.data.data);
       } else {
         const response = await API.user_order_seller(
           localStorage.getItem("__userId"),
           header
         );
-        console.log("order", response);
         setAllEnqris(response.data.data);
         setOrderCount(response.data.data);
       }
