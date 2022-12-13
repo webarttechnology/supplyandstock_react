@@ -61,6 +61,15 @@ const TermsAndConditions = () => {
                     be invalid or unenforceable, the remaining provisions will
                     remain in full force and effect.
                   </p>
+                  <p>
+                    We reserve the right to remove your account if you violate
+                    our website policies.
+                  </p>
+                  <p>
+                    Contacting the buyers directly or exchanging contact
+                    information will be considered as a breach of contact and
+                    such users will be permanently banned from the platform.
+                  </p>
                   <p>Thank you for using our website!</p>
                 </article>
               </main>
