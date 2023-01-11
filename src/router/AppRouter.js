@@ -17,6 +17,8 @@ import Order from "../pages/Order";
 import OrderList from "../pages/orderList";
 import TermsAndConditions from "../pages/TermsAndConditions";
 import Shipping from "../pages/Shipping";
+import AccountActive from "../pages/AccountActive";
+import StripeAccountActive from "../pages/StripeAccountActive";
 
 const AppRouter = () => {
   const [isLogin, setIsLogin] = useState(
@@ -40,6 +42,29 @@ const AppRouter = () => {
                 />
               }
             />
+            <Route
+              path="/active-account"
+              element={
+                <AccountActive
+                  setCommonModal={setCommonModal}
+                  commonModal={commonModal}
+                />
+              }
+            />
+            <Route
+              path="/user-dashboard"
+              element={<Dashboard setIsLogin={setIsLogin} />}
+            />
+            <Route
+              path="/user/account-active"
+              element={
+                <StripeAccountActive
+                  setIsLogin={setIsLogin}
+                  setCommonModal={setCommonModal}
+                  commonModal={commonModal}
+                />
+              }
+            />
             {/* <Route
               path="/"
               element={
@@ -55,18 +80,15 @@ const AppRouter = () => {
               element={<SignupSeller setIsLogin={setIsLogin} />}
             /> */}
             <Route
-          path="/buyer/login"
-          element={<Logins setIsLogin={setIsLogin} />}
-        /> 
-      <Route
-          path="/buyer/signup"
-          element={<SignupBuyer setIsLogin={setIsLogin} />}
-        />
-            <Route path="/" element={<Dashboard setIsLogin={setIsLogin} />} />
-            <Route
-              path="/user-dashboard"
-              element={<Dashboard setIsLogin={setIsLogin} />}
+              path="/buyer/login"
+              element={<Logins setIsLogin={setIsLogin} />}
             />
+            <Route
+              path="/buyer/signup"
+              element={<SignupBuyer setIsLogin={setIsLogin} />}
+            />
+            <Route path="/" element={<Dashboard setIsLogin={setIsLogin} />} />
+
             <Route
               path="/order"
               element={<OrderList setIsLogin={setIsLogin} />}
@@ -96,6 +118,15 @@ const AppRouter = () => {
                   setCommonModal={setCommonModal}
                   commonModal={commonModal}
                   setIsLogin={setIsLogin}
+                />
+              }
+            />
+            <Route
+              path="/active-account"
+              element={
+                <AccountActive
+                  setCommonModal={setCommonModal}
+                  commonModal={commonModal}
                 />
               }
             />

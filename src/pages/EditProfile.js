@@ -11,12 +11,12 @@ const initialData = {
   mobileNo: "",
 };
 
-const EditProfile = ({ setIsLogin,setUserEmail,setActiveAcount }) => {
+const EditProfile = ({ setIsLogin, setUserEmail, setActiveAcount }) => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState(initialData);
   const [dialCode, setDialCode] = useState("");
   const [mobileData, setMobileData] = useState("");
-  
+
   const handleCountrySelect = (e) => {
     setDialCode(e.target.value);
   };
@@ -108,7 +108,7 @@ const EditProfile = ({ setIsLogin,setUserEmail,setActiveAcount }) => {
           navigate("/");
         }
         setFormData(BuyerResponse.data.data);
-        setUserEmail(BuyerResponse.data.data.email)
+        setUserEmail(BuyerResponse.data.data.email);
         const mobileDatas = BuyerResponse.data.data.mobileNo.substring(2);
         setMobileData(mobileDatas);
       } else {
@@ -124,12 +124,12 @@ const EditProfile = ({ setIsLogin,setUserEmail,setActiveAcount }) => {
           setIsLogin(localStorage.removeItem("isLoginCheck"));
           navigate("/");
         }
-        if (sellerResponse.data.data.strip_acc) {
-          setActiveAcount(true)
+        if (sellerResponse.data.data.isActive) {
+          setActiveAcount(true);
         }
-        console.log("sellerResponse.data.data.strip_acc", sellerResponse.data.data.strip_acc);
+        console.log("sellerResponse.data.data", sellerResponse.data.data);
         setFormData(sellerResponse.data.data);
-        setUserEmail(sellerResponse.data.data.emailId)
+        setUserEmail(sellerResponse.data.data.emailId);
         const mobileDatas = sellerResponse.data.data.mobileNo.substring(2);
         setMobileData(mobileDatas);
       }
@@ -219,7 +219,6 @@ const EditProfile = ({ setIsLogin,setUserEmail,setActiveAcount }) => {
               name="mobileNo"
               value={mobileData}
             />
-            
           </div>
         </div>
       </div>
