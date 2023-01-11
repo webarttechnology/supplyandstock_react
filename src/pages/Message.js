@@ -199,7 +199,9 @@ const Message = ({ setTotalNotification, setNotification, setMessCunt }) => {
           chatroomId: chatCodes,
           sellerId: localStorage.getItem("__userId"),
         };
+        
         const response = await API.payment_link_gent(reqObj, header);
+     
         if (response.data.success === 1) {
           // chatRoomShowing()
           socket.emit("getChatHistory", {

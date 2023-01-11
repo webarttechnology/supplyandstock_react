@@ -10,9 +10,12 @@ import { io } from "socket.io-client";
 import { SOCEKT, URL } from "../api/constant";
 import { useEffect } from "react";
 import { useState } from "react";
+import ActiveAccount from "./ActiveAccount";
 const Dashboard = ({ setIsLogin }) => {
   const [orderCount, setOrderCount] = useState([]);
   const [menuFetch, setMenuFetch] = useState([]);
+  const [userEmail, setUserEmail] = useState("");
+  const [activeAccount, setActiveAcount] = useState(false);
   const navigate = useNavigate();
   const logOutBtn = () => {
     localStorage.removeItem("__userId");
@@ -114,6 +117,21 @@ const Dashboard = ({ setIsLogin }) => {
                           </button>
                           <button
                             class="nav-link"
+                            id="v-pills-stripe-tab"
+                            data-bs-toggle="pill"
+                            data-bs-target="#v-pills-stripe"
+                            type="button"
+                            role="tab"
+                            aria-controls="v-pills-stripe"
+                            aria-selected="false"
+                          >
+                            <span>
+                            <i class="bi bi-person-badge"></i>
+                            </span>{" "}
+                            Activate Stripe Account
+                          </button>
+                          <button
+                            class="nav-link"
                             id="v-pills-enqury-tab"
                             data-bs-toggle="pill"
                             data-bs-target="#v-pills-enqury"
@@ -208,7 +226,7 @@ const Dashboard = ({ setIsLogin }) => {
                         role="tabpanel"
                         aria-labelledby="v-pills-profile-tab"
                       >
-                        <EditProfile setIsLogin={setIsLogin} />
+                        <EditProfile setActiveAcount={setActiveAcount} setUserEmail={setUserEmail} setIsLogin={setIsLogin} />
                       </div>
                       <div
                         class="tab-pane fade"
@@ -226,6 +244,13 @@ const Dashboard = ({ setIsLogin }) => {
                           setMenuFetch={setMenuFetch}
                           setIsLogin={setIsLogin}
                         />
+                      </div>
+                      <div
+                        class="tab-pane fade"
+                        id="v-pills-stripe"
+                        role="tabpanel"
+                      >
+                        <ActiveAccount activeAccount={activeAccount} userEmail={userEmail} />
                       </div>
                       <div
                         class="tab-pane fade"

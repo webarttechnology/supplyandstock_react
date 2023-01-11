@@ -431,3 +431,15 @@ export const user_order_seller = async (data, header) => {
     return e.response;
   }
 };
+
+export const Active_stripe_account = async (data, header) => {
+  try {
+    const url = c.ACTIVEACOUNT;
+    const res = await axios.patch(url, data);
+    console.log("res" ,res);
+    return res;
+  } catch (e) {
+    return e.response;
+  }
+};
+

@@ -673,6 +673,7 @@ label {
   color: #000000;
   margin-bottom: 20px;
   font-weight: 500 !important;
+  font-size: 20px;
 }
 .menufecHeading {
   margin-top: 1rem;
@@ -906,6 +907,14 @@ tr {
   padding: 25px;
   box-shadow: 0px 0px 25px #8c8c8c;
   border-radius: 10px;
+}
+.messageC img{
+  width: 100%;
+}
+.checkAcount i{
+  color: #08c10e;
+  font-size: 40px;
+  line-height: 35px;
 }
 .sideBarUser {
   border-right: 1px solid #ccc;
@@ -1628,4 +1637,25 @@ main {
 .getMenuUser {
   height: 420px;
   overflow-y: scroll;
+}
+.activeAcount label{
+  margin: 5px 0;
+}
+.activeAcount h4{
+  font-size: 17px;
+  margin: 5px 0px;
+  font-weight: 400 !important;
+  color: #ffffff;
+  /* border-top: 1px solid #ccc; */
+  /* padding-top: 5px; */
+  background: #637c96;
+  line-height: 32px;
+}
+.accountHead{
+  font-size: 25px;
+  font-weight: 500 !important;
+  color: #8b3e42;
+}
+.stripAc{
+  font-weight: 500 !important;
 }

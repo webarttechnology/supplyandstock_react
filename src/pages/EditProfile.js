@@ -11,12 +11,12 @@ const initialData = {
   mobileNo: "",
 };
 
-const EditProfile = ({ setIsLogin }) => {
+const EditProfile = ({ setIsLogin,setUserEmail,setActiveAcount }) => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState(initialData);
   const [dialCode, setDialCode] = useState("");
   const [mobileData, setMobileData] = useState("");
-
+  
   const handleCountrySelect = (e) => {
     setDialCode(e.target.value);
   };
@@ -108,6 +108,7 @@ const EditProfile = ({ setIsLogin }) => {
           navigate("/");
         }
         setFormData(BuyerResponse.data.data);
+        setUserEmail(BuyerResponse.data.data.email)
         const mobileDatas = BuyerResponse.data.data.mobileNo.substring(2);
         setMobileData(mobileDatas);
       } else {
@@ -115,7 +116,6 @@ const EditProfile = ({ setIsLogin }) => {
           localStorage.getItem("__userId"),
           header
         );
-
         if (sellerResponse.data.data === null) {
           localStorage.removeItem("__userId");
           localStorage.removeItem("_tokenCode");
@@ -124,7 +124,12 @@ const EditProfile = ({ setIsLogin }) => {
           setIsLogin(localStorage.removeItem("isLoginCheck"));
           navigate("/");
         }
+        if (sellerResponse.data.data.strip_acc) {
+          setActiveAcount(true)
+        }
+        console.log("sellerResponse.data.data.strip_acc", sellerResponse.data.data.strip_acc);
         setFormData(sellerResponse.data.data);
+        setUserEmail(sellerResponse.data.data.emailId)
         const mobileDatas = sellerResponse.data.data.mobileNo.substring(2);
         setMobileData(mobileDatas);
       }
@@ -214,9 +219,7 @@ const EditProfile = ({ setIsLogin }) => {
               name="mobileNo"
               value={mobileData}
             />
-            {/* <input className="mobileNumberF" onChange={(e) => setMobileData(e.target.value)} 
-                  value={mobileData} 
-                  type="number" name="mobileNo" placeholder="Enter Mobile number" /> */}
+            
           </div>
         </div>
       </div>

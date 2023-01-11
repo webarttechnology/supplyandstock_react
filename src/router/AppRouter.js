@@ -54,14 +54,14 @@ const AppRouter = () => {
               path="/seller/signup"
               element={<SignupSeller setIsLogin={setIsLogin} />}
             /> */}
-            {/* <Route
+            <Route
           path="/buyer/login"
           element={<Logins setIsLogin={setIsLogin} />}
-        /> */}
-            {/* <Route
+        /> 
+      <Route
           path="/buyer/signup"
           element={<SignupBuyer setIsLogin={setIsLogin} />}
-        /> */}
+        />
             <Route path="/" element={<Dashboard setIsLogin={setIsLogin} />} />
             <Route
               path="/user-dashboard"
@@ -128,14 +128,14 @@ const AppRouter = () => {
                 />
               }
             />
-            {/* <Route
-          path="/buyer/login"
-          element={<Logins setIsLogin={setIsLogin} />}
-        /> */}
-            {/* <Route
-          path="/buyer/signup"
-          element={<SignupBuyer setIsLogin={setIsLogin} />}
-        /> */}
+            <Route
+              path="/buyer/login"
+              element={<Logins setIsLogin={setIsLogin} />}
+            />
+            <Route
+              path="/buyer/signup"
+              element={<SignupBuyer setIsLogin={setIsLogin} />}
+            />
             <Route
               path="/user-dashboard"
               element={<Dashboard setIsLogin={setIsLogin} />}
