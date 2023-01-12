@@ -127,7 +127,6 @@ const EditProfile = ({ setIsLogin, setUserEmail, setActiveAcount }) => {
         if (sellerResponse.data.data.isActive) {
           setActiveAcount(true);
         }
-        console.log("sellerResponse.data.data", sellerResponse.data.data);
         setFormData(sellerResponse.data.data);
         setUserEmail(sellerResponse.data.data.emailId);
         const mobileDatas = sellerResponse.data.data.mobileNo.substring(2);

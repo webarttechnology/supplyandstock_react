@@ -453,3 +453,15 @@ export const account_status = async (data, header) => {
     return e.response;
   }
 };
+
+export const account_details = async (data, header) => {
+  try {
+    const url = c.PAYMENT + "/get-stripe-account/" + data;
+    const res = await axios.get(url, {
+      headers: JSON.parse(header),
+    });
+    return res;
+  } catch (e) {
+    return e.response;
+  }
+};

@@ -26,7 +26,7 @@ const TermsAndConditions = () => {
                   <p>
                     You are responsible for ensuring that the products you list
                     on our website are accurate and complete, and that you have
-                    the right to sell them .
+                    the right to sell them.
                   </p>
                   <p>
                     You are responsible for setting the price of your products
@@ -35,40 +35,45 @@ const TermsAndConditions = () => {
                   </p>
                   {/* <h2>Intellectual Property Rights</h2> */}
                   <p>
+                    We reserve the right to remove any listings that violate our
+                    policies or are otherwise deemed inappropriate for our
+                    website.
+                  </p>
+                  <p>
                     We are not responsible for any disputes that may arise
                     between you and a buyer.
                   </p>
+                  {/* <h2>Restrictions</h2> */}
                   <p>
                     We reserve the right to change these terms and conditions at
                     any time without notice.
                   </p>
-                  {/* <h2>Restrictions</h2> */}
+
+                  <p>
+                    We reserve the right to remove your account if you violate
+                    our website policies.
+                  </p>
+                  {/* <h2>Your Content</h2> */}
+                  <p>
+                    Contacting the buyers directly or exchanging contact
+                    information will be considered as a breach of contact and
+                    such users will be permanently banned from the platform.
+                  </p>
                   <p>
                     By using our website, you agree to indemnify and hold us
                     harmless from any claims, losses, or damages arising from
                     your use of our website or your violation of these terms and
                     conditions.
                   </p>
-
                   <p>
                     These terms and conditions constitute the entire agreement
                     between you and us, and supersede any prior agreements or
                     understandings, whether oral or written.
                   </p>
-                  {/* <h2>Your Content</h2> */}
                   <p>
                     If any provision of these terms and conditions is found to
                     be invalid or unenforceable, the remaining provisions will
                     remain in full force and effect.
-                  </p>
-                  <p>
-                    We reserve the right to remove your account if you violate
-                    our website policies.
-                  </p>
-                  <p>
-                    Contacting the buyers directly or exchanging contact
-                    information will be considered as a breach of contact and
-                    such users will be permanently banned from the platform.
                   </p>
                   <p>Thank you for using our website!</p>
                 </article>

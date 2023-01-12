@@ -11,7 +11,6 @@ const AccountActive = () => {
         id: localStorage.getItem("__userId"),
       };
       const response = await API.account_status(reqObj);
-      console.log("response", response);
       if (response.data.success === 1) {
         navigate("/user/account-active");
         toast(response.data.msg, {
