@@ -700,7 +700,7 @@ const Individual = ({
           onClick={validationButton}
           className="bannerBtn border-0 text-center w-50 mt-4"
         >
-          Active
+          Activate
         </button>
       ) : (
         <button
@@ -708,7 +708,7 @@ const Individual = ({
           onClick={activeAcount}
           className="bannerBtn border-0 text-center w-50 mt-4"
         >
-          Active
+          Activate
         </button>
       )}
     </>
