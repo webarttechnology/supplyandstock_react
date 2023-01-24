@@ -155,7 +155,7 @@ const Header = ({ isLogin, totalNotification }) => {
       <div className="headermain">
         <div className="container">
           <div className="row justify-content-between">
-            <div className="col-md-5 ps-0">
+            <div className="col-md-7 ps-0">
               <div className="headerMenu">
                 <ul className="ps-0 mobileMenu">
                   {isLogin ? (
@@ -166,19 +166,22 @@ const Header = ({ isLogin, totalNotification }) => {
                     </li>
                   )}
 
-                  {/* <li>
-                    <Link to="/">Shop</Link>
+                  <li>
+                    <Link to="/about">About us</Link>
                   </li>
                   <li>
-                    <Link to="/">OUR STORY</Link>
-                  </li> */}
-                  {/* <li>
-                    <Link to="/">CONTACT</Link>
-                  </li> */}
+                    <Link to="/sellers">For Sellers</Link>
+                  </li>
+                  <li>
+                    <Link to="/buyers"> For Buyers</Link>
+                  </li>
+                  <li>
+                    <Link to="/contact">Contact us</Link>
+                  </li>
                 </ul>
               </div>
             </div>
-            <div className="col-md-7 text-end">
+            <div className="col-md-5 text-end">
               <div className="rightMenu">
                 <ul>
                   {search === false ? (

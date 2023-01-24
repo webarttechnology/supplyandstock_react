@@ -19,6 +19,10 @@ import TermsAndConditions from "../pages/TermsAndConditions";
 import Shipping from "../pages/Shipping";
 import AccountActive from "../pages/AccountActive";
 import StripeAccountActive from "../pages/StripeAccountActive";
+import Sellers from "../pages/Sellers";
+import Contact from "../pages/Contact";
+import Buyers from "../pages/Buyers";
+import About from "../pages/About";
 
 const AppRouter = () => {
   const [isLogin, setIsLogin] = useState(
@@ -51,6 +55,7 @@ const AppRouter = () => {
                 />
               }
             />
+
             <Route
               path="/user-dashboard"
               element={<Dashboard setIsLogin={setIsLogin} />}
@@ -88,7 +93,6 @@ const AppRouter = () => {
               element={<SignupBuyer setIsLogin={setIsLogin} />}
             />
             <Route path="/" element={<Dashboard setIsLogin={setIsLogin} />} />
-
             <Route
               path="/order"
               element={<OrderList setIsLogin={setIsLogin} />}
@@ -121,6 +125,11 @@ const AppRouter = () => {
                 />
               }
             />
+            <Route path="/sellers" element={<Sellers />} />
+            <Route path="/buyers" element={<Buyers />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/about" element={<About />} />
+
             <Route
               path="/active-account"
               element={
