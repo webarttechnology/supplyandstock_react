@@ -6,6 +6,7 @@ import Features from "./Features";
 import GetTouch from "./GetTouch";
 import OurStory from "./OurStory";
 import Partner from "./Partner";
+import Slider from "./Slider";
 import UserSection from "./UserSection";
 import Video from "./Video";
 
@@ -20,7 +21,7 @@ const Home = ({ setCommonModal, commonModal }) => {
       <OurStory />
       <Features />
       <Video />
-      {/* <Slider /> */}
+      <Slider />
       <GetTouch />
     </>
   );
