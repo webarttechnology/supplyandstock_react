@@ -282,11 +282,24 @@ const Message = ({ setTotalNotification, setNotification, setMessCunt }) => {
 
   const imageUploading = (e) => {
     let images = e.target.files[0];
-    var reader = new FileReader();
-    reader.onloadend = function () {
-      setImageData(reader.result);
-    };
-    reader.readAsDataURL(images);
+    if (images.size > 5000000) {
+      toast("Your file size to large. uploaded maximum 5 mb", {
+        position: "top-right",
+        autoClose: 5000,
+        type: "error",
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    } else {
+      var reader = new FileReader();
+      reader.onloadend = function () {
+        setImageData(reader.result);
+      };
+      reader.readAsDataURL(images);
+    }
   };
 
   useEffect(() => {
@@ -678,6 +691,7 @@ const Message = ({ setTotalNotification, setNotification, setMessCunt }) => {
                                       hidden
                                       id="file-upload"
                                       type="file"
+                                      accept=".png, .jpg, .jpeg, .pdf"
                                       onChange={imageUploading}
                                     />
                                     <InputEmoji
