@@ -1056,7 +1056,7 @@ tr {
   padding: 15px 0;
 }
 .messfeed::-webkit-scrollbar {
-  width: 15px;
+  width: 0px;
 }
 .message img {
   width: 53%;

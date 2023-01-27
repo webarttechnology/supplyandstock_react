@@ -158,14 +158,16 @@ const Header = ({ isLogin, totalNotification }) => {
             <div className="col-md-7 ps-0">
               <div className="headerMenu">
                 <ul className="ps-0 mobileMenu">
-                  {isLogin ? (
+                  {/* {isLogin ? (
                     ""
                   ) : (
                     <li>
                       <Link to="/home">Home</Link>
                     </li>
-                  )}
-
+                  )} */}
+                  <li>
+                    <Link to="/home">Home</Link>
+                  </li>
                   <li>
                     <Link to="/about">About us</Link>
                   </li>

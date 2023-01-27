@@ -109,6 +109,10 @@ const AppRouter = () => {
               element={<TermsAndConditions />}
             />
             <Route path="/shipping" element={<Shipping />} />
+            <Route path="/sellers" element={<Sellers />} />
+            <Route path="/buyers" element={<Buyers />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/about" element={<About />} />
           </Routes>
         </>
       ) : (
