@@ -8,9 +8,12 @@ const GetTouch = () => {
           <div className="row">
             <div className="col-md-12">
               <div className="newsLatter">
-                <div className="row">
+                <div className="row align-items-center">
                   <div className="col-md-7">
-                    <h2>Lorem ipsum dolor sit amet.</h2>
+                    <h2>
+                      Leave us your email id to get exclusive offers and early
+                      bird discounts
+                    </h2>
                   </div>
                   <div className="col-md-5">
                     <form class="subscribe_form">

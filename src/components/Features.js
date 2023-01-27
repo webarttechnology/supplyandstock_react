@@ -8,14 +8,7 @@ const Features = () => {
           <div className="row">
             <div className="col-md-12 text-center">
               <div className="ourStoryCont">
-                <h2 className="mb-4">Our Features</h2>
-                <p className="text-dark">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem
-                  tenetur vitae ab quo. <br /> Quibusdam qui sunt laborum.
-                  Facere itaque optio repellat, dolor minus aspernatur illum,
-                  <br />
-                  atque incidunt accusamus, asperiores repudiandae.
-                </p>
+                <h2 className="mb-4">What Makes Us Stand Out</h2>
               </div>
             </div>
           </div>
@@ -23,114 +16,84 @@ const Features = () => {
             <div class="col-md-6 col-lg-4">
               <div class="single-service">
                 <div class="part-1">
-                  <i class="fab fa-500px"></i>
-                  <h3 class="title">
-                    Express delivery innovative Design service
-                  </h3>
+                  <img src="images/free.png" className="w-25" />
+                  <h3 class="title mt-3">Zero Registration Fee</h3>
                 </div>
                 <div class="part-2">
                   <p class="description">
-                    Express delivery inno service effective logistics solution
-                    for delivery of small cargo delivery service.
+                    From registration to orders, our platform is free for
+                    Sellers with zero hidden costs
                   </p>
-                  <a href="#">
-                    <i class="fas fa-arrow-circle-right"></i>Read More
-                  </a>
                 </div>
               </div>
             </div>
             <div class="col-md-6 col-lg-4">
               <div class="single-service">
                 <div class="part-1">
-                  <i class="fab fa-angellist"></i>
-                  <h3 class="title">
-                    Online chat may refer to any kind communication
-                  </h3>
+                  <img src="images/questions.png" className="w-25" />
+                  <h3 class="title mt-3">Receive Buyer Inquiry Real-time</h3>
                 </div>
                 <div class="part-2">
                   <p class="description">
-                    Express delivery inno service effective logistics solution
-                    for delivery of small cargo delivery service.
+                    Get multiple inquiries as soon as they are placed by the
+                    buyers through notifications
                   </p>
-                  <a href="#">
-                    <i class="fas fa-arrow-circle-right"></i>Read More
-                  </a>
                 </div>
               </div>
             </div>
             <div class="col-md-6 col-lg-4">
               <div class="single-service">
                 <div class="part-1">
-                  <i class="fas fa-award"></i>
-                  <h3 class="title">
-                    Service provider provide organizations consulting
-                  </h3>
+                  <img src="images/chat.png" className="w-25" />
+                  <h3 class="title mt-3">Chat Directly With Buyers</h3>
                 </div>
                 <div class="part-2">
                   <p class="description">
-                    Express delivery inno service effective logistics solution
-                    for delivery of small cargo delivery service.
+                    Interact with buyers directly through Live Chat and boost
+                    the chance of sale by 10X
                   </p>
-                  <a href="#">
-                    <i class="fas fa-arrow-circle-right"></i>Read More
-                  </a>
                 </div>
               </div>
             </div>
             <div class="col-md-6 col-lg-4">
               <div class="single-service">
                 <div class="part-1">
-                  <i class="fab fa-asymmetrik"></i>
-                  <h3 class="title">
-                    Express delivery innovative Design service
-                  </h3>
+                  <img src="images/cash-payment.png" className="w-25" />
+                  <h3 class="title mt-3">Instant Vendor Payouts</h3>
                 </div>
                 <div class="part-2">
                   <p class="description">
-                    Express delivery inno service effective logistics solution
-                    for delivery of small cargo delivery service.
+                    Get paid instantly and transfer your earnings directly to
+                    your bank account hassle-free
                   </p>
-                  <a href="#">
-                    <i class="fas fa-arrow-circle-right"></i>Read More
-                  </a>
                 </div>
               </div>
             </div>
             <div class="col-md-6 col-lg-4">
               <div class="single-service">
                 <div class="part-1">
-                  <i class="fas fa-broadcast-tower"></i>
-                  <h3 class="title">
-                    Provide solutions and services to end users
-                  </h3>
+                  <img src="images/0-percent.png" className="w-25" />
+                  <h3 class="title mt-1">Zero Commission for Vendors</h3>
                 </div>
                 <div class="part-2">
                   <p class="description">
-                    Express delivery inno service effective logistics solution
-                    for delivery of small cargo delivery service.
+                    Pay no commission and earn top dollar for your product
+                    through our vendor friendly ecosystem
                   </p>
-                  <a href="#">
-                    <i class="fas fa-arrow-circle-right"></i>Read More
-                  </a>
                 </div>
               </div>
             </div>
             <div class="col-md-6 col-lg-4">
               <div class="single-service">
                 <div class="part-1">
-                  <i class="fab fa-canadian-maple-leaf"></i>
-                  <h3 class="title">
-                    This broad term incorporates all IT businesses
-                  </h3>
+                  <img src="images/best-price.png" className="w-25" />
+                  <h3 class="title">Self Service Pricing</h3>
                 </div>
                 <div class="part-2">
                   <p class="description">
-                    Express delivery inno service effective logistics solution
-                    for delivery of small cargo delivery service.
+                    Offer personalized pricing for each buyer to give you full
+                    control over your pricing configuration.
                   </p>
-                  <a href="#">
-                    <i class="fas fa-arrow-circle-right"></i>Read More
-                  </a>
                 </div>
               </div>
             </div>

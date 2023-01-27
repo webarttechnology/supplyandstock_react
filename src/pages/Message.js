@@ -11,7 +11,7 @@ import boopSfx from "../assets/images/messton.mp3";
 import moment from "moment-timezone";
 import Modal from "react-responsive-modal";
 import { toast } from "react-toastify";
-import { SOCEKT, TIMEZONE } from "../api/constant";
+import { IMG, SOCEKT, TIMEZONE } from "../api/constant";
 const initialData = {
   manufacturerId: "",
   product_des: "",
@@ -40,6 +40,8 @@ const Message = ({ setTotalNotification, setNotification, setMessCunt }) => {
   const [chatrCode, setChatrCode] = useState("");
   const [sallerid, setSallerid] = useState("");
   const [sellerMssId, setSellerMssId] = useState("");
+  const [imageData, setImageData] = useState("");
+  console.log("imageData", imageData);
 
   const chatRoomShow = async () => {
     const header = localStorage.getItem("_tokenCode");
@@ -48,7 +50,6 @@ const Message = ({ setTotalNotification, setNotification, setMessCunt }) => {
         localStorage.getItem("__userId"),
         header
       );
-
       response.data.data.map((item, index) =>
         setTotalNotification(item.unseenCount)
       );
@@ -73,6 +74,7 @@ const Message = ({ setTotalNotification, setNotification, setMessCunt }) => {
 
     try {
       const response = await API.chatfeedShow(chatCode, header);
+      console.log("response", response);
       setFeedMess(response.data.data);
     } catch (error) {}
   };
@@ -93,7 +95,9 @@ const Message = ({ setTotalNotification, setNotification, setMessCunt }) => {
         senderId: localStorage.getItem("__userId"),
         chatroomId: chatCodes,
         message: text,
+        image: imageData,
       });
+      setImageData(false);
       commonReedMess();
       chatRoomShowing();
     }
@@ -146,10 +150,12 @@ const Message = ({ setTotalNotification, setNotification, setMessCunt }) => {
   };
 
   const messsendHandaler = () => {
+    console.log("text", text, chatCodes);
     socket.emit("createChat", {
       senderId: localStorage.getItem("__userId"),
       chatroomId: chatCodes,
       message: text,
+      image: imageData,
     });
     commonReedMess();
     chatRoomShowing();
@@ -199,9 +205,9 @@ const Message = ({ setTotalNotification, setNotification, setMessCunt }) => {
           chatroomId: chatCodes,
           sellerId: localStorage.getItem("__userId"),
         };
-        
+
         const response = await API.payment_link_gent(reqObj, header);
-     
+
         if (response.data.success === 1) {
           // chatRoomShowing()
           socket.emit("getChatHistory", {
@@ -250,6 +256,7 @@ const Message = ({ setTotalNotification, setNotification, setMessCunt }) => {
       id: localStorage.getItem("__userId"),
     });
     socket.on("receiveChatRoom", (data) => {
+      console.log("data", data);
       if (data.showid === localStorage.getItem("__userId")) {
         setUserList(data.chatroom);
       }
@@ -262,6 +269,7 @@ const Message = ({ setTotalNotification, setNotification, setMessCunt }) => {
     });
 
     socket.on("receiveChat", (data) => {
+      console.log("data", data);
       setFeedMess(data);
     });
 
@@ -270,6 +278,15 @@ const Message = ({ setTotalNotification, setNotification, setMessCunt }) => {
 
   const closeModal = () => {
     setOpenModal(false);
+  };
+
+  const imageUploading = (e) => {
+    let images = e.target.files[0];
+    var reader = new FileReader();
+    reader.onloadend = function () {
+      setImageData(reader.result);
+    };
+    reader.readAsDataURL(images);
   };
 
   useEffect(() => {
@@ -412,6 +429,32 @@ const Message = ({ setTotalNotification, setNotification, setMessCunt }) => {
                                     item.senderId ? (
                                       <div className="flex-column col-md-12 d-flex align-items-baseline">
                                         <div class="isResiver">
+                                          <div className="imagesSend">
+                                            {item.image[0] === "" ? (
+                                              ""
+                                            ) : (
+                                              <>
+                                                {item.image[0].type ===
+                                                "image" ? (
+                                                  <img
+                                                    src={
+                                                      IMG + item.image[0].file
+                                                    }
+                                                  />
+                                                ) : (
+                                                  <a
+                                                    className="aplicationTyp"
+                                                    href={
+                                                      IMG + item.image[0].file
+                                                    }
+                                                    target="_blank"
+                                                  >
+                                                    <i class="bi bi-file-earmark-pdf-fill"></i>
+                                                  </a>
+                                                )}
+                                              </>
+                                            )}
+                                          </div>
                                           <p>
                                             <div
                                               dangerouslySetInnerHTML={{
@@ -516,6 +559,32 @@ const Message = ({ setTotalNotification, setNotification, setMessCunt }) => {
                                     ) : (
                                       <div className="align-items-end flex-column col-md-12 d-flex justify-content-end text-end">
                                         <div className="isSender">
+                                          <div className="imagesSend">
+                                            {item.image[0] === "" ? (
+                                              ""
+                                            ) : (
+                                              <>
+                                                {item.image[0].type ===
+                                                "image" ? (
+                                                  <img
+                                                    src={
+                                                      IMG + item.image[0].file
+                                                    }
+                                                  />
+                                                ) : (
+                                                  <a
+                                                    className="aplicationTyp"
+                                                    href={
+                                                      IMG + item.image[0].file
+                                                    }
+                                                    target="_blank"
+                                                  >
+                                                    <i class="bi bi-file-earmark-pdf-fill"></i>
+                                                  </a>
+                                                )}
+                                              </>
+                                            )}
+                                          </div>
                                           <p>
                                             <div
                                               dangerouslySetInnerHTML={{
@@ -599,10 +668,18 @@ const Message = ({ setTotalNotification, setNotification, setMessCunt }) => {
                               <div class="row">
                                 <div class="col-sm-12">
                                   <div className="mess_type_input">
-                                    {/* <label for="file-upload" className="custom-file-upload">
-                                            <i class="bi bi-paperclip"></i>
-                                        </label>
-                                        <input hidden id="file-upload" type="file" /> */}
+                                    <label
+                                      for="file-upload"
+                                      className="custom-file-upload mt-0"
+                                    >
+                                      <i class="bi bi-paperclip"></i>
+                                    </label>
+                                    <input
+                                      hidden
+                                      id="file-upload"
+                                      type="file"
+                                      onChange={imageUploading}
+                                    />
                                     <InputEmoji
                                       className="messBox"
                                       value={text}

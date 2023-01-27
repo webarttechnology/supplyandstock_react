@@ -4,7 +4,7 @@ import CommonModal from "./CommonModal";
 const Banner = ({ commonModal, setCommonModal }) => {
   return (
     <>
-      <div className="bannerHome">
+      <div className="bannerHome hbanner">
         <div className="container">
           <div className="row justify-content-center">
             <div className="col-md-8 text-center">

@@ -11,24 +11,23 @@ const OurStory = () => {
             <div className="col-md-6">
               <div className="ourStoryCont">
                 <h2 className="mb-4">About SWS</h2>
+                <h3>Grow Your Business by 10X with Zero Investment</h3>
                 <p className="bannerText">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  Suspendisse eget augue varius, aliquam libero eget, finibus
-                  elit. Aenean vitae convallis dolor, quis finibus dolor.
+                  Are you a vendor looking to connect with buyers nationwide,
+                  without incurring any overhead costs? Look no further! Our B2B
+                  platform offers a simple to grow your business
                 </p>
                 <p className="bannerText">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  Suspendisse eget augue varius, aliquam libero eget, finibus
-                  elit. Aenean vitae convallis dolor, quis finibus dolor. Lorem
-                  ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-                  eget augue varius, aliquam libero eget, finibus elit. Aenean
-                  vitae convallis dolor, quis finibus dolor. Lorem ipsum dolor
-                  sit amet, consectetur adipiscing elit. Suspendisse eget augue
-                  varius, aliquam libero eget, finibus elit. Aenean vitae
-                  convallis dolor, quis finibus dolor.
+                  Presenting a unique B2B platform to connect vendors and buyers
+                  all over the country with zero overhead cost for the vendors.
+                  <br />
+                  Register with Us Today to get premium benefits
                 </p>
-                <Link to="/" className="bannerBtn">
-                  more info
+                <Link to="/about" className="bannerBtn me-3">
+                  Register Now
+                </Link>
+                <Link to="/sellers" className="bannerBtn">
+                  How It Works
                 </Link>
               </div>
             </div>
