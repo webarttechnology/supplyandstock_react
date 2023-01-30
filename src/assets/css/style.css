@@ -1352,6 +1352,9 @@ tr {
 }
 /* ? MOBILE RESPONSIVE MENU ADD */
 @media only screen and (max-width: 768px) {
+  .grid-70-30 {
+    display: block !important;
+  }
   .menuFatchDataList {
     margin-bottom: 15px;
   }

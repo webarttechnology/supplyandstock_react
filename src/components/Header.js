@@ -319,11 +319,34 @@ const Header = ({ isLogin, totalNotification }) => {
                   </Link>
                 </li>
               ) : (
-                <li>
-                  <Link onClick={() => setIsOpen(false)} to="/">
-                    Home
-                  </Link>
-                </li>
+                <>
+                  <li>
+                    <Link onClick={() => setIsOpen(false)} to="/">
+                      Home
+                    </Link>
+                  </li>
+                  <li>
+                    <Link onClick={() => setIsOpen(false)} to="/about">
+                      About us
+                    </Link>
+                  </li>
+                  <li>
+                    <Link onClick={() => setIsOpen(false)} to="/sellers">
+                      For Sellers
+                    </Link>
+                  </li>
+                  <li>
+                    <Link onClick={() => setIsOpen(false)} to="/buyers">
+                      {" "}
+                      For Buyers
+                    </Link>
+                  </li>
+                  <li>
+                    <Link onClick={() => setIsOpen(false)} to="/contact">
+                      Contact us
+                    </Link>
+                  </li>
+                </>
               )}
 
               {isLogin ? (
