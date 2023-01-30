@@ -35,28 +35,19 @@ const Sellers = () => {
                           </p>
                         </div>
                         <div class="timeline-continue">
-                          <div class="row timeline-right">
+                          <div class="row timeline-right align-items-center">
                             <div class="col-md-6">
                               <div className="howItIMg">
-                                <img src={s1} />
+                                <img src="images/img2.png" />
                               </div>
                             </div>
                             <div class="col-md-6">
                               <div class="timeline-box">
-                                <div class="timeline-icon">
-                                  <i class="fa fa-gift"></i>
-                                </div>
                                 <div class="timeline-text">
-                                  <h4>Lorem ipsum dolor</h4>
-                                  <p>
-                                    Lorem ipsum dolor sit amet elit ornare velit
-                                    non Lorem ipsum, dolor sit amet consectetur
-                                    adipisicing elit. Ducimus rem velit nisi
-                                    suscipit obcaecati quia placeat itaque
-                                    impedit, cumque ipsam voluptas architecto
-                                    odit accusamus quod, quasi beatae rerum
-                                    atque consectetur.
-                                  </p>
+                                  <h4>
+                                    Sign up for the Supply We Stock platform as
+                                    a seller.
+                                  </h4>
                                 </div>
                               </div>
                             </div>
@@ -70,33 +61,21 @@ const Sellers = () => {
                               </div>
                             </div>
                           </div>
-                          <div class="row timeline-left">
+                          <div class="row timeline-left align-items-center">
                             <div class="col-md-6 d-md-none d-block"></div>
                             <div class="col-md-6">
                               <div class="timeline-box">
-                                <div class="timeline-icon d-md-none d-block">
-                                  <i class="bi bi-alarm"></i>
-                                </div>
                                 <div class="timeline-text">
-                                  <h4>Lorem ipsum dolor</h4>
-                                  <p>
-                                    Lorem ipsum dolor sit amet elit ornare velit
-                                    non Lorem ipsum, dolor sit amet consectetur
-                                    adipisicing elit. Ducimus rem velit nisi
-                                    suscipit obcaecati quia placeat itaque
-                                    impedit, cumque ipsam voluptas architecto
-                                    odit accusamus quod, quasi beatae rerum
-                                    atque consectetur.
-                                  </p>
-                                </div>
-                                <div class="timeline-icon d-md-block d-none">
-                                  <i class="bi bi-alarm"></i>
+                                  <h4>
+                                    List products from the manufacturers they
+                                    represent on the platform.
+                                  </h4>
                                 </div>
                               </div>
                             </div>
                             <div class="col-md-6 d-md-block d-none">
                               <div className="howItIMg">
-                                <img src={s2} />
+                                <img src="images/img1.jpg" />
                               </div>
                             </div>
                           </div>
@@ -109,28 +88,122 @@ const Sellers = () => {
                               </div>
                             </div>
                           </div>
-                          <div class="row timeline-right">
+                          <div class="row timeline-right align-items-center">
                             <div class="col-md-6">
                               <div className="howItIMg">
-                                <img src={s3} />
+                                <img src="images/img3.jpg" />
                               </div>
                             </div>
                             <div class="col-md-6">
                               <div class="timeline-box">
-                                <div class="timeline-icon">
-                                  <i class="fa fa-briefcase"></i>
-                                </div>
                                 <div class="timeline-text">
-                                  <h4>Lorem ipsum dolor</h4>
-                                  <p>
-                                    Lorem ipsum dolor sit amet elit ornare velit
-                                    non Lorem ipsum dolor sit amet consectetur
-                                    adipisicing elit. Ea cupiditate aut neque
-                                    ipsam, provident repudiandae numquam nulla
-                                    facere nesciunt praesentium suscipit nihil
-                                    vitae consectetur sunt soluta nobis ex hic
-                                    corporis?
-                                  </p>
+                                  <h4>
+                                    Respond to buyer inquiries and negotiate
+                                    prices and quantities.
+                                  </h4>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="col-12">
+                              <div class="timeline-year">
+                                <p>
+                                  STEP <br /> 04
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="row timeline-left align-items-center">
+                            <div class="col-md-6">
+                              <div class="timeline-box">
+                                <div class="timeline-text">
+                                  <h4>
+                                    Ship the product to the buyer and receive
+                                    payment instantly.
+                                  </h4>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-md-6">
+                              <div className="howItIMg">
+                                <img src="images/shipping.png" />
+                              </div>
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="col-12">
+                              <div class="timeline-year">
+                                <p>
+                                  STEP <br /> 05
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="row timeline-right align-items-center">
+                            <div class="col-md-6">
+                              <div className="howItIMg">
+                                <img src="images/img4.png" />
+                              </div>
+                            </div>
+                            <div class="col-md-6">
+                              <div class="timeline-box">
+                                <div class="timeline-text">
+                                  <h4>
+                                    Keep inventory updated on the platform.
+                                  </h4>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="col-12">
+                              <div class="timeline-year">
+                                <p>
+                                  STEP <br /> 06
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="row timeline-left align-items-center">
+                            <div class="col-md-6">
+                              <div class="timeline-box">
+                                <div class="timeline-text">
+                                  <h4>
+                                    Communicate with buyers and provide customer
+                                    service.
+                                  </h4>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-md-6">
+                              <div className="howItIMg">
+                                <img src="images/img5.png" />
+                              </div>
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="col-12">
+                              <div class="timeline-year">
+                                <p>
+                                  STEP <br /> 07
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="row timeline-right align-items-center">
+                            <div class="col-md-6">
+                              <div className="howItIMg">
+                                <img src="images/revenue.jpg" />
+                              </div>
+                            </div>
+                            <div class="col-md-6">
+                              <div class="timeline-box">
+                                <div class="timeline-text">
+                                  <h4>
+                                    Keep track of sales and revenue generated
+                                    through the platform.
+                                  </h4>
                                 </div>
                               </div>
                             </div>

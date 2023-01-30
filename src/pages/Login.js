@@ -764,6 +764,10 @@ const Login = ({ setIsLogin, setCommonModal, commonModal }) => {
                     <Link to="/seller/signup">Sign up</Link>
                   </p>
                   <p className="sectionBtm">
+                    Login as Buyer ? <Link to="/buyer/login">Login</Link> ||
+                    Register As Buyer ? <Link to="/buyer/signup">Signup</Link>
+                  </p>
+                  <p className="sectionBtm d-none">
                     Login as Buyer ?{" "}
                     <Link to="#" onClick={() => setCommonModal(true)}>
                       Login

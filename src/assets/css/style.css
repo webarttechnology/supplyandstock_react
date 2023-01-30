@@ -920,7 +920,7 @@ tr {
   border-radius: 10px;
 }
 .messageC img {
-  width: 100%;
+  width: 50%;
 }
 .checkAcount i {
   color: #08c10e;
@@ -1085,6 +1085,7 @@ tr {
 }
 .isResiver p {
   margin-bottom: 0;
+  color: #fff;
 }
 .react-input-emoji--button {
   display: none !important;
@@ -2034,11 +2035,8 @@ main {
   }
 }
 .howItIMg img {
-  width: 230px;
-  height: 230px;
-  border-radius: 50%;
+  width: 60%;
   object-fit: cover;
-  box-shadow: 0px 4px 13px #adabab;
 }
 .howItIMg {
   margin: auto;
@@ -2395,4 +2393,9 @@ ul {
 .aplicationTyp i {
   color: #be8d93;
   font-size: 30px;
+}
+.nots {
+  color: #fdafaf;
+  margin-bottom: 0;
+  font-size: 14px;
 }

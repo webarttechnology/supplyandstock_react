@@ -507,7 +507,6 @@ const Message = ({ setTotalNotification, setNotification, setMessCunt }) => {
                                           ) : (
                                             ""
                                           )}
-
                                           {item.message[0].btn ===
                                           "paymentLink" ? (
                                             <div class="comandBtn">
@@ -710,6 +709,12 @@ const Message = ({ setTotalNotification, setNotification, setMessCunt }) => {
                                       <i class="bi bi-send-fill"></i>
                                     </button>
                                   </div>
+                                </div>
+                                <div className="col-md-12">
+                                  <p className="nots">
+                                    Note : User can only upload pdf and images
+                                    (5mb)
+                                  </p>
                                 </div>
                               </div>
                             </div>
