@@ -166,7 +166,7 @@ const Header = ({ isLogin, totalNotification }) => {
                     </li>
                   )} */}
                   <li>
-                    <Link to="/home">Home</Link>
+                    <Link to="/">Home</Link>
                   </li>
                   <li>
                     <Link to="/about">About us</Link>
@@ -283,7 +283,7 @@ const Header = ({ isLogin, totalNotification }) => {
                       </Link>
                     </li>
                   ) : (
-                    <Link to="/" className="loginBtn">
+                    <Link to="/seller/login" className="loginBtn">
                       login
                     </Link>
                   )}

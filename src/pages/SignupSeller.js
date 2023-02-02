@@ -911,7 +911,8 @@ const SignupSeller = ({ setIsLogin, commonModal, setCommonModal }) => {
                   )}
                 </button>
                 <p className="sectionBtm">
-                  Already You Have A Account ? <Link to="/">Login Now</Link>
+                  Already You Have A Account ?{" "}
+                  <Link to="/seller/login">Login Now</Link>
                 </p>
               </div>
               {/* <div class="login">

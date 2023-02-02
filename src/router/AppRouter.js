@@ -23,6 +23,7 @@ import Sellers from "../pages/Sellers";
 import Contact from "../pages/Contact";
 import Buyers from "../pages/Buyers";
 import About from "../pages/About";
+import NewDash from "../pages/NewDash";
 
 const AppRouter = () => {
   const [isLogin, setIsLogin] = useState(
@@ -38,7 +39,7 @@ const AppRouter = () => {
           <Header isLogin={isLogin} totalNotification={totalNotification} />
           <Routes>
             <Route
-              path="/home"
+              path="/"
               element={
                 <Home
                   setCommonModal={setCommonModal}
@@ -46,6 +47,7 @@ const AppRouter = () => {
                 />
               }
             />
+            <Route path="/order" element={<NewDash />} />
             <Route
               path="/active-account"
               element={
@@ -55,7 +57,6 @@ const AppRouter = () => {
                 />
               }
             />
-
             <Route
               path="/user-dashboard"
               element={<Dashboard setIsLogin={setIsLogin} />}
@@ -93,16 +94,14 @@ const AppRouter = () => {
               element={<SignupBuyer setIsLogin={setIsLogin} />}
             />
             <Route path="/" element={<Dashboard setIsLogin={setIsLogin} />} />
-            <Route
-              path="/order"
-              element={<OrderList setIsLogin={setIsLogin} />}
-            />
+
             <Route path="/edit-profile" element={<EditProfile />} />
             <Route
               path="/message"
               element={<Message setTotalNotification={setTotalNotification} />}
             />
             <Route path="/enquiry" element={<Enquiry />} />
+
             <Route path="/payment/succuess/:id" element={<PaymentSuccuess />} />
             <Route
               path="/terms-and-conditions"
@@ -118,9 +117,23 @@ const AppRouter = () => {
       ) : (
         <>
           <Header isLogin={isLogin} totalNotification={totalNotification} />
+
+          {/* <Route
+            path="/order"
+            element={<OrderList setIsLogin={setIsLogin} />}
+          /> */}
           <Routes>
             <Route
               path="/"
+              element={
+                <Home
+                  setCommonModal={setCommonModal}
+                  commonModal={commonModal}
+                />
+              }
+            />
+            <Route
+              path="/seller/login"
               element={
                 <Login
                   setCommonModal={setCommonModal}
@@ -143,15 +156,7 @@ const AppRouter = () => {
                 />
               }
             />
-            <Route
-              path="/home"
-              element={
-                <Home
-                  setCommonModal={setCommonModal}
-                  commonModal={commonModal}
-                />
-              }
-            />
+
             <Route
               path="/login"
               element={
@@ -184,10 +189,7 @@ const AppRouter = () => {
               path="/user-dashboard"
               element={<Dashboard setIsLogin={setIsLogin} />}
             />
-            <Route
-              path="/order"
-              element={<OrderList setIsLogin={setIsLogin} />}
-            />
+
             <Route path="/edit-profile" element={<EditProfile />} />
             <Route
               path="/message"

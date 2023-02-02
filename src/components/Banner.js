@@ -65,7 +65,7 @@ const Banner = ({ commonModal, setCommonModal }) => {
                 <div className="col-md-2">
                   <div className="usertypeBox">
                     <span>
-                      <Link to="/">
+                      <Link to="/seller/login">
                         Seller <i class="bi bi-arrow-right"></i>
                       </Link>
                       {/* <div className="userBtn">

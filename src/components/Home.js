@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useLocation } from "react-router";
 import { toast, ToastContainer } from "react-toastify";
 import Banner from "./Banner";
@@ -12,6 +12,9 @@ import Video from "./Video";
 
 const Home = ({ setCommonModal, commonModal }) => {
   const loaction = useLocation();
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <>
@@ -21,7 +24,7 @@ const Home = ({ setCommonModal, commonModal }) => {
       <OurStory />
       <Features />
       <Video />
-      <Slider />
+      {/* <Slider /> */}
       <GetTouch />
     </>
   );
