@@ -8,7 +8,7 @@ import * as API from "../api/index";
 import Drawer from "react-modern-drawer";
 import "react-modern-drawer/dist/index.css";
 import moment from "moment-timezone";
-const Header = ({ isLogin, totalNotification }) => {
+const Header = ({ isLogin, totalNotification, landingpage }) => {
   const [search, setSearch] = useState(false);
   const [notification, setNotification] = useState([]);
   const [messCunt, setMessCunt] = useState(0);
@@ -152,7 +152,7 @@ const Header = ({ isLogin, totalNotification }) => {
           </div>
         </div>
       </div>
-      <div className="headermain">
+      <div className={landingpage ? "d-none" : "headermain"}>
         <div className="container">
           <div className="row justify-content-between">
             <div className="col-md-7 ps-0">

@@ -138,11 +138,11 @@ const SignupBuyer = ({ setIsLogin }) => {
           setMobileErrorInner("Please enter valid mobile number");
         } else {
           const response = await API.user_registration_buyer(reqObj);
-
           if (response.data.success === 1) {
             const headerObj = {
               Authorization: `Bearer ${response.data.token_code}`,
             };
+            navigate("/user-dashboard");
             localStorage.setItem("_tokenCode", JSON.stringify(headerObj));
             localStorage.setItem("_userType", selected);
             setLoading(false);

@@ -28,7 +28,12 @@ const initialDatalogPass = {
   confirmPassword: "",
 };
 
-const SignupSeller = ({ setIsLogin, commonModal, setCommonModal }) => {
+const SignupSeller = ({
+  setIsLogin,
+  commonModal,
+  setCommonModal,
+  landingpage,
+}) => {
   // ???? SELLERS LOGIN AND SIGNUP PAGE
 
   const navigate = useNavigate();
@@ -120,12 +125,12 @@ const SignupSeller = ({ setIsLogin, commonModal, setCommonModal }) => {
   const agreeButton = async () => {
     try {
       const response = await API.user_registration_seller(finalAgreeData);
-
       if (response.data.success === 1) {
         setCommonModal(false);
         const headerObj = {
           Authorization: `Bearer ${response.data.token_code}`,
         };
+        navigate("/user-dashboard");
         localStorage.setItem("_tokenCode", JSON.stringify(headerObj));
         localStorage.setItem("_userType", selected);
         setLoading(false);
@@ -174,7 +179,6 @@ const SignupSeller = ({ setIsLogin, commonModal, setCommonModal }) => {
       setLoading(false);
       return;
     }
-
     setCommonModal(true);
     if (selected === "Buyer") {
       try {
@@ -185,9 +189,7 @@ const SignupSeller = ({ setIsLogin, commonModal, setCommonModal }) => {
           mobileNo: +1 + formData.mobileNo,
           password: formData.password,
         };
-
         const response = await API.user_registration_buyer(reqObj);
-
         if (response.data.success === 1) {
           const headerObj = {
             Authorization: `Bearer ${response.data.token_code}`,
@@ -221,7 +223,6 @@ const SignupSeller = ({ setIsLogin, commonModal, setCommonModal }) => {
           mobileNo: `+1${formData.mobileNo}`,
           password: formData.password,
         };
-
         setFinalAgreeData(reqObj);
         if (formData.mobileNo === "") {
           setMobileErrorInner("Please enter your mobile number.");
@@ -762,11 +763,24 @@ const SignupSeller = ({ setIsLogin, commonModal, setCommonModal }) => {
     !formData.password ||
     !formData.confirmPassword ||
     !selected;
-
+  console.log("landingpage", landingpage);
   return (
     <>
       {/* <ToastContainer /> */}
-      <div className="loginSec">
+      <div className="loginSec flex-column">
+        {landingpage ? (
+          <>
+            <div className="row">
+              <div className="col-md-12 text-center">
+                <h2 className="mb-4">
+                  Register with Us <br /> with Zero overhead Cost
+                </h2>
+              </div>
+            </div>
+          </>
+        ) : (
+          ""
+        )}
         <div className={isEmail === 0 ? "main" : "main verification"}>
           {isEmail === 0 ? (
             <>

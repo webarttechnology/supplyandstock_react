@@ -1,10 +1,13 @@
 import React from "react";
 import video1 from "../assets/images/video1.mp4";
 import video2 from "../assets/images/video2.mp4";
-const Video = () => {
+const Video = ({ landingpage }) => {
   return (
     <div>
-      <div className="videoSec">
+      <div
+        className="videoSec"
+        style={{ paddingBottom: landingpage ? "50px" : "" }}
+      >
         <div className="container">
           <div className="col-md-12 text-center">
             <div className="ourStoryCont">

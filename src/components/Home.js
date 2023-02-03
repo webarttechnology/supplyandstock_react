@@ -10,7 +10,7 @@ import Slider from "./Slider";
 import UserSection from "./UserSection";
 import Video from "./Video";
 
-const Home = ({ setCommonModal, commonModal }) => {
+const Home = ({ setCommonModal, commonModal, landingpage }) => {
   const loaction = useLocation();
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -18,7 +18,11 @@ const Home = ({ setCommonModal, commonModal }) => {
 
   return (
     <>
-      <Banner setCommonModal={setCommonModal} commonModal={commonModal} />
+      <Banner
+        landingpage={landingpage}
+        setCommonModal={setCommonModal}
+        commonModal={commonModal}
+      />
       {/* <UserSection/> */}
       {/* <Partner/> */}
       <OurStory />

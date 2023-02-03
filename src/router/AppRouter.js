@@ -24,19 +24,27 @@ import Contact from "../pages/Contact";
 import Buyers from "../pages/Buyers";
 import About from "../pages/About";
 import NewDash from "../pages/NewDash";
+import Landing from "../components/Landing";
 
 const AppRouter = () => {
+  const [landingpage, setLandingpage] = useState(false);
   const [isLogin, setIsLogin] = useState(
     JSON.parse(localStorage.getItem("isLoginCheck"))
   );
   const [totalNotification, setTotalNotification] = useState("");
   const [commonModal, setCommonModal] = useState(false);
 
+  console.log("landingpage", landingpage);
+
   return (
     <Router>
       {isLogin ? (
         <>
-          <Header isLogin={isLogin} totalNotification={totalNotification} />
+          <Header
+            landingpage={landingpage}
+            isLogin={isLogin}
+            totalNotification={totalNotification}
+          />
           <Routes>
             <Route
               path="/"
@@ -116,17 +124,18 @@ const AppRouter = () => {
         </>
       ) : (
         <>
-          <Header isLogin={isLogin} totalNotification={totalNotification} />
+          <Header
+            landingpage={landingpage}
+            isLogin={isLogin}
+            totalNotification={totalNotification}
+          />
 
-          {/* <Route
-            path="/order"
-            element={<OrderList setIsLogin={setIsLogin} />}
-          /> */}
           <Routes>
             <Route
               path="/"
               element={
                 <Home
+                  landingpage={landingpage}
                   setCommonModal={setCommonModal}
                   commonModal={commonModal}
                 />
@@ -171,6 +180,8 @@ const AppRouter = () => {
               path="/seller/signup"
               element={
                 <SignupSeller
+                  landingpage={landingpage}
+                  setLandingpage={setLandingpage}
                   setCommonModal={setCommonModal}
                   commonModal={commonModal}
                   setIsLogin={setIsLogin}
@@ -202,6 +213,16 @@ const AppRouter = () => {
               element={<TermsAndConditions />}
             />
             <Route path="/shipping" element={<Shipping />} />
+            <Route
+              path="/seller-getstarted"
+              element={
+                <Landing
+                  landingpage={landingpage}
+                  setLandingpage={setLandingpage}
+                  setIsLogin={setIsLogin}
+                />
+              }
+            />
           </Routes>
         </>
       )}

@@ -1,11 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import CommonModal from "./CommonModal";
-const Banner = ({ commonModal, setCommonModal }) => {
+const Banner = ({ commonModal, setCommonModal, landingpage }) => {
   return (
     <>
       <div className="bannerHome hbanner">
-        <div className="container">
+        <div className={landingpage ? "d-none" : "container"}>
           <div className="row justify-content-center">
             <div className="col-md-8 text-center">
               {/* <h4 className="bannerWlcomeHeading">Welcome to</h4>
