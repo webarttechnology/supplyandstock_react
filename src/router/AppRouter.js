@@ -25,6 +25,8 @@ import Buyers from "../pages/Buyers";
 import About from "../pages/About";
 import NewDash from "../pages/NewDash";
 import Landing from "../components/Landing";
+import AccountSeccuess from "../pages/AccountSeccuess";
+import ProssSeller from "../pages/ProssSeller";
 
 const AppRouter = () => {
   const [landingpage, setLandingpage] = useState(false);
@@ -67,7 +69,12 @@ const AppRouter = () => {
             />
             <Route
               path="/user-dashboard"
-              element={<Dashboard setIsLogin={setIsLogin} />}
+              element={
+                <Dashboard
+                  setLandingpage={setLandingpage}
+                  setIsLogin={setIsLogin}
+                />
+              }
             />
             <Route
               path="/user/account-active"
@@ -155,7 +162,6 @@ const AppRouter = () => {
             <Route path="/buyers" element={<Buyers />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/about" element={<About />} />
-
             <Route
               path="/active-account"
               element={
@@ -165,7 +171,6 @@ const AppRouter = () => {
                 />
               }
             />
-
             <Route
               path="/login"
               element={
@@ -198,9 +203,13 @@ const AppRouter = () => {
             />
             <Route
               path="/user-dashboard"
-              element={<Dashboard setIsLogin={setIsLogin} />}
+              element={
+                <Dashboard
+                  setLandingpage={setLandingpage}
+                  setIsLogin={setIsLogin}
+                />
+              }
             />
-
             <Route path="/edit-profile" element={<EditProfile />} />
             <Route
               path="/message"
@@ -217,6 +226,26 @@ const AppRouter = () => {
               path="/seller-getstarted"
               element={
                 <Landing
+                  landingpage={landingpage}
+                  setLandingpage={setLandingpage}
+                  setIsLogin={setIsLogin}
+                />
+              }
+            />
+            <Route
+              path="/process-seller"
+              element={
+                <ProssSeller
+                  landingpage={landingpage}
+                  setLandingpage={setLandingpage}
+                  setIsLogin={setIsLogin}
+                />
+              }
+            />
+            <Route
+              path="/welcome"
+              element={
+                <AccountSeccuess
                   landingpage={landingpage}
                   setLandingpage={setLandingpage}
                   setIsLogin={setIsLogin}

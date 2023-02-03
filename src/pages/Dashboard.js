@@ -11,7 +11,7 @@ import { SOCEKT, URL } from "../api/constant";
 import { useEffect } from "react";
 import { useState } from "react";
 import ActiveAccount from "./ActiveAccount";
-const Dashboard = ({ setIsLogin }) => {
+const Dashboard = ({ setIsLogin, setLandingpage }) => {
   const [orderCount, setOrderCount] = useState([]);
   const [menuFetch, setMenuFetch] = useState([]);
   const [userEmail, setUserEmail] = useState("");
@@ -31,6 +31,7 @@ const Dashboard = ({ setIsLogin }) => {
   const socket = io(SOCEKT);
 
   useEffect(() => {
+    setLandingpage(false);
     socket.emit("notification", {
       id: localStorage.getItem("__userId"),
     });
@@ -126,7 +127,7 @@ const Dashboard = ({ setIsLogin }) => {
                             aria-selected="false"
                           >
                             <span>
-                            <i class="bi bi-person-badge"></i>
+                              <i class="bi bi-person-badge"></i>
                             </span>{" "}
                             Activate Stripe Account
                           </button>
@@ -226,7 +227,11 @@ const Dashboard = ({ setIsLogin }) => {
                         role="tabpanel"
                         aria-labelledby="v-pills-profile-tab"
                       >
-                        <EditProfile setActiveAcount={setActiveAcount} setUserEmail={setUserEmail} setIsLogin={setIsLogin} />
+                        <EditProfile
+                          setActiveAcount={setActiveAcount}
+                          setUserEmail={setUserEmail}
+                          setIsLogin={setIsLogin}
+                        />
                       </div>
                       <div
                         class="tab-pane fade"
@@ -250,7 +255,10 @@ const Dashboard = ({ setIsLogin }) => {
                         id="v-pills-stripe"
                         role="tabpanel"
                       >
-                        <ActiveAccount activeAccount={activeAccount} userEmail={userEmail} />
+                        <ActiveAccount
+                          activeAccount={activeAccount}
+                          userEmail={userEmail}
+                        />
                       </div>
                       <div
                         class="tab-pane fade"

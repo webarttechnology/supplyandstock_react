@@ -179,7 +179,7 @@ const SignupSeller = ({
       setLoading(false);
       return;
     }
-    setCommonModal(true);
+
     if (selected === "Buyer") {
       try {
         const reqObj = {
@@ -229,32 +229,38 @@ const SignupSeller = ({
         } else if (formData.mobileNo.length < 10) {
           setMobileErrorInner("Please enter valid mobile number");
         } else {
-          // const response = await API.user_registration_seller(reqObj);
-          // console.log("sssresponse", response);
-          // if (response.data.success === 1) {
-          //   const headerObj = {
-          //     Authorization: `Bearer ${response.data.token_code}`,
-          //   };
-          //   localStorage.setItem("_tokenCode", JSON.stringify(headerObj));
-          //   localStorage.setItem("_userType", selected);
-          //   setLoading(false);
-          //   setIsEmail(1);
-          //   localStorage.setItem("__userId", response.data.data._id);
-          // } else {
-          //   toast(response.data.msg, {
-          //     position: "top-right",
-          //     autoClose: 5000,
-          //     type: "error",
-          //     hideProgressBar: false,
-          //     closeOnClick: true,
-          //     pauseOnHover: true,
-          //     draggable: true,
-          //     progress: undefined,
-          //     theme: "colored",
-          //   });
-          //   //setErrorMsg(response.data.msg)
-          //   setLoading(false);
-          // }
+          if (landingpage) {
+            const response = await API.user_registration_seller(reqObj);
+            console.log("response", response);
+            if (response.data.success === 1) {
+              const headerObj = {
+                Authorization: `Bearer ${response.data.token_code}`,
+              };
+              navigate("/welcome");
+              localStorage.setItem("_tokenCode", JSON.stringify(headerObj));
+              localStorage.setItem("_userType", selected);
+              setLoading(false);
+              setIsEmail(1);
+              localStorage.setItem("__userId", response.data.data._id);
+            } else {
+              toast(response.data.msg, {
+                position: "top-right",
+                autoClose: 5000,
+                type: "error",
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+              });
+              setCommonModal(false);
+              //setErrorMsg(response.data.msg)
+              setLoading(false);
+            }
+          } else {
+            setCommonModal(true);
+          }
         }
       } catch (error) {}
     }
@@ -767,7 +773,7 @@ const SignupSeller = ({
   return (
     <>
       {/* <ToastContainer /> */}
-      <div className="loginSec flex-column">
+      <div className="loginSec flex-column" id="lendingSeller">
         {landingpage ? (
           <>
             <div className="row">
@@ -924,10 +930,14 @@ const SignupSeller = ({
                     />
                   )}
                 </button>
-                <p className="sectionBtm">
-                  Already You Have A Account ?{" "}
-                  <Link to="/seller/login">Login Now</Link>
-                </p>
+                {landingpage ? (
+                  ""
+                ) : (
+                  <p className="sectionBtm">
+                    Already You Have A Account ?{" "}
+                    <Link to="/seller/login">Login Now</Link>
+                  </p>
+                )}
               </div>
               {/* <div class="login">
                           <label for="chk" aria-hidden="true">Login</label>

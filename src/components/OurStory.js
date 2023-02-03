@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import ourStoryImg from "../assets/images/about.jpg";
 
-const OurStory = () => {
+const OurStory = ({ landingpage }) => {
   return (
     <>
       <div className="ourStory">
@@ -23,12 +23,26 @@ const OurStory = () => {
                   <br />
                   Register with Us Today to get premium benefits
                 </p>
-                <Link to="/about" className="bannerBtn me-3">
-                  Register Now
-                </Link>
-                <Link to="/sellers" className="bannerBtn">
-                  How It Works
-                </Link>
+
+                {landingpage ? (
+                  <>
+                    <a href="#lendingSeller" className="bannerBtn me-3">
+                      Register Now
+                    </a>
+                    <Link to="/process-seller" className="bannerBtn">
+                      How It Works
+                    </Link>
+                  </>
+                ) : (
+                  <>
+                    <Link to="/about" className="bannerBtn me-3">
+                      Register Now
+                    </Link>
+                    <Link to="/sellers" className="bannerBtn">
+                      How It Works
+                    </Link>
+                  </>
+                )}
               </div>
             </div>
             <div className="col-md-6">

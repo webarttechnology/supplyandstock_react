@@ -14,7 +14,7 @@ const Landing = ({ setLandingpage, landingpage }) => {
   return (
     <>
       <Banner landingpage={landingpage} />
-      <OurStory />
+      <OurStory landingpage={landingpage} />
       <Features />
       <Video landingpage={landingpage} />
       <SignupSeller landingpage={landingpage} />
