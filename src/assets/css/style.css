@@ -2424,8 +2424,8 @@ ul {
 .topHalf p {
   margin-bottom: 30px;
 }
-svg {
-  fill: rgb(192, 112, 112);
+.topHalf svg {
+  fill: rgb(255, 251, 251);
 }
 .topHalf h1 {
   font-size: 2.25rem;
