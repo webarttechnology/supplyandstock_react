@@ -130,7 +130,7 @@ const SignupSeller = ({
         const headerObj = {
           Authorization: `Bearer ${response.data.token_code}`,
         };
-        navigate("/user-dashboard");
+        //navigate("/user-dashboard");
         localStorage.setItem("_tokenCode", JSON.stringify(headerObj));
         localStorage.setItem("_userType", selected);
         setLoading(false);
